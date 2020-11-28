@@ -1,12 +1,27 @@
 {% extends "base.html" %}
 {% block content %}
 
+    
+
+    <div class="row">
     {% for activity in activities %}
-        {{ activity.activity_name }}<br>
-        {{ activity.activity_age }}<br>
-        {{ activity.activity_description }}<br>
-        {{ activity.activity_time }}<br>
-        {{ activity.activity_category }}<br>
+        <div class="col s12 m3">
+            <div class="card">
+                <div class="card-image">
+                    <img src="static/images/test.jpg">
+                    <span class="card-title">{{ activity.activity_name }}</span>
+                </div>
+                <div class="card-content">
+                    <p>{{ activity.activity_age }} //  {{ activity.activity_category }} // {{ activity.activity_time }}</p>
+                </div>
+                <div class="card-action">
+                     <a href="#">Details</a>
+                </div>
+            </div>
+        </div>
     {% endfor %}
+    </div>
+
+    
 
 {% endblock %}

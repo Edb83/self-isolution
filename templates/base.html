@@ -19,12 +19,12 @@
     <!-- main navbar -->
     <nav>
         <div class="nav-wrapper purple darken-1">
-        <a href="{{ url_for('get_activities') }}" class="brand-logo">Self Isolution</a>
+        <a href="{{ url_for('get_activities') }}" class="brand-logo center">Self Isolution</a>
         <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
         <ul class="right hide-on-med-and-down">
             <li><a href="{{ url_for('get_activities') }}">Home</a></li>
             <li><a href="#">Activities</a></li>
-            <li><a href="#">Register</a></li>
+            <li><a href="{{ url_for('register') }}">Register</a></li>
             <li><a href="#">Log In</a></li>
         </ul>
         </div>
@@ -34,7 +34,7 @@
         <li><h4 class="center-align purple-text text-darken-1">Self Isolution</h4></li>
         <li><a href="{{ url_for('get_activities') }}">Home</a></li>
         <li><a href="#">Activities</a></li>
-        <li><a href="#">Register</a></li>
+        <li><a href="{{ url_for('register') }}">Register</a></li>
         <li><a href="#">Log In</a></li>
     </ul>
 </header>
