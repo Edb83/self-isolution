@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <h3 class="center-align">Edit {{ activity.activity_name }}</h3>
+
+    <div class="row card-panel">
+        <form class="col s12" method="POST" action="{{ url_for('edit_activity', activity_id=activity._id) }}">
+
+            <!-- Title -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="fas fa-pencil-alt prefix"></i>
+                    <input id="activity_name" name="activity_name" minlength="5" maxlength="30"
+                        type="text" class="validate" required>
+                    <label for="activity_name">Title</label>
+                </div>
+            </div>
+
+            <!-- Category -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="fas fa-folder-open prefix"></i>
+                    <select id="category_name" name="category_name" class="validate" required>
+                        <option value="" disabled selected>Choose category</option>
+                        {% for category in categories %}
+                        <option value="{{category.category_name}}">{{category.category_name}}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="category_name">Category</label>
+                </div>
+            </div>
+
+            <!-- Target Age -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="fas fa-child prefix"></i>
+                    <select id="age_name" name="age_name" class="validate" required>
+                        <option value="" disabled selected>Choose age</option>
+                        {% for age in ages %}
+                        <option value="{{age.ages_name}}">{{age.ages_name}}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="age_name">Target Age</label>
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="fas fa-quote-left prefix"></i>
+                    <textarea id="activity_summary" name="activity_summary" minlength="10" maxlength="50" class="materialize-textarea validate" required></textarea>
+                    <label for="activity_summary">Summary</label>
+                </div>
+            </div>
+
+            <!-- Details -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="fas fa-align-left prefix"></i>
+                    <textarea id="activity_details" name="activity_details" minlength="10" maxlength="500" class="materialize-textarea validate" required></textarea>
+                    <label for="activity_details">Details</label>
+                </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="row">
+                <button type="submit" class="col s10 m6 l4 offset-s1 offset-m3 offset-l4 waves-effect waves-light btn-large">
+                    Edit Activity <i class="fas fa-edit left"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}
+
+{% block scripts  %}
+{% endblock %}

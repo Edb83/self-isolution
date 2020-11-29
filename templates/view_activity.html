@@ -1,18 +1,21 @@
 {% extends "base.html" %}
 {% block content %}
 
+    <h3 class="center-align">{{ activity.activity_name }}</h3>
+
     <div class="row">
         <div class="col s12">
-            <div class="card">
-                <div class="card-image">
-                    <img src="static/images/test.jpg">
-                    <span class="card-title">{{ activity.activity_name }}</span>
-                </div>
-                <div class="card-content">
-                    <p>{{ activity.activity_summary }}</p>
-                    <p><strong>Target age:</strong> {{ activity.age_name }} | <strong>Category:</strong> {{ activity.category_name }} | <strong>User:</strong> {{ activity.created_by }}</p>
-                </div>
-            </div>
+            {{ activity.category_name }} <br>
+            {{ activity.age_name }}<br>
+            {{ activity.activity_summary }}<br>
+            {{ activity.activity_details }}<br>
+            {{ activity.created_by }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <a href="{{ url_for('get_activities') }}" class="waves-effect waves-light btn">Back</a>
+            <a href="{{ url_for('edit_activity', activity_id=activity._id) }}" class="waves-effect waves-light btn">Edit</a>
         </div>
     </div>
 

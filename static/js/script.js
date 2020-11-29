@@ -75,7 +75,7 @@ $(document).ready(function () {
 
 $(document).click(function () {
   // Fixes bug with Materialize select elements not working with iOS
-  // https://stackoverflow.com/questions/52850091/materialize-select-and-dropdown-touch-event-selecting-wrong-item?answertab=active#tab-top
+  // https://stackoverflow.com/a/52851046
   $('li[id^="select-options"]').on('touchend', function (e) {
      e.stopPropagation();
   }); 

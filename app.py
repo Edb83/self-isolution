@@ -119,6 +119,17 @@ def add_activity():
         "add_activity.html", categories=categories, ages=ages)
 
 
+@app.route("/edit_activity/<activity_id>", methods=["GET", "POST"])
+def edit_activity(activity_id):
+    activity = mongo.db.activities.find_one({"_id": ObjectId(activity_id)})
+    categories = mongo.db.categories.find().sort("category_name", 1)
+    ages = mongo.db.ages.find()
+    return render_template(
+        "edit_activity.html",
+        activity=activity,
+        categories=categories, ages=ages)
+
+
 @app.route("/view_activity/<activity_id>")
 def view_activity(activity_id):
     activity = mongo.db.activities.find_one({"_id": ObjectId(activity_id)})
