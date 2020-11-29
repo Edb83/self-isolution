@@ -115,7 +115,14 @@ def add_activity():
 
     categories = mongo.db.categories.find().sort("category_name", 1)
     ages = mongo.db.ages.find()
-    return render_template("add_activity.html", categories=categories, ages=ages)
+    return render_template(
+        "add_activity.html", categories=categories, ages=ages)
+
+
+@app.route("/view_activity/<activity_id>")
+def view_activity(activity_id):
+    activity = mongo.db.activities.find_one({"_id": ObjectId(activity_id)})
+    return render_template("view_activity.html", activity=activity)
 
 
 if __name__ == "__main__":

@@ -1,3 +1,14 @@
+  body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
+
+/* Removes display of browser-default caret which is visible using select.js iOS fix */
 .hide-select {
     display: none;
 }

@@ -2,6 +2,8 @@ $(document).ready(function () {
   $(".sidenav").sidenav({ edge: "right" });
   $("select").formSelect();
 
+  // Adds validation to Materialize select fields
+  // Code Institute
   validateMaterializeSelect();
   function validateMaterializeSelect() {
     let classValid = {

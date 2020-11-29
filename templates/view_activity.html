@@ -1,12 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <h3 class="center-align">Activities</h3>
-
     <div class="row">
-    {% for activity in activities %}
-        <div class="col s12 m6 l4">
-            <div class="card hoverable">
+        <div class="col s12">
+            <div class="card">
                 <div class="card-image">
                     <img src="static/images/test.jpg">
                     <span class="card-title">{{ activity.activity_name }}</span>
@@ -15,12 +12,8 @@
                     <p>{{ activity.activity_summary }}</p>
                     <p><strong>Target age:</strong> {{ activity.age_name }} | <strong>Category:</strong> {{ activity.category_name }} | <strong>User:</strong> {{ activity.created_by }}</p>
                 </div>
-                <div class="card-action">
-                        <a href="{{ url_for('view_activity', activity_id=activity._id) }}">Details</a>
-                </div>
             </div>
         </div>
-    {% endfor %}
     </div>
 
 {% endblock %}
