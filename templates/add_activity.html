@@ -4,7 +4,9 @@
     <h3 class="center-align">Add Activity</h3>
 
     <div class="row card-panel">
-        <form class="col s12" method="POST" action="">
+        <form class="col s12" method="POST" action="{{ url_for('add_activity') }}">
+
+            <!-- Title -->
             <div class="row">
                 <div class="input-field col s12">
                     <i class="fas fa-pencil-alt prefix"></i>
@@ -13,7 +15,10 @@
                     <label for="activity_name">Title</label>
                 </div>
             </div>
+
             <div class="row">
+
+                <!-- Category -->
                 <div class="input-field col s12 m6">
                     <i class="fas fa-folder-open prefix"></i>
                     <select id="category_name" name="category_name" class="validate" required>
@@ -24,6 +29,8 @@
                     </select>
                     <label for="category_name">Category</label>
                 </div>
+
+                <!-- Target Age -->
                 <div class="input-field col s12 m6">
                     <i class="fas fa-child prefix"></i>
                     <select id="age_name" name="age_name" class="validate" required>
@@ -35,6 +42,8 @@
                     <label for="age_name">Target Age</label>
                 </div>
             </div>
+
+            <!-- Summary -->
             <div class="row">
                 <div class="input-field col s12">
                     <i class="fas fa-quote-left prefix"></i>
@@ -42,12 +51,21 @@
                     <label for="activity_summary">Summary</label>
                 </div>
             </div>
+
+            <!-- Details -->
             <div class="row">
                 <div class="input-field col s12">
                     <i class="fas fa-align-left prefix"></i>
                     <textarea id="activity_details" name="activity_details" minlength="10" maxlength="500" class="materialize-textarea validate" required></textarea>
                     <label for="activity_details">Details</label>
                 </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="row">
+                <button type="submit" class="col s10 m6 l4 offset-s1 offset-m3 offset-l4 waves-effect waves-light btn-large">
+                    Add Activity <i class="fas fa-plus-circle left"></i>
+                </button>
             </div>
         </form>
     </div>

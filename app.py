@@ -97,8 +97,22 @@ def logout():
     return redirect(url_for("login"))
 
 
-@app.route("/add_activity")
+@app.route("/add_activity", methods=["GET", "POST"])
 def add_activity():
+    if request.method == "POST":
+        activity = {
+            "activity_name": request.form.get("activity_name"),
+            "category_name": request.form.get("category_name"),
+            "age_name": request.form.get("age_name"),
+            "activity_summary": request.form.get("activity_summary"),
+            "activity_details": request.form.get("activity_details"),
+            "created_by": session["user"]
+            # could use request.form.getlist for the equipment
+        }
+        mongo.db.activities.insert_one(activity)
+        flash("Activity Added")
+        return redirect(url_for("get_activities"))
+
     categories = mongo.db.categories.find().sort("category_name", 1)
     ages = mongo.db.ages.find()
     return render_template("add_activity.html", categories=categories, ages=ages)
