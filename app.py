@@ -99,7 +99,9 @@ def logout():
 
 @app.route("/add_activity")
 def add_activity():
-    return render_template("add_activity.html")
+    categories = mongo.db.categories.find().sort("category_name", 1)
+    ages = mongo.db.ages.find()
+    return render_template("add_activity.html", categories=categories, ages=ages)
 
 
 if __name__ == "__main__":

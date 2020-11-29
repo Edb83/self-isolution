@@ -3,18 +3,50 @@
 
     <h3 class="center-align">Add Activity</h3>
 
-    <div class="row">
+    <div class="row card-panel">
         <form class="col s12" method="POST" action="">
             <div class="row">
                 <div class="input-field col s12">
-                    <i class="fas fa-lightbulb prefix"></i>
-                    <input id="icon_prefix" type="text" class="validate">
-                    <label for="icon_prefix">Title</label>
+                    <i class="fas fa-pencil-alt prefix"></i>
+                    <input id="activity_name" name="activity_name" minlength="5" maxlength="30"
+                        type="text" class="validate" required>
+                    <label for="activity_name">Title</label>
                 </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    <i class="fas fa-folder-open prefix"></i>
+                    <select id="category_name" name="category_name" class="validate" required>
+                        <option value="" disabled selected>Choose category</option>
+                        {% for category in categories %}
+                        <option value="{{category.category_name}}">{{category.category_name}}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="category_name">Category</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <i class="fas fa-child prefix"></i>
+                    <select id="age_name" name="age_name" class="validate" required>
+                        <option value="" disabled selected>Choose age</option>
+                        {% for age in ages %}
+                        <option value="{{age.ages_name}}">{{age.ages_name}}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="age_name">Target Age</label>
+                </div>
+            </div>
+            <div class="row">
                 <div class="input-field col s12">
-                    <i class="fas fa-folder prefix"></i>
-                    <input id="icon_telephone" type="tel" class="validate">
-                    <label for="icon_telephone">Category</label>
+                    <i class="fas fa-quote-left prefix"></i>
+                    <textarea id="activity_summary" name="activity_summary" minlength="10" maxlength="50" class="materialize-textarea validate" required></textarea>
+                    <label for="activity_summary">Summary</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="fas fa-align-left prefix"></i>
+                    <textarea id="activity_details" name="activity_details" minlength="10" maxlength="500" class="materialize-textarea validate" required></textarea>
+                    <label for="activity_details">Details</label>
                 </div>
             </div>
         </form>
