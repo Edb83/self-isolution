@@ -11,7 +11,7 @@
                 <div class="input-field col s12">
                     <i class="fas fa-pencil-alt prefix"></i>
                     <input id="activity_name" name="activity_name" minlength="5" maxlength="30"
-                        type="text" class="validate" required>
+                        value="{{ activity.activity_name }}" type="text" class="validate" required>
                     <label for="activity_name">Title</label>
                 </div>
             </div>
@@ -21,9 +21,13 @@
                 <div class="input-field col s12">
                     <i class="fas fa-folder-open prefix"></i>
                     <select id="category_name" name="category_name" class="validate" required>
-                        <option value="" disabled selected>Choose category</option>
+                        <option value="" disabled>Choose category</option>
                         {% for category in categories %}
-                        <option value="{{category.category_name}}">{{category.category_name}}</option>
+                            {% if category.category_name == activity.category_name %}
+                                <option value="{{category.category_name}}" selected>{{category.category_name}}</option>
+                            {% else %}
+                                <option value="{{category.category_name}}">{{category.category_name}}</option>
+                            {% endif %}
                         {% endfor %}
                     </select>
                     <label for="category_name">Category</label>
@@ -35,9 +39,13 @@
                 <div class="input-field col s12">
                     <i class="fas fa-child prefix"></i>
                     <select id="age_name" name="age_name" class="validate" required>
-                        <option value="" disabled selected>Choose age</option>
+                        <option value="" disabled>Choose age</option>
                         {% for age in ages %}
-                        <option value="{{age.ages_name}}">{{age.ages_name}}</option>
+                            {% if age.age_name == activity.age_name %}
+                               <option value="{{age.age_name}}" selected>{{age.age_name}}</option>
+                            {% else %}
+                                <option value="{{age.age_name}}">{{age.age_name}}</option>
+                            {% endif %}
                         {% endfor %}
                     </select>
                     <label for="age_name">Target Age</label>
@@ -48,7 +56,9 @@
             <div class="row">
                 <div class="input-field col s12">
                     <i class="fas fa-quote-left prefix"></i>
-                    <textarea id="activity_summary" name="activity_summary" minlength="10" maxlength="50" class="materialize-textarea validate" required></textarea>
+                    <textarea id="activity_summary" name="activity_summary" minlength="10" maxlength="50" class="materialize-textarea validate" required>
+                        {{- activity.activity_summary -}}
+                    </textarea>
                     <label for="activity_summary">Summary</label>
                 </div>
             </div>
@@ -57,16 +67,23 @@
             <div class="row">
                 <div class="input-field col s12">
                     <i class="fas fa-align-left prefix"></i>
-                    <textarea id="activity_details" name="activity_details" minlength="10" maxlength="500" class="materialize-textarea validate" required></textarea>
+                    <textarea id="activity_details" name="activity_details" minlength="10" maxlength="500" class="materialize-textarea validate" required>
+                        {{- activity.activity_details -}}
+                    </textarea>
                     <label for="activity_details">Details</label>
                 </div>
             </div>
 
             <!-- Submit -->
             <div class="row">
-                <button type="submit" class="col s10 m6 l4 offset-s1 offset-m3 offset-l4 waves-effect waves-light btn-large">
-                    Edit Activity <i class="fas fa-edit left"></i>
-                </button>
+                <div class="col s12 center-align">
+                    <a href="{{ url_for('get_activities') }}" class="waves-effect waves-light btn red">
+                        Cancel <i class="fas fa-times-circle right"></i>
+                    </a>
+                    <button type="submit" class="waves-effect waves-light btn">
+                        Save <i class="fas fa-edit right"></i>
+                    </button>
+                </div>
             </div>
         </form>
     </div>

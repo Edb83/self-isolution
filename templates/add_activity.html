@@ -23,7 +23,7 @@
                     <select id="category_name" name="category_name" class="validate" required>
                         <option value="" disabled selected>Choose category</option>
                         {% for category in categories %}
-                        <option value="{{category.category_name}}">{{category.category_name}}</option>
+                            <option value="{{category.category_name}}">{{category.category_name}}</option>
                         {% endfor %}
                     </select>
                     <label for="category_name">Category</label>
@@ -37,7 +37,7 @@
                     <select id="age_name" name="age_name" class="validate" required>
                         <option value="" disabled selected>Choose age</option>
                         {% for age in ages %}
-                        <option value="{{age.ages_name}}">{{age.ages_name}}</option>
+                            <option value="{{age.age_name}}">{{age.age_name}}</option>
                         {% endfor %}
                     </select>
                     <label for="age_name">Target Age</label>
@@ -64,9 +64,14 @@
 
             <!-- Submit -->
             <div class="row">
-                <button type="submit" class="col s10 m6 l4 offset-s1 offset-m3 offset-l4 waves-effect waves-light btn-large">
-                    Add Activity <i class="fas fa-plus-circle left"></i>
-                </button>
+                <div class="col s12 center-align">
+                    <a href="{{ url_for('get_activities') }}" class="waves-effect waves-light btn red">
+                        Cancel <i class="fas fa-times-circle right"></i>
+                    </a>
+                    <button type="submit" class="waves-effect waves-light btn">
+                        Submit <i class="fas fa-plus-circle right"></i>
+                    </button>
+                </div>
             </div>
         </form>
     </div>
