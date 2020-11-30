@@ -148,6 +148,13 @@ def edit_activity(activity_id):
         categories=categories, ages=ages)
 
 
+@app.route("/delete_activity/<activity_id>")
+def delete_activity(activity_id):
+    mongo.db.activities.remove({"_id": ObjectId(activity_id)})
+    flash("Activity Deleted")
+    return redirect(url_for('profile', username=session['user']))
+
+
 @app.route("/view_activity/<activity_id>")
 def view_activity(activity_id):
     activity = mongo.db.activities.find_one({"_id": ObjectId(activity_id)})
