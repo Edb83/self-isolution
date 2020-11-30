@@ -8,7 +8,7 @@
         <div class="col s12 m6 l4">
             <div class="card hoverable">
                 <div class="card-image">
-                    <img src="static/images/test.jpg">
+                    <img src="{{ url_for('static', filename='images/test.jpg') }}">
                     <span class="card-title">{{ activity.activity_name }}</span>
                 </div>
                 <div class="card-content">
@@ -16,8 +16,11 @@
                     <p><strong>Target age:</strong> {{ activity.age_name }} | <strong>Category:</strong> {{ activity.category_name }} | <strong>User:</strong> {{ activity.created_by }}</p>
                 </div>
                 <div class="card-action">
-                        <a href="{{ url_for('view_activity', activity_id=activity._id) }}">Details</a>
+                    <a href="{{ url_for('view_activity', activity_id=activity._id) }}">Details</a>
                 </div>
+                {% if session.user|lower == activity.created_by|lower %}
+                    <a href="{{ url_for('edit_activity', activity_id=activity._id) }}" class="waves-effect waves-light btn right">Edit</a>
+                {% endif %}
             </div>
         </div>
     {% endfor %}

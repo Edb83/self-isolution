@@ -15,7 +15,9 @@
     <div class="row">
         <div class="col s12">
             <a href="{{ url_for('get_activities') }}" class="waves-effect waves-light btn">Back</a>
-            <a href="{{ url_for('edit_activity', activity_id=activity._id) }}" class="waves-effect waves-light btn">Edit</a>
+            {% if session.user|lower == activity.created_by|lower %}
+              <a href="{{ url_for('edit_activity', activity_id=activity._id) }}" class="waves-effect waves-light btn">Edit</a>
+            {% endif %}
         </div>
     </div>
 

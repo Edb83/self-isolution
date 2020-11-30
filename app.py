@@ -59,11 +59,11 @@ def login():
         if existing_user:
             # ensure hashed password matches user input
             if check_password_hash(
-                existing_user["password"], request.form.get("password")):
-                    session["user"] = request.form.get("username").lower()
-                    flash("Welcome, {}".format(request.form.get("username")))
-                    return redirect(url_for(
-                        "profile", username=session["user"]))
+                 existing_user["password"], request.form.get("password")):
+                session["user"] = request.form.get("username").lower()
+                flash("Welcome, {}".format(request.form.get("username")))
+                return redirect(url_for(
+                    "profile", username=session["user"]))
 
             else:
                 # invalid password match
@@ -82,9 +82,12 @@ def profile(username):
     # get session user's username from database
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
+    activities = list(mongo.db.activities.find(
+        {"created_by": session["user"]}))
 
     if session["user"]:
-        return render_template("profile.html", username=username)
+        return render_template(
+            "profile.html", username=username, activities=activities)
 
     return redirect(url_for("get_activities"))
 
@@ -124,6 +127,21 @@ def edit_activity(activity_id):
     activity = mongo.db.activities.find_one({"_id": ObjectId(activity_id)})
     categories = mongo.db.categories.find().sort("category_name", 1)
     ages = mongo.db.ages.find()
+
+    if request.method == "POST":
+        submit = {"$set": {
+            "activity_name": request.form.get("activity_name"),
+            "category_name": request.form.get("category_name"),
+            "age_name": request.form.get("age_name"),
+            "activity_summary": request.form.get("activity_summary"),
+            "activity_details": request.form.get("activity_details"),
+            "created_by": session["user"]
+            # could use request.form.getlist for the equipment
+        }}
+        mongo.db.activities.update_many(activity, submit)
+        flash("Activity Updated")
+        return render_template("view_activity.html", activity=activity)
+
     return render_template(
         "edit_activity.html",
         activity=activity,
