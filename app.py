@@ -5,6 +5,8 @@ from flask import (
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import date
+
 if os.path.exists("env.py"):
     import env
 
@@ -21,7 +23,7 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route("/get_activities")
 def get_activities():
-    activities = mongo.db.activities.find()
+    activities = mongo.db.activities.find().sort("_id", -1)
     return render_template("activities.html", activities=activities)
 
 
@@ -109,7 +111,8 @@ def add_activity():
             "age_name": request.form.get("age_name"),
             "activity_summary": request.form.get("activity_summary"),
             "activity_details": request.form.get("activity_details"),
-            "created_by": session["user"]
+            "created_by": session["user"],
+            "date_added": date.today().strftime("%d %b %Y")
             # could use request.form.getlist for the equipment
         }
         mongo.db.activities.insert_one(activity)
