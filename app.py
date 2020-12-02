@@ -24,7 +24,18 @@ mongo = PyMongo(app)
 @app.route("/get_activities")
 def get_activities():
     activities = mongo.db.activities.find().sort("_id", -1)
-    return render_template("activities.html", activities=activities)
+    images = {
+        "Arts & Craft":
+            "https://images.pexels.com/photos/159579/crayons-coloring-book-coloring-book-159579.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+        "Exercise":
+            "https://cdn.pixabay.com/photo/2019/05/22/15/31/sports-4221779__340.jpg",
+        "Imagination":
+            "https://images.pexels.com/photos/5561177/pexels-photo-5561177.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+        "Learning":
+            "https://images.unsplash.com/photo-1568828668638-b1b4014d91a2?ixid=MXwxMjA3fDB8MHxzZWFyY2h8OXx8YWxwaGFiZXQlMjBibG9ja3N8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+    }
+    return render_template(
+        "activities.html", activities=activities, images=images)
 
 
 @app.route("/register", methods=["GET", "POST"])
