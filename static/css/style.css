@@ -11,3 +11,12 @@ main {
 select {
     -webkit-appearance: none; 
 }
+
+.card-summary {
+    font-size: 1.2em;
+    color: #13557e;
+}
+
+.card-headline {
+    letter-spacing: 0.1px;
+}
