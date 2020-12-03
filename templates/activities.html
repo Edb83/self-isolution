@@ -8,7 +8,11 @@
     <div class="card hoverable grey lighten-4">
       <div class="card-image">
         <a href="{{ url_for('view_activity', activity_id=activity._id) }}">
-            <img src="{{ images.get(activity.category_name) }}" />
+            {% for category in categories %}
+                {% if category.category_name == activity.category_name %}
+                <img src="{{ category.img_url }}" />
+                {% endif %}
+            {% endfor %}
             <span class="card-title">{{ activity.activity_name }}</span>
         </a>
         {% if session.user|lower == activity.created_by|lower %}

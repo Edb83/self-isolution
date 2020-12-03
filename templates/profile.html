@@ -17,7 +17,11 @@
             <div class="col s12 m6 l4">
                 <div class="card hoverable">
                     <div class="card-image">
-                        <img src="{{ url_for('static', filename='images/test.jpg') }}">
+                        {% for category in categories %}
+                            {% if category.category_name == activity.category_name %}
+                            <img src="{{ category.img_url }}" />
+                            {% endif %}
+                        {% endfor %}
                         <span class="card-title">{{ activity.activity_name }}</span>
                     </div>
                     <div class="card-content">

@@ -24,7 +24,7 @@ mongo = PyMongo(app)
 @app.route("/get_activities")
 def get_activities():
     activities = mongo.db.activities.find().sort("_id", -1)
-    categories = mongo.db.categories.find()
+    categories = list(mongo.db.categories.find())
 
     return render_template(
         "activities.html", activities=activities, categories=categories)
@@ -89,7 +89,7 @@ def profile(username):
         {"username": session["user"]})["username"]
     activities = list(mongo.db.activities.find(
         {"created_by": session["user"]}))
-    categories = mongo.db.categories.find()
+    categories = list(mongo.db.categories.find())
 
     if session["user"]:
         return render_template(
