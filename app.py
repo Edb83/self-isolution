@@ -89,10 +89,12 @@ def profile(username):
         {"username": session["user"]})["username"]
     activities = list(mongo.db.activities.find(
         {"created_by": session["user"]}))
+    categories = mongo.db.categories.find()
 
     if session["user"]:
         return render_template(
-            "profile.html", username=username, activities=activities)
+            "profile.html", username=username,
+            activities=activities, categories=categories)
 
     return redirect(url_for("get_activities"))
 
