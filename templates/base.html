@@ -23,6 +23,9 @@
                 <a href="#" data-target="mobile-navbar" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
                 <ul class="right hide-on-med-and-down">
                     <li><a href="{{ url_for('get_activities') }}">Activities</a></li>
+                    {% if session.user|lower == "admin"|lower %}
+                        <li><a href="{{ url_for('get_categories') }}">Categories</a></li>
+                    {% endif %}
                     {% if session.user %}
                         <li><a href="{{ url_for('add_activity') }}">Add</a></li>
                         <li><a href="{{ url_for('profile', username=session['user']) }}">Profile</a></li>
@@ -38,6 +41,9 @@
         <ul class="sidenav" id="mobile-navbar">
             <li><h4 class="center-align purple-text text-darken-1">Self Isolution</h4></li>
                 <li><a href="{{ url_for('get_activities') }}">Activities</a></li>
+                {% if session.user|lower == "admin"|lower %}
+                        <li><a href="{{ url_for('get_categories') }}">Categories</a></li>
+                    {% endif %}
                 {% if session.user %}
                     <li><a href="{{ url_for('add_activity') }}">Add</a></li>
                     <li><a href="{{ url_for('profile', username=session['user']) }}">Profile</a></li>
