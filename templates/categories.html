@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <h3 class="center-align">Manage Categories</h3>
+
+    <div class="row">
+        {% for category in categories %}
+            <div class="col s12 m6 l3">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="{{ category.img_url }}">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">{{ category.category_name }}<i class="fas fa-angle-up right"></i></span>
+                        <a href="#" class="btn-floating halfway-fab left blue"><i class="fas fa-edit"></i></a>
+                        <a href="#" class="btn-floating halfway-fab right red"><i class="fas fa-trash"></i></a>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">Stats<i class="fas fa-times-circle right"></i></span>
+                        <ul>
+                            <li>Activities</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
