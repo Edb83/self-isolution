@@ -43,7 +43,7 @@
                 <li><a href="{{ url_for('get_activities') }}">Activities</a></li>
                 {% if session.user|lower == "admin"|lower %}
                         <li><a href="{{ url_for('get_categories') }}">Categories</a></li>
-                    {% endif %}
+                {% endif %}
                 {% if session.user %}
                     <li><a href="{{ url_for('add_activity') }}">Add</a></li>
                     <li><a href="{{ url_for('profile', username=session['user']) }}">Profile</a></li>
