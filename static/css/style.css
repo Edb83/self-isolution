@@ -12,6 +12,10 @@ select {
     -webkit-appearance: none; 
 }
 
+.card {
+    min-height: 29em;
+}
+
 .card-summary {
     font-size: 1.2em;
     color: #13557e;
