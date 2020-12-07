@@ -120,6 +120,14 @@ def add_activity():
             "date_added": date.today().strftime("%d %b %Y")
             # could use request.form.getlist for the equipment
         }
+        cat_activities = mongo.db.categories.find_one(
+            {"category_name": activity["category_name"]})["activity_count"]
+        cat_activities_update = int(cat_activities + 1)
+
+        mongo.db.categories.update_one(
+            {"category_name": activity["category_name"]},
+            {"$set": {"activity_count": cat_activities_update}})
+
         mongo.db.activities.insert_one(activity)
         flash("Activity Added")
         return redirect(url_for("get_activities"))
@@ -158,7 +166,18 @@ def edit_activity(activity_id):
 
 @app.route("/delete_activity/<activity_id>")
 def delete_activity(activity_id):
+    activity = mongo.db.activities.find_one({"_id": ObjectId(activity_id)})
+
+    cat_activities = mongo.db.categories.find_one(
+        {"category_name": activity["category_name"]})["activity_count"]
+    cat_activities_update = int(cat_activities - 1)
+
+    mongo.db.categories.update_one(
+        {"category_name": activity["category_name"]},
+        {"$set": {"activity_count": cat_activities_update}})
+
     mongo.db.activities.remove({"_id": ObjectId(activity_id)})
+
     flash("Activity Deleted")
     return redirect(url_for('profile', username=session['user']))
 
@@ -171,7 +190,7 @@ def view_activity(activity_id):
 
 @app.route("/get_categories")
 def get_categories():
-    categories = list(mongo.db.categories.find().sort("category_name", 1))
+    categories = list(mongo.db.categories.find())
     return render_template("categories.html", categories=categories)
 
 
