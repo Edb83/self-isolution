@@ -219,6 +219,15 @@ def add_category():
         "add_category.html")
 
 
+@app.route("/delete_category/<category_id>")
+def delete_category(category_id):
+    category = mongo.db.categories.find_one({"_id": ObjectId(category_id)})
+    mongo.db.categories.remove(category)
+
+    flash("Category Deleted")
+    return redirect(url_for('get_categories'))
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
