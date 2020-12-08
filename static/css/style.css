@@ -24,3 +24,7 @@ select {
 .card-headline {
     letter-spacing: 0.1px;
 }
+
+.collapsible-header {
+    display: block;
+}

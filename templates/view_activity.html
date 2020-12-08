@@ -5,11 +5,11 @@
 
     <div class="row">
         <div class="col s12">
-            {{ activity.category_name }} <br>
-            {{ activity.age_name }}<br>
-            {{ activity.activity_summary }}<br>
-            {{ activity.activity_details }}<br>
-            {{ activity.created_by }}
+            <p><strong>Category:</strong> {{ activity.category_name }}</p>
+            <p><strong>Summary:</strong> {{ activity.activity_summary }}</p>
+            <p><strong>Details:</strong> {{ activity.activity_details }}</p>
+            <p><strong>User:</strong> {{ activity.created_by }}</p>
+            <p><strong>Added:</strong> {{ activity.date_added }}</p>
         </div>
     </div>
     <div class="row">

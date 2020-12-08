@@ -1,6 +1,7 @@
 $(document).ready(function () {
   $(".sidenav").sidenav({ edge: "right" });
   $("select").formSelect();
+  $('.collapsible').collapsible();
 
   // Adds validation to Materialize select fields
   // Code Institute

@@ -11,7 +11,7 @@
 
     <h3 class="center-align">My activities</h3>
 
-    <div class="row">
+    <!-- <div class="row">
     {% for activity in activities %}
         {% if session.user|lower == activity.created_by|lower %}
             <div class="col s12 m6 l4">
@@ -36,6 +36,35 @@
             </div>
         {% endif %}
     {% endfor %}
+    </div> -->
+
+    <div class="row">
+        <div class="col s12 m8 offset-m2">
+            <ul class="collapsible">
+                {% for activity in activities %}
+                    {% if session.user|lower == activity.created_by|lower %}
+                        <li>
+                            <div class="collapsible-header">
+                                <div class="row">
+                                    <div class="col s6">
+                                        <i class="fas fa-caret-down"></i> <strong>{{ activity.activity_name }}</strong>
+                                    </div>
+                                    <div class="col s3 center-align">
+                                    {{ activity.category_name }}
+                                    </div>
+                                    <div class="col s3 right-align">
+                                    {{ activity.date_added }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="collapsible-body">
+                            <span>{{ activity.activity_details }}</span>
+                            </div>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 
 {% endblock %}
