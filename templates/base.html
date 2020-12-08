@@ -18,7 +18,7 @@
     <header>
         <!-- main navbar -->
         <nav>
-            <div class="nav-wrapper purple darken-1">
+            <div class="nav-wrapper purple darken-1 text-shadow">
                 <a href="{{ url_for('home') }}" class="brand-logo">Self Isolution</a>
                 <a href="#" data-target="mobile-navbar" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
                 <ul class="right hide-on-med-and-down">
@@ -39,7 +39,7 @@
         </nav>
         <!-- mobile navbar -->
         <ul class="sidenav" id="mobile-navbar">
-            <li><h4 class="center-align purple-text text-darken-1">Self Isolution</h4></li>
+            <li><h4 class="purple-text text-darken-1">Self Isolution</h4></li>
                 <li><a href="{{ url_for('get_activities') }}">Activities</a></li>
                 {% if session.user|lower == "admin"|lower %}
                         <li><a href="{{ url_for('get_categories') }}">Categories</a></li>
@@ -68,6 +68,9 @@
             {% endif %}
         {% endwith %}
     </section>
+
+    {% block welcome %}
+    {% endblock %}
 
     <main class="container">
         {% block content %}

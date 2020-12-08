@@ -1,16 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Montserrat&display=swap');
+
 body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+  font-family: 'Montserrat', sans-serif;
 }
 
 main {
   flex: 1 0 auto;
 }
 
-#welcome-img {
+#hero-img {
+    background-image: url(../images/street-1431207_1920.jpg);
+    background-size: contain;
+    background-position: top;
+    background-repeat: no-repeat;
     width: 100%;
-    margin-top: 2rem;
+    height: 50vh;
 }
 
 select {
@@ -18,7 +25,7 @@ select {
 }
 
 .card {
-    min-height: 29em;
+    min-height: 30em;
 }
 
 .card-summary {
@@ -32,4 +39,31 @@ select {
 
 .collapsible-header {
     display: block;
+}
+
+.brand-logo {
+    font-family: 'Bubblegum Sans', cursive;
+    margin-left: 2rem;
+}
+
+nav ul a {
+    font-size: 1.2rem;
+}
+
+h3 {
+    font-family: 'Bubblegum Sans', cursive;
+}
+
+.text-shadow {
+    text-shadow: 1px 1px 2px #000;
+}
+
+/* Media queries */
+
+@media only screen and (max-width: 992px) {
+    nav .brand-logo {
+        left: 0;
+        -webkit-transform: none;
+        transform: none;
+    }
 }

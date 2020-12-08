@@ -14,7 +14,7 @@
                             <img src="{{ category.img_url }}" />
                             {% endif %}
                         {% endfor %}
-                        <span class="card-title">{{ activity.activity_name }}</span>
+                        <span class="card-title text-shadow">{{ activity.activity_name }}</span>
                     </a>
                     {% if session.user|lower == activity.created_by|lower %}
                     <a
