@@ -11,7 +11,7 @@
                     <a href="{{ url_for('view_activity', activity_id=activity._id) }}">
                         {% for category in categories %}
                             {% if category.category_name == activity.category_name %}
-                            <img src="{{ category.img_url }}" />
+                            <img src="{{ category.category_image }}" />
                             {% endif %}
                         {% endfor %}
                         <span class="card-title text-shadow">{{ activity.activity_name }}</span>

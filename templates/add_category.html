@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <h3 class="center-align">Add Category</h3>
+
+    <div class="row card-panel">
+        <form class="col s12" method="POST" action="{{ url_for('add_category') }}">
+
+            <!-- Title -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="fas fa-pencil-alt prefix"></i>
+                    <input id="category_name" name="category_name" minlength="5" maxlength="30"
+                        type="text" class="validate" required>
+                    <label for="category_name">Title</label>
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="fas fa-quote-left prefix"></i>
+                    <textarea id="category_summary" name="category_summary" minlength="10" maxlength="50" class="materialize-textarea validate" required></textarea>
+                    <label for="category_summary">Summary</label>
+                </div>
+            </div>
+
+            <!-- Img url -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="fas fa-image prefix"></i>
+                    <input id="category_image" name="category_image"
+                        type="url" class="validate">
+                    <label for="category_image">Image URL</label>
+                </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="row">
+                <div class="col s12 center-align">
+                    <a href="{{ url_for('get_categories') }}" class="waves-effect waves-light btn red">
+                        Cancel <i class="fas fa-times-circle right"></i>
+                    </a>
+                    <button type="submit" class="waves-effect waves-light btn">
+                        Submit <i class="fas fa-plus-circle right"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}
+
+{% block scripts  %}
+{% endblock %}

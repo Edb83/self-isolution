@@ -5,15 +5,14 @@
 
     <div class="row">
         {% for category in categories %}
-            <div class="col s12 m6 l3">
+            <div class="col s12 m6">
                 <div class="card">
                     <div class="card-image waves-effect waves-block waves-light">
-                        <img class="activator" src="{{ category.img_url }}">
+                        <img class="activator" src="{{ category.category_image }}">
                     </div>
                     <div class="card-content">
                         <span class="card-title activator grey-text text-darken-4">{{ category.category_name }}<i class="fas fa-angle-up right"></i></span>
-                        <a href="#" class="btn-floating halfway-fab left blue"><i class="fas fa-edit"></i></a>
-                        <a href="#" class="btn-floating halfway-fab right red"><i class="fas fa-trash"></i></a>
+                        
                     </div>
                     <div class="card-reveal">
                         <span class="card-title grey-text text-darken-4">Stats<i class="fas fa-times-circle right"></i></span>
@@ -26,3 +25,6 @@
         {% endfor %}
     </div>
 {% endblock %}
+<!-- 
+<a href="#" class="btn-floating halfway-fab left blue"><i class="fas fa-edit"></i></a>
+<a href="#" class="btn-floating halfway-fab right red"><i class="fas fa-trash"></i></a> -->

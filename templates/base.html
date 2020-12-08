@@ -25,9 +25,10 @@
                     <li><a href="{{ url_for('get_activities') }}">Activities</a></li>
                     {% if session.user|lower == "admin"|lower %}
                         <li><a href="{{ url_for('get_categories') }}">Categories</a></li>
+                        <li><a href="{{ url_for('add_category') }}">Add Category</a></li>
                     {% endif %}
                     {% if session.user %}
-                        <li><a href="{{ url_for('add_activity') }}">Add</a></li>
+                        <li><a href="{{ url_for('add_activity') }}">Add Activity</a></li>
                         <li><a href="{{ url_for('profile', username=session['user']) }}">Profile</a></li>
                         <li><a href="{{ url_for('logout') }}">Log Out</a></li>
                     {% else %}
@@ -39,7 +40,7 @@
         </nav>
         <!-- mobile navbar -->
         <ul class="sidenav" id="mobile-navbar">
-            <li><h4 class="purple-text text-darken-1">Self Isolution</h4></li>
+            <li><h4 id="nav-sidebar-header" class="purple-text text-darken-1">Self Isolution</h4></li>
                 <li><a href="{{ url_for('get_activities') }}">Activities</a></li>
                 {% if session.user|lower == "admin"|lower %}
                         <li><a href="{{ url_for('get_categories') }}">Categories</a></li>

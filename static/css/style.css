@@ -54,6 +54,10 @@ h3 {
     font-family: 'Bubblegum Sans', cursive;
 }
 
+#nav-sidebar-header {
+    margin-left: 2rem;
+}
+
 .text-shadow {
     text-shadow: 1px 1px 2px #000;
 }

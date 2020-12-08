@@ -121,6 +121,7 @@ def add_activity():
             "age_name": request.form.get("age_name"),
             "activity_summary": request.form.get("activity_summary"),
             "activity_details": request.form.get("activity_details"),
+            "activity_image": request.form.get("activity_image"),
             "created_by": session["user"],
             "date_added": date.today().strftime("%d %b %Y")
             # could use request.form.getlist for the equipment
@@ -156,6 +157,7 @@ def edit_activity(activity_id):
             "age_name": request.form.get("age_name"),
             "activity_summary": request.form.get("activity_summary"),
             "activity_details": request.form.get("activity_details"),
+            "activity_image": request.form.get("activity_image"),
             "created_by": session["user"]
             # could use request.form.getlist for the equipment
         }}
@@ -197,6 +199,24 @@ def view_activity(activity_id):
 def get_categories():
     categories = list(mongo.db.categories.find())
     return render_template("categories.html", categories=categories)
+
+
+@app.route("/add_category", methods=["GET", "POST"])
+def add_category():
+    if request.method == "POST":
+        category = {
+            "category_name": request.form.get("category_name"),
+            "category_summary": request.form.get("category_summary"),
+            "category_image": request.form.get("category_image"),
+            "activity_count": 0
+        }
+
+        mongo.db.categories.insert_one(category)
+        flash("Category Added")
+        return redirect(url_for("get_categories"))
+
+    return render_template(
+        "add_category.html")
 
 
 if __name__ == "__main__":
