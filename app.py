@@ -159,7 +159,6 @@ def edit_activity(activity_id):
             "activity_details": request.form.get("activity_details"),
             "activity_image": request.form.get("activity_image"),
             "created_by": session["user"]
-            # could use request.form.getlist for the equipment
         }}
         mongo.db.activities.update_many(activity, submit)
         flash("Activity Updated")
@@ -217,6 +216,24 @@ def add_category():
 
     return render_template(
         "add_category.html")
+
+
+@app.route("/edit_category/<category_id>", methods=["GET", "POST"])
+def edit_category(category_id):
+    categories = mongo.db.categories.find()
+    category = mongo.db.categories.find_one({"_id": ObjectId(category_id)})
+
+    if request.method == "POST":
+        submit = {"$set": {
+            "category_summary": request.form.get("category_summary"),
+            "category_image": request.form.get("category_image"),
+        }}
+        mongo.db.categories.update_many(category, submit)
+        flash("Category Updated")
+        return render_template("categories.html", categories=categories)
+
+    return render_template(
+        "edit_category.html", category=category)
 
 
 @app.route("/delete_category/<category_id>")
