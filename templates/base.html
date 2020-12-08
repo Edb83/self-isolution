@@ -18,8 +18,8 @@
     <header>
         <!-- main navbar -->
         <nav>
-            <div class="nav-wrapper purple darken-1 center-align">
-                <a href="{{ url_for('get_activities') }}" class="brand-logo">Self Isolution</a>
+            <div class="nav-wrapper purple darken-1">
+                <a href="{{ url_for('home') }}" class="brand-logo">Self Isolution</a>
                 <a href="#" data-target="mobile-navbar" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
                 <ul class="right hide-on-med-and-down">
                     <li><a href="{{ url_for('get_activities') }}">Activities</a></li>
@@ -68,6 +68,9 @@
             {% endif %}
         {% endwith %}
     </section>
+
+    {% block hero %}
+    {% endblock %}
 
     <main class="container">
         {% block content %}
