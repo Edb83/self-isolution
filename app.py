@@ -196,8 +196,9 @@ def view_activity(activity_id):
 
 @app.route("/get_categories")
 def get_categories():
+    activities = list(mongo.db.activities.find())
     categories = list(mongo.db.categories.find())
-    return render_template("categories.html", categories=categories)
+    return render_template("categories.html", categories=categories, activities=activities)
 
 
 @app.route("/add_category", methods=["GET", "POST"])
