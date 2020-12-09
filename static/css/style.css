@@ -25,9 +25,9 @@ select {
     -webkit-appearance: none; 
 }
 
-.card {
+/* .card {
     min-height: 30em;
-}
+} */
 
 .card-summary {
     font-size: 1.2em;

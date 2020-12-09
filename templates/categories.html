@@ -18,7 +18,7 @@
                     <div class="card-reveal">
                         <span class="card-title grey-text text-darken-4">Stats<i class="fas fa-times-circle right"></i></span>
                         <ul>
-                            <li><strong>Activities:</strong> {{ category.activity_count }} </li>
+                            <li><strong>Activities:</strong> {{ category.activity_list|count }} </li>
                         </ul>
                         {% if session.user|lower == "admin"|lower %}
                             <a href="{{ url_for('edit_category', category_id=category._id) }}" class="waves-effect waves-light btn">Edit</a>
@@ -33,7 +33,7 @@
                 <div class="modal-content">
                     <h4>Confirm deletion</h4>
                     <p>Are you sure you want to delete <strong>{{ category.category_name }}</strong> ?</p>
-                    {% if category.activity_count > 0 %}
+                    {% if category.activity_list|count > 0 %}
                     <p>The following activities will be left without an associated category:</p>
                         {% for activity in activities %}
                             {% if activity.category_name == category.category_name %}

@@ -22,7 +22,7 @@
                         {% endif %}
                         <span class="card-title text-shadow">{{ activity.activity_name }}</span>
                     </a>
-                    {% if session.user|lower == activity.created_by|lower %}
+                    {% if session.user|lower == activity.created_by|lower or session.user|lower == "admin"|lower %}
                     <a
                         href="{{ url_for('edit_activity', activity_id=activity._id) }}"
                         class="btn-floating halfway-fab waves-effect waves-light cyan accent-3"

@@ -126,13 +126,10 @@ def add_activity():
             "date_added": date.today().strftime("%d %b %Y")
             # could use request.form.getlist for the equipment
         }
-        cat_activities = mongo.db.categories.find_one(
-            {"category_name": activity["category_name"]})["activity_count"]
-        cat_activities_update = int(cat_activities + 1)
 
         mongo.db.categories.update_one(
             {"category_name": activity["category_name"]},
-            {"$set": {"activity_count": cat_activities_update}})
+            {"$push": {"activity_list": activity["activity_name"]}})
 
         mongo.db.activities.insert_one(activity)
         flash("Activity Added")
@@ -149,6 +146,8 @@ def edit_activity(activity_id):
     categories = mongo.db.categories.find().sort("category_name", 1)
     ages = ["Under 2", "2-4", "4-6", "6+"]
 
+    current_category = mongo.db.categories.find_one({"category_name": activity["category_name"]})
+
     if request.method == "POST":
         submit = {"$set": {
             "activity_name": request.form.get("activity_name"),
@@ -160,6 +159,17 @@ def edit_activity(activity_id):
             "created_by": session["user"]
         }}
         mongo.db.activities.update_many(activity, submit)
+        new_category = mongo.db.categories.find_one(
+                {"category_name": request.form.get("category_name")})
+
+        if request.form.get("category_name") != current_category["category_name"]:
+            mongo.db.categories.update_one(
+                new_category,
+                {"$push": {"activity_list": activity["activity_name"]}})
+            mongo.db.categories.update_one(
+                current_category,
+                {"$pull": {"activity_list": activity["activity_name"]}})
+
         flash("Activity Updated")
         return render_template("view_activity.html", activity=activity)
 
@@ -173,16 +183,12 @@ def edit_activity(activity_id):
 @app.route("/delete_activity/<activity_id>")
 def delete_activity(activity_id):
     activity = mongo.db.activities.find_one({"_id": ObjectId(activity_id)})
-
-    cat_activities = mongo.db.categories.find_one(
-        {"category_name": activity["category_name"]})["activity_count"]
-    cat_activities_update = int(cat_activities - 1)
-
+    current_category = mongo.db.categories.find_one({"category_name": activity["category_name"]})
     mongo.db.categories.update_one(
-        {"category_name": activity["category_name"]},
-        {"$set": {"activity_count": cat_activities_update}})
+        current_category,
+        {"$pull": {"activity_list": activity["activity_name"]}})
 
-    mongo.db.activities.remove({"_id": ObjectId(activity_id)})
+    mongo.db.activities.deleteOne({"_id": ObjectId(activity_id)})
 
     flash("Activity Deleted")
     return redirect(url_for('profile', username=session['user']))
@@ -208,7 +214,7 @@ def add_category():
             "category_name": request.form.get("category_name"),
             "category_summary": request.form.get("category_summary"),
             "category_image": request.form.get("category_image"),
-            "activity_count": 0
+            "activity_list": []
         }
 
         mongo.db.categories.insert_one(category)
