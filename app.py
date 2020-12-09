@@ -118,7 +118,7 @@ def add_activity():
         activity = {
             "activity_name": request.form.get("activity_name"),
             "category_name": request.form.get("category_name"),
-            "age_name": request.form.get("age_name"),
+            "target_age": request.form.get("target_age"),
             "activity_summary": request.form.get("activity_summary"),
             "activity_details": request.form.get("activity_details"),
             "activity_image": request.form.get("activity_image"),
@@ -139,22 +139,21 @@ def add_activity():
         return redirect(url_for("get_activities"))
 
     categories = mongo.db.categories.find().sort("category_name", 1)
-    ages = mongo.db.ages.find()
     return render_template(
-        "add_activity.html", categories=categories, ages=ages)
+        "add_activity.html", categories=categories)
 
 
 @app.route("/edit_activity/<activity_id>", methods=["GET", "POST"])
 def edit_activity(activity_id):
     activity = mongo.db.activities.find_one({"_id": ObjectId(activity_id)})
     categories = mongo.db.categories.find().sort("category_name", 1)
-    ages = mongo.db.ages.find()
+    ages = ["Under 2", "2-4", "4-6", "6+"]
 
     if request.method == "POST":
         submit = {"$set": {
             "activity_name": request.form.get("activity_name"),
             "category_name": request.form.get("category_name"),
-            "age_name": request.form.get("age_name"),
+            "target_age": request.form.get("target_age"),
             "activity_summary": request.form.get("activity_summary"),
             "activity_details": request.form.get("activity_details"),
             "activity_image": request.form.get("activity_image"),
@@ -167,7 +166,8 @@ def edit_activity(activity_id):
     return render_template(
         "edit_activity.html",
         activity=activity,
-        categories=categories, ages=ages)
+        categories=categories,
+        ages=ages)
 
 
 @app.route("/delete_activity/<activity_id>")

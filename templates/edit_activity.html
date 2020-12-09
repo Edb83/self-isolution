@@ -38,17 +38,17 @@
             <div class="row">
                 <div class="input-field col s12">
                     <i class="fas fa-child prefix"></i>
-                    <select id="age_name" name="age_name" class="validate" required>
+                    <select id="target_age" name="target_age" class="validate" required>
                         <option value="" disabled>Choose age</option>
-                        {% for age in ages %}
-                            {% if age.age_name == activity.age_name %}
-                               <option value="{{age.age_name}}" selected>{{age.age_name}}</option>
-                            {% else %}
-                                <option value="{{age.age_name}}">{{age.age_name}}</option>
-                            {% endif %}
-                        {% endfor %}
+                            {% for age in ages %}
+                                {% if activity.target_age == age %}
+                                    <option value="{{ activity.target_age }}" selected>{{ activity.target_age }}</option>
+                                {% else %}
+                                    <option value="{{ age }}">{{ age }}</option>
+                                {% endif %}
+                            {% endfor %}
                     </select>
-                    <label for="age_name">Target Age</label>
+                    <label for="target_age">Target Age</label>
                 </div>
             </div>
 
@@ -81,6 +81,7 @@
                     <input id="activity_image" name="activity_image"
                         value="{{activity.activity_image}}" type="url" class="validate">
                     <label for="activity_image">Image URL</label>
+                    <span class="helper-text" data-error="Please leave blank if you do not have a valid image URL" data-success="Looks good!">Please leave blank if you do not have a valid image URL</span>
                 </div>
             </div>
 
