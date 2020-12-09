@@ -1,7 +1,8 @@
 {% extends "base.html" %}
+{% block title %}Self Isolution - Categories{% endblock %}
 {% block content %}
 
-    <h3 class="center-align">Manage Categories</h3>
+    <h3 class="center-align">Categories</h3>
 
     <div class="row">
         {% for category in categories %}
@@ -19,8 +20,10 @@
                         <ul>
                             <li><strong>Activities:</strong> {{ category.activity_count }} </li>
                         </ul>
-                        <a href="{{ url_for('edit_category', category_id=category._id) }}" class="waves-effect waves-light btn">Edit</a>
-                        <a href="{{ url_for('delete_category', category_id=category._id) }}" class="waves-effect waves-light btn right">Delete</a>
+                        {% if session.user|lower == "admin"|lower %}
+                            <a href="{{ url_for('edit_category', category_id=category._id) }}" class="waves-effect waves-light btn">Edit</a>
+                            <a href="{{ url_for('delete_category', category_id=category._id) }}" class="waves-effect waves-light btn right">Delete</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
