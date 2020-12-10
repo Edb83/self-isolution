@@ -3,6 +3,12 @@ $(document).ready(function () {
   $("select").formSelect();
   $('.collapsible').collapsible();
   $('.modal').modal();
+  $('.chips').chips({
+    placeholder: "+",
+    onChipAdd: function(chip) {
+        $(chip).find('.material-icons').removeClass('material-icons').addClass('fas fa-times-circle').text('');
+    }
+  });
 
   // Adds validation to Materialize select fields
   // Code Institute
