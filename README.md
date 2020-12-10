@@ -8,21 +8,22 @@ Solution: adding `-webkit-appeance: none` to select elements (https://stackoverf
 # Todo:
 
 ## DONE Change Ages into hard-coded options rather than mongo collection
+## DONE Add delete confirmation
 
-Flesh out view_activity
-Flesh out home
-Flesh out profile
-Flesh out footer
+- Flesh out view_activity
+- Flesh out home
+- Flesh out profile
+- Flesh out footer
 
-Add delete user
-Merge add category and delete user into 'manage'/admin area
-Add likes/favourites (as list in mongodb?)
+- Add delete user
+- Merge add category and delete user into 'manage'/admin area
+- Add likes/favourites (as list in mongodb?)
 
-Add category stats
-Add search functionality
-Add delete confirmation
-Add toasts
-Fix image handling within cards
+- Add category stats
+- Add search functionality
 
-Add 'unassigned category' for activities on deletion of category
-Update requirements.txt
+- Add toasts
+- Fix image handling within cards
+
+- Add 'unassigned category' for activities on deletion of category
+- Update requirements.txt
