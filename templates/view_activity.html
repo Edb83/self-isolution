@@ -16,7 +16,9 @@
             </div>
             <div class="col s12 l6">
                 <h5>{{ activity.activity_summary }}</h5>
-                <p>{{ activity.activity_details }}</p>
+                {% for para in activity.activity_details.splitlines() %}
+                    <p>{{ para }}</p>
+                {% endfor %}
                 
                 <div id="activity-chip-container" class="center-align">
                 {% for item in activity.activity_equipment.splitlines() %}
