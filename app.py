@@ -114,6 +114,9 @@ def logout():
 
 @app.route("/add_activity", methods=["GET", "POST"])
 def add_activity():
+    ages = ["Under 2", "2-4", "4-6", "6+"]
+    categories = mongo.db.categories.find().sort("category_name", 1)
+
     if request.method == "POST":
         activity = {
             "activity_name": request.form.get("activity_name"),
@@ -121,12 +124,12 @@ def add_activity():
             "target_age": request.form.get("target_age"),
             "activity_summary": request.form.get("activity_summary"),
             "activity_details": request.form.get("activity_details"),
+            "activity_equipment": request.form.get("activity_equipment"),
             "activity_image": request.form.get("activity_image"),
             "created_by": session["user"],
             "date_added": date.today().strftime("%d %b %Y")
             # could use request.form.getlist for the equipment
         }
-
         mongo.db.categories.update_one(
             {"category_name": activity["category_name"]},
             {"$push": {"activity_list": activity["activity_name"]}})
@@ -135,9 +138,8 @@ def add_activity():
         flash("Activity Added")
         return redirect(url_for("get_activities"))
 
-    categories = mongo.db.categories.find().sort("category_name", 1)
     return render_template(
-        "add_activity.html", categories=categories)
+        "add_activity.html", categories=categories, ages=ages)
 
 
 @app.route("/edit_activity/<activity_id>", methods=["GET", "POST"])
@@ -155,6 +157,7 @@ def edit_activity(activity_id):
             "target_age": request.form.get("target_age"),
             "activity_summary": request.form.get("activity_summary"),
             "activity_details": request.form.get("activity_details"),
+            "activity_equipment": request.form.get("activity_equipment"),
             "activity_image": request.form.get("activity_image"),
             "created_by": session["user"]
         }}
@@ -188,7 +191,7 @@ def delete_activity(activity_id):
         current_category,
         {"$pull": {"activity_list": activity["activity_name"]}})
 
-    mongo.db.activities.deleteOne({"_id": ObjectId(activity_id)})
+    mongo.db.activities.remove({"_id": ObjectId(activity_id)})
 
     flash("Activity Deleted")
     return redirect(url_for('profile', username=session['user']))

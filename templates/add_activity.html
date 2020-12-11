@@ -37,10 +37,9 @@
                     <i class="fas fa-child prefix"></i>
                     <select id="target_age" name="target_age" class="validate" required>
                         <option value="" disabled selected>Choose age</option>
-                            <option value="Under 2">Under 2</option>
-                            <option value="2-4">2-4</option>
-                            <option value="4-6">4-6</option>
-                            <option value="6+">6+</option>
+                        {% for age in ages %}
+                            <option value="{{ age }}">{{ age }}</option>
+                        {% endfor %}
                     </select>
                     <label for="target_age">Target Age</label>
                 </div>
@@ -65,14 +64,14 @@
             </div>
 
             <!-- What you'll need -->
-
             <div class="row">
                 <div class="input-field col s12">
                     <i class="fas fa-box-open prefix"></i>
-                    <label>What You'll Need</label>
+                    <textarea id="activity_equipment" name="activity_equipment" minlength="10" maxlength="50" class="materialize-textarea validate"></textarea>
+                    <label for="activity_equipment">What you'll need</label>
+                    <span class="helper-text">Please enter each item on a new line or leave blank if nothing needed!</span>
                 </div>
             </div>
-            <div class="chips chips-placeholder"></div>
 
             <!-- Image -->
             <div class="row">
