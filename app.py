@@ -174,7 +174,7 @@ def edit_activity(activity_id):
                 {"$pull": {"activity_list": activity["activity_name"]}})
 
         flash("Activity Updated")
-        return render_template("view_activity.html", activity=activity)
+        return redirect(url_for('view_activity', activity_id=ObjectId(activity_id)))
 
     return render_template(
         "edit_activity.html",
