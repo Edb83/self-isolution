@@ -7,7 +7,7 @@
 
     <div class="row">
         {% for activity in activities %}
-            <div class="col s12 m6 xl4">
+            <div id="activities-container" class="col s12 m6 xl4">
                 <div class="card hoverable grey lighten-4">
                     <div class="card-image">
                     <a href="{{ url_for('view_activity', activity_id=activity._id) }}">
