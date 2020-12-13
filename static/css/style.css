@@ -29,27 +29,31 @@ select {
     border-radius: 5%;
 }
 
-.card .card-content {
-    min-height: 20vh;
-}
-
 .card .card-image img {
     border-radius: 5% 5% 0 0;
     height: 200px;
     object-fit: cover;
+    filter: brightness(0.8);
 }
 
 .card-summary {
     font-size: 1.2em;
     color: #13557e;
+    height: 4rem;;
+}
+
+.truncate {
+    white-space: break-spaces;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .card-headline {
     letter-spacing: 0.1px;
 }
 
-#activities-container .card {
-    background-color: blue;
+.activities-card-info-container {
+    line-height: 2rem;
 }
 
 #activity-header {

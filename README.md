@@ -8,7 +8,7 @@ Solution: adding `-webkit-appeance: none` to select elements (https://stackoverf
 # Todo:
 
 ## DONE Change Ages into hard-coded options rather than mongo collection
-## DONE Add delete confirmation
+## DONE Add delete confirmation for activity and category
 
 - Flesh out view_activity
 - Flesh out home

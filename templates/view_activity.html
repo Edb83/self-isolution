@@ -7,21 +7,21 @@
         <div class="col s12 center-align" id="activity-header">
             <div class="col s6">
                 <div class="chip activity-age-chip">
-                    {{ activity.target_age }}
+                    <i class="fas fa-child"></i><span class="activity-chip-text"> {{ activity.target_age }}</span>
                 </div>
             </div>
             <div class="col s6">
                 <div class="chip activity-category-chip">
-                    {{ activity.category_name }}
+                    <i class="fas fa-folder-open"></i><span class="activity-chip-text"> {{ activity.category_name }}</span>
                 </div>
             </div>
         </div>
         <h3 class="center-align">{{ activity.activity_name }}</h3>
         <div id="activity-body" class="col s12">
-            <div id="activity-image" class="col s12 m6">
+            <div id="activity-image" class="col s12 xl6">
                 <img class="responsive-img center-align" src="{{ activity.activity_image }}" alt="">
             </div>
-            <div class="col s12 m6">
+            <div class="col s12 xl6">
                 <h5>{{ activity.activity_summary }}</h5>
                 <div class="row activity-creation-container">
                     <div class="col s6">{{ activity.created_by }}</div>

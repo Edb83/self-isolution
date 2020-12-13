@@ -13,8 +13,8 @@
     <h3 class="center-align">My activities</h3>
 
     <div class="row">
-        <div class="col s12 m8 offset-m2">
-            <ul class="collapsible">
+        <div class="col s12">
+            <ul class="collapsible popout">
                 {% for activity in activities %}
                     {% if session.user|lower == activity.created_by|lower %}
                         <li>
@@ -24,7 +24,9 @@
                                         <i class="fas fa-caret-down"></i> <strong>{{ activity.activity_name }}</strong>
                                     </div>
                                     <div class="col s3 center-align">
-                                    {{ activity.category_name }}
+                                        <div class="chip activity-category-chip">
+                                            {{ activity.category_name }}
+                                        </div>
                                     </div>
                                     <div class="col s3 right-align">
                                     {{ activity.date_added }}
@@ -32,7 +34,7 @@
                                 </div>
                             </div>
                             <div class="collapsible-body">
-                                <p>{{ activity.activity_details }}</p>
+                                <p>{{ activity.activity_summary }}</p>
                                 <a href="{{ url_for('edit_activity', activity_id=activity._id) }}" class="waves-effect waves-light btn">Edit</a>
                                 <!-- <a href="{{ url_for('delete_activity', activity_id=activity._id) }}" class="waves-effect waves-light btn right">Delete</a> -->
                                 <button data-target="{{ activity._id }}" class="btn modal-trigger">Delete</button>
