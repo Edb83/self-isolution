@@ -12,33 +12,6 @@
 
     <h3 class="center-align">My activities</h3>
 
-    <!-- <div class="row">
-    {% for activity in activities %}
-        {% if session.user|lower == activity.created_by|lower %}
-            <div class="col s12 m6 l4">
-                <div class="card hoverable">
-                    <div class="card-image">
-                        {% for category in categories %}
-                            {% if category.category_name == activity.category_name %}
-                            <img src="{{ category.img_url }}" />
-                            {% endif %}
-                        {% endfor %}
-                        <span class="card-title">{{ activity.activity_name }}</span>
-                    </div>
-                    <div class="card-content">
-                        <p>{{ activity.activity_summary }}</p>
-                        <p><strong>Target age:</strong> {{ activity.age_name }} | <strong>Category:</strong> {{ activity.category_name }} </p>
-                    </div>
-                    <div class="card-action">
-                        <a href="{{ url_for('edit_activity', activity_id=activity._id) }}" class="waves-effect waves-light btn">Edit</a>
-                        <a href="{{ url_for('delete_activity', activity_id=activity._id) }}" class="waves-effect waves-light btn right">Delete</a>
-                    </div>
-                </div>
-            </div>
-        {% endif %}
-    {% endfor %}
-    </div> -->
-
     <div class="row">
         <div class="col s12 m8 offset-m2">
             <ul class="collapsible">
@@ -61,10 +34,22 @@
                             <div class="collapsible-body">
                                 <p>{{ activity.activity_details }}</p>
                                 <a href="{{ url_for('edit_activity', activity_id=activity._id) }}" class="waves-effect waves-light btn">Edit</a>
-                                <a href="{{ url_for('delete_activity', activity_id=activity._id) }}" class="waves-effect waves-light btn right">Delete</a>
+                                <!-- <a href="{{ url_for('delete_activity', activity_id=activity._id) }}" class="waves-effect waves-light btn right">Delete</a> -->
+                                <button data-target="{{ activity._id }}" class="btn modal-trigger">Delete</button>
                             </div>
                         </li>
                     {% endif %}
+
+                    <div id="{{ activity._id }}" class="modal">
+                        <div class="modal-content">
+                            <h4>Confirm deletion</h4>
+                            <p>Are you sure you want to delete <strong>{{ activity.activity_name }}</strong> ?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#!" class="modal-close waves-effect waves-red btn-flat">Cancel</a>
+                            <a href="{{ url_for('delete_activity', activity_id=activity._id) }}" class="modal-close waves-effect waves-green btn-flat">Delete</a>
+                        </div>
+                    </div>
                 {% endfor %}
             </ul>
         </div>
