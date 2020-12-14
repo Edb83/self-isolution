@@ -71,7 +71,7 @@ def upload_file():
     if file and allowed_file(file.filename):
         file.filename = secure_filename(file.filename)
         output = upload_file_to_s3(file)
-    return str(output)
+    return output
 
 
 def upload_file_to_s3(file):
