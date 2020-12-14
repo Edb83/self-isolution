@@ -7,16 +7,18 @@
 
     <div class="row card-panel grey lighten-4">
         <form action="{{ url_for('search') }}" method="post" class="col s12">
-            <div class="row valign-wrapper center-align">
-                <div class="input-field col s12 m8">
+            <div class="row center-align">
+                <div class="input-field col s12">
                     <i class="fas fa-search prefix light-blue-text text-darken-4"></i>
                     <input type="text" name="query" id="query" minlength="3" class="validate" required>
                     <label for="query">Search Activities</label>
                 </div>
-                <div class="col s12 m4">
-                    <a href="{{ url_for('get_activities') }}" class="red btn text-shadow">Reset</a>
+                <div class="col s12">
+                    <a href="{{ url_for('get_activities') }}" class="red btn text-shadow">
+                        <i class="fas fa-window-close center-align"></i>
+                    </a>
                     <button type="submit" class="light-blue darken-1 btn text-shadow">
-                        <i class="fas fa-search left"></i> Search
+                        <i class="fas fa-search center-align"></i>
                     </button>
                 </div>
             </div>
@@ -44,7 +46,7 @@
                         {% if session.user|lower == activity.created_by|lower or session.user|lower == "admin"|lower %}
                         <a
                             href="{{ url_for('edit_activity', activity_id=activity._id) }}"
-                            class="btn-floating halfway-fab waves-effect waves-light cyan accent-3"
+                            class="btn-floating halfway-fab waves-effect waves-light light-blue darken-1"
                             ><i class="fas fa-user-edit"></i
                         ></a>
                         {% endif %}
