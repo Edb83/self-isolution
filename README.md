@@ -5,15 +5,24 @@ Solution: Stopping propagation on touchend event (https://stackoverflow.com/a/52
 Solution: adding `-webkit-appeance: none` to select elements (https://stackoverflow.com/questions/7638677/how-can-i-remove-the-gloss-on-a-select-element-in-safari-on-mac)
 
 
+## Bug: images uploaded to AWS not updating on edit
+Solution: missing enctype="multipart/form-data"
+
+# Bug: images not uploading on deployed site
+Solution: add AWS secret keys to cvars on heroku
+
 # Todo:
 
 Features: 
 ## DONE Change Ages into hard-coded options rather than mongo collection
 ## DONE Add delete confirmation for activity and category
+## DONE Add image upload
+## Fix image upload edit
+- Add file_update for categories
 - Add search functionality
   - inc. category, age, equipment chips
-## DONE Add image upload
-- Fix image upload edit
+- Fix views for admin and session user
+- Fix activity_lists not updating correctly - names need to be unique or use ObjectID
 - Add toasts
 - Add delete user ??
 - Add likes/favourites (as list in mongodb?) ??
@@ -37,4 +46,4 @@ Styling:
 - Check duplicate equipment chips
 
 Project:
-- Update requirements.txt
+## DONE Update requirements.txt
