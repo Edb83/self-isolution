@@ -5,7 +5,7 @@
     <h3 class="center-align">Add Activity</h3>
 
     <div class="row card-panel">
-        <form class="col s12" method="POST" action="{{ url_for('add_activity') }}">
+        <form class="col s12" method="POST" action="{{ url_for('add_activity') }}" enctype="multipart/form-data">
 
             <!-- Title -->
             <div class="row">
@@ -67,7 +67,7 @@
             <div class="row">
                 <div class="input-field col s12">
                     <i class="fas fa-box-open prefix"></i>
-                    <textarea id="activity_equipment" name="activity_equipment" minlength="10" maxlength="50" class="materialize-textarea validate"></textarea>
+                    <textarea id="activity_equipment" name="activity_equipment" minlength="3" maxlength="50" class="materialize-textarea validate"></textarea>
                     <label for="activity_equipment">What you'll need</label>
                     <span class="helper-text">Please enter each item on a new line or leave blank if nothing needed!</span>
                 </div>
@@ -75,13 +75,15 @@
 
             <!-- Image -->
             <div class="row">
-                <div class="input-field col s12">
+               <div class="file-field input-field col s12">
                     <i class="fas fa-image prefix"></i>
-                    <input id="activity_image" name="activity_image"
-                        type="url" class="validate">
-                    <label for="activity_image">Image URL</label>
-                    <span class="helper-text" data-error="Please leave blank if you do not have a valid image URL" data-success="Looks good!">Please leave blank if you do not have a valid image URL</span>
-                </div>
+                    <input type="file" id="activity_image" name="activity_image" />
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text"
+                        placeholder="Upload image" />
+                        <label for="activity_image">Image for your activity</label>
+                    </div>
+               </div>
             </div>
 
             <!-- Submit -->

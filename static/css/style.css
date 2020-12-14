@@ -25,6 +25,10 @@ select {
     -webkit-appearance: none; 
 }
 
+.file-field .file-path-wrapper {
+    padding-left: 3rem;
+}
+
 .card {
     border-radius: 5%;
 }

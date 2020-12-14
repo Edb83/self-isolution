@@ -1,10 +1,12 @@
 import os
+import boto3
 from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for)
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 from datetime import date
 
 if os.path.exists("env.py"):
@@ -18,6 +20,76 @@ app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
+
+# Amazon S3 Bucket
+S3_BUCKET = os.environ.get("S3_BUCKET")
+S3_KEY = os.environ.get("S3_KEY")
+S3_SECRET = os.environ.get("S3_SECRET_ACCESS_KEY")
+S3_LOCATION = os.environ.get("S3_LOCATION")
+
+UPLOAD_FOLDER = "/static/uploads"
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+
+s3 = boto3.client(
+   "s3",
+   aws_access_key_id=S3_KEY,
+   aws_secret_access_key=S3_SECRET
+)
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+def upload_file_to_s3(file):
+
+    """
+    Docs: http://boto3.readthedocs.io/en/latest/guide/s3.html
+    """
+
+    try:
+        s3.upload_fileobj(file, S3_BUCKET, file.filename, ExtraArgs={
+            "ACL": "public-read", "ContentType": file.content_type}
+        )
+
+    except Exception as e:
+        print("Something Happened: ", e)
+        return e
+
+    return "{}{}".format(S3_LOCATION, file.filename)
+
+
+def upload_file():
+    """
+    We check the request.files object for a activity_image key.
+    (activity_image is the name of the file input in add_activity and edit_activity)
+    If it's not there, we return blank output
+    """
+    output = ""
+    if "activity_image" not in request.files:
+        return output
+
+    # If the key is in the object, we save it in a variable called file
+    file = request.files["activity_image"]
+
+    """
+    We check the filename attribute on the object
+    If empty, it means the user sumbmitted an empty form, so we return a blank output
+    """
+
+    if file.filename == "":
+        return output
+
+    """Check that there is a file and that it has an allowed filetype
+    https://flask.palletsprojects.com/en/master/patterns/fileuploads/
+    """
+
+    if file and allowed_file(file.filename):
+        file.filename = secure_filename(file.filename)
+        output = upload_file_to_s3(file)
+    return output
 
 
 @app.route("/")
@@ -116,6 +188,7 @@ def logout():
 def add_activity():
     ages = ["Under 2", "2-4", "4-6", "6+"]
     categories = mongo.db.categories.find().sort("category_name", 1)
+    image_path = upload_file()
 
     if request.method == "POST":
         activity = {
@@ -125,10 +198,9 @@ def add_activity():
             "activity_summary": request.form.get("activity_summary"),
             "activity_details": request.form.get("activity_details"),
             "activity_equipment": request.form.get("activity_equipment"),
-            "activity_image": request.form.get("activity_image"),
+            "activity_image": image_path,
             "created_by": session["user"],
             "date_added": date.today().strftime("%d %b %Y")
-            # could use request.form.getlist for the equipment
         }
         mongo.db.categories.update_one(
             {"category_name": activity["category_name"]},
@@ -147,6 +219,7 @@ def edit_activity(activity_id):
     activity = mongo.db.activities.find_one({"_id": ObjectId(activity_id)})
     categories = mongo.db.categories.find().sort("category_name", 1)
     ages = ["Under 2", "2-4", "4-6", "6+"]
+    edit_image_path = upload_file()
 
     current_category = mongo.db.categories.find_one({"category_name": activity["category_name"]})
 
@@ -158,7 +231,7 @@ def edit_activity(activity_id):
             "activity_summary": request.form.get("activity_summary"),
             "activity_details": request.form.get("activity_details"),
             "activity_equipment": request.form.get("activity_equipment"),
-            "activity_image": request.form.get("activity_image"),
+            "activity_image": edit_image_path,
             "created_by": session["user"]
         }}
         mongo.db.activities.update_many(activity, submit)

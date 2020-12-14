@@ -7,23 +7,34 @@ Solution: adding `-webkit-appeance: none` to select elements (https://stackoverf
 
 # Todo:
 
+Features: 
 ## DONE Change Ages into hard-coded options rather than mongo collection
 ## DONE Add delete confirmation for activity and category
+- Add search functionality
+  - inc. category, age, equipment chips
+## DONE Add image upload
+- Fix image upload edit
+- Add toasts
+- Add delete user ??
+- Add likes/favourites (as list in mongodb?) ??
+- Add category stats ??
+- Add 'unassigned category' for activities on deletion of category
 
-- Flesh out view_activity
+
+Content: 
+## DONE Flesh out view_activity
 - Flesh out home
+- Revise category card content
 - Flesh out profile
 - Flesh out footer
 
-- Add delete user
+Structure:
 - Merge add category and delete user into 'manage'/admin area
-- Add likes/favourites (as list in mongodb?)
 
-- Add category stats
-- Add search functionality
-
-- Add toasts
+Styling:
 - Fix image handling within cards
+- Add password/field requirements
+- Check duplicate equipment chips
 
-- Add 'unassigned category' for activities on deletion of category
+Project:
 - Update requirements.txt

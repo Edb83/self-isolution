@@ -79,7 +79,7 @@
             <div class="row">
                 <div class="input-field col s12">
                     <i class="fas fa-box-open prefix"></i>
-                    <textarea id="activity_equipment" name="activity_equipment" minlength="10" maxlength="50" class="materialize-textarea validate">
+                    <textarea id="activity_equipment" name="activity_equipment" minlength="3" maxlength="50" class="materialize-textarea validate">
                         {{- activity.activity_equipment -}}
                     </textarea>
                     <label for="activity_equipment">What you'll need</label>
@@ -89,13 +89,14 @@
 
             <!-- Image -->
             <div class="row">
-                <div class="input-field col s12">
+               <div class="file-field input-field col s12">
                     <i class="fas fa-image prefix"></i>
-                    <input id="activity_image" name="activity_image"
-                        value="{{activity.activity_image}}" type="url" class="validate">
-                    <label for="activity_image">Image URL</label>
-                    <span class="helper-text" data-error="Please leave blank if you do not have a valid image URL" data-success="Looks good!">Please leave blank if you do not have a valid image URL</span>
-                </div>
+                    <input type="file" id="edit_image_path" name="activity_image">
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text" value="{{ activity.activity_image }}" />
+                        <label for="edit_image_path">Upload new image</label>
+                    </div>
+               </div>
             </div>
 
             <!-- Submit -->
