@@ -43,16 +43,16 @@ def allowed_file(filename):
 
 def upload_file():
     """
-    We check the request.files object for a activity_image key.
-    (activity_image is the name of the file input in add_activity and edit_activity)
+    We check the request.files object for an image_file key.
+    (image_file is the name of the file input in add_activity, edit_activity, add_category and edit_category)
     If it's not there, we return blank output
     """
     output = ""
-    if "activity_image" not in request.files:
+    if "image_file" not in request.files:
         return output
 
     # If the key is in the object, we save it in a variable called file
-    file = request.files["activity_image"]
+    file = request.files["image_file"]
 
     """
     We check the filename attribute on the object
@@ -196,7 +196,7 @@ def add_activity():
             "activity_summary": request.form.get("activity_summary"),
             "activity_details": request.form.get("activity_details"),
             "activity_equipment": request.form.get("activity_equipment"),
-            "activity_image": image_path,
+            "image_file": image_path,
             "created_by": session["user"],
             "date_added": date.today().strftime("%d %b %Y")
         }
@@ -229,7 +229,7 @@ def edit_activity(activity_id):
             "activity_summary": request.form.get("activity_summary"),
             "activity_details": request.form.get("activity_details"),
             "activity_equipment": request.form.get("activity_equipment"),
-            "activity_image": edit_image_path,
+            "image_file": edit_image_path,
         }}
         mongo.db.activities.update_many(activity, edit)
         new_category = mongo.db.categories.find_one(
@@ -282,11 +282,12 @@ def get_categories():
 
 @app.route("/add_category", methods=["GET", "POST"])
 def add_category():
+    image_path = upload_file()
     if request.method == "POST":
         category = {
             "category_name": request.form.get("category_name"),
             "category_summary": request.form.get("category_summary"),
-            "category_image": request.form.get("category_image"),
+            "image_file": image_path,
             "activity_list": []
         }
 
@@ -302,11 +303,12 @@ def add_category():
 def edit_category(category_id):
     categories = mongo.db.categories.find()
     category = mongo.db.categories.find_one({"_id": ObjectId(category_id)})
+    edit_image_path = upload_file()
 
     if request.method == "POST":
         submit = {"$set": {
             "category_summary": request.form.get("category_summary"),
-            "category_image": request.form.get("category_image"),
+            "image_file": edit_image_path,
         }}
         mongo.db.categories.update_many(category, submit)
         flash("Category Updated")

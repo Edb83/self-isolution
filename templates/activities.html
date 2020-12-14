@@ -11,14 +11,14 @@
                 <div class="card hoverable grey lighten-4">
                     <div class="card-image">
                     <a href="{{ url_for('view_activity', activity_id=activity._id) }}">
-                        {% if activity.activity_image == "" %}
+                        {% if activity.image_file == "" %}
                             {% for category in categories %}
                                 {% if category.category_name == activity.category_name %}
-                                    <img src="{{ category.category_image }}" />
+                                    <img src="{{ category.image_file }}" />
                                 {% endif %}
                             {% endfor %}
                         {% else %}
-                            <img src="{{ activity.activity_image }}" />
+                            <img src="{{ activity.image_file }}" />
                         {% endif %}
                         <span class="card-title text-shadow">{{ activity.activity_name }}</span>
                     </a>

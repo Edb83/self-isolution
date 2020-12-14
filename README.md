@@ -18,11 +18,11 @@ Features:
 ## DONE Add delete confirmation for activity and category
 ## DONE Add image upload
 ## Fix image upload edit
+## DONE Fix activity_lists not updating correctly - names need to be unique or use ObjectID
 - Add file_update for categories
 - Add search functionality
   - inc. category, age, equipment chips
 - Fix views for admin and session user
-- Fix activity_lists not updating correctly - names need to be unique or use ObjectID
 - Add toasts
 - Add delete user ??
 - Add likes/favourites (as list in mongodb?) ??
