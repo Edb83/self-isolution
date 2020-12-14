@@ -61,7 +61,7 @@ def upload_file():
     """
 
     if file.filename == "":
-        return output
+        return str(output)
 
     """Check that there is a file and that it has an allowed filetype
     https://flask.palletsprojects.com/en/master/patterns/fileuploads/
