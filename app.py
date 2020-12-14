@@ -12,24 +12,23 @@ from datetime import date
 if os.path.exists("env.py"):
     import env
 
+# Amazon S3 Bucket
+UPLOAD_FOLDER = "./static/uploads"
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
+
+S3_BUCKET = os.environ.get("S3_BUCKET")
+S3_KEY = os.environ.get("S3_KEY")
+S3_SECRET = os.environ.get("S3_SECRET_ACCESS_KEY")
+S3_LOCATION = os.environ.get("S3_LOCATION")
 
 app = Flask(__name__)
 
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 mongo = PyMongo(app)
-
-# Amazon S3 Bucket
-S3_BUCKET = os.environ.get("S3_BUCKET")
-S3_KEY = os.environ.get("S3_KEY")
-S3_SECRET = os.environ.get("S3_SECRET_ACCESS_KEY")
-S3_LOCATION = os.environ.get("S3_LOCATION")
-
-UPLOAD_FOLDER = "/static/uploads"
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-
 
 s3 = boto3.client(
    "s3",
@@ -41,24 +40,6 @@ s3 = boto3.client(
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-
-def upload_file_to_s3(file):
-
-    """
-    Docs: http://boto3.readthedocs.io/en/latest/guide/s3.html
-    """
-
-    try:
-        s3.upload_fileobj(file, S3_BUCKET, file.filename, ExtraArgs={
-            "ACL": "public-read", "ContentType": file.content_type}
-        )
-
-    except Exception as e:
-        print("Something Happened: ", e)
-        return e
-
-    return "{}{}".format(S3_LOCATION, file.filename)
 
 
 def upload_file():
@@ -90,6 +71,24 @@ def upload_file():
         file.filename = secure_filename(file.filename)
         output = upload_file_to_s3(file)
     return output
+
+
+def upload_file_to_s3(file):
+
+    """
+    Docs: http://boto3.readthedocs.io/en/latest/guide/s3.html
+    """
+
+    try:
+        s3.upload_fileobj(file, S3_BUCKET, file.filename, ExtraArgs={
+            "ACL": "public-read", "ContentType": file.content_type}
+        )
+
+    except Exception as e:
+        print("Something Happened: ", e)
+        return e
+
+    return "{}{}".format(S3_LOCATION, file.filename)
 
 
 @app.route("/")
