@@ -98,11 +98,18 @@ def home():
 
 @app.route("/get_activities")
 def get_activities():
-    activities = mongo.db.activities.find().sort("_id", -1)
+    activities = list(mongo.db.activities.find().sort("_id", -1))
     categories = list(mongo.db.categories.find())
 
     return render_template(
         "activities.html", activities=activities, categories=categories)
+
+
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    query = request.form.get("query")
+    activities = list(mongo.db.activities.find({"$text": {"$search": query}}))
+    return render_template("activities.html", activities=activities)
 
 
 @app.route("/register", methods=["GET", "POST"])
