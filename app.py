@@ -13,7 +13,7 @@ if os.path.exists("env.py"):
     import env
 
 # Amazon S3 Bucket
-
+UPLOAD_FOLDER = "./static/uploads"
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
 
 S3_BUCKET = os.environ.get("S3_BUCKET")
@@ -26,6 +26,7 @@ app = Flask(__name__)
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
 
 mongo = PyMongo(app)
