@@ -1,16 +1,10 @@
 $(document).ready(function () {
   $(".sidenav").sidenav({ edge: "right" });
   $("select").formSelect();
+  $('input#activity_name, textarea#activity_summary, textarea#activity_details, textarea#activity_equipment, input#category_name, textarea#category_summary').characterCounter();
   $('.collapsible').collapsible();
   $('.modal').modal();
-  $('.chips').chips(
-//       {
-//     placeholder: "+",
-//     onChipAdd: function(chip) {
-//         $(chip).find('.material-icons').removeClass('material-icons').addClass('fas fa-times-circle').text('');
-//     }
-//   }
-  );
+  $('.chips').chips();
 
   // Adds validation to Materialize select fields
   // Code Institute
