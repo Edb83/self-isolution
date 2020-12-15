@@ -7,6 +7,7 @@ from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
+from werkzeug.exceptions import RequestEntityTooLarge
 from datetime import date
 
 if os.path.exists("env.py"):
@@ -34,6 +35,12 @@ s3 = boto3.client(
    aws_access_key_id=S3_KEY,
    aws_secret_access_key=S3_SECRET
 )
+
+
+@app.errorhandler(413)
+@app.errorhandler(RequestEntityTooLarge)
+def app_handle_413(e):
+    return 'File Too Large', 413
 
 
 def allowed_file(filename):
