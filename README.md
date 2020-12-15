@@ -20,7 +20,7 @@ Features:
 ## Fix image upload edit
 ## DONE Fix activity_lists not updating correctly - names need to be unique or use ObjectID
 ## DONE Add file_update for categories
-- Add handling of files > 1mb
+- Add handling of files > 1mb... see werzeug 413 error handler - only in production version?
 ## DONE Add search functionality
   - inc. category, age, equipment chips
 - Fix views for admin and session user

@@ -15,12 +15,13 @@
                         <div class="col-12 center-align">
                             <span class="card-title activator grey-text text-darken-4">{{ category.category_name }}<i class="fas fa-angle-up right"></i></span>
                        </div>
+                       <div class="col-12 center-align">
                         {% if session.user|lower == "admin"|lower %}
-                        <div class="col-12 center-align">
                             <a href="{{ url_for('edit_category', category_id=category._id) }}" class="waves-effect waves-light btn">Edit</a>
                             <button data-target="{{ category._id }}" class="btn modal-trigger">Delete</button>
-                        </div>
                         {% endif %}
+                        <a href="{{ url_for('filter_category', category_id=category._id) }}" class="waves-effect waves-light btn">View All</a>
+                        </div>
                     </div>
                     <div class="card-reveal">
                         <span class="card-title grey-text text-darken-4">Stats<i class="fas fa-times-circle right"></i></span>

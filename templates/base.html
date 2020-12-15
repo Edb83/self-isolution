@@ -25,9 +25,9 @@
                     <ul class="right hide-on-med-and-down">
                         <li><a href="{{ url_for('home') }}">Home</a></li>
                         <li><a href="{{ url_for('get_activities') }}">Activities</a></li>
+                        <li><a href="{{ url_for('get_categories') }}">Categories</a></li>
                         {% if session.user %}
                             <li><a href="{{ url_for('add_activity') }}">Add Activity</a></li>
-                            <li><a href="{{ url_for('get_categories') }}">Categories</a></li>
                         {% if session.user|lower == "admin"|lower %}
                             <li><a href="{{ url_for('add_category') }}">Add Category</a></li>
                         {% endif %}
@@ -46,9 +46,9 @@
         <ul class="sidenav" id="mobile-navbar">
             <li><a href="{{ url_for('home') }}"><h4 id="nav-sidebar-header" class="purple-text text-darken-1">Self Isolution</h4></a></li>
                 <li><a href="{{ url_for('get_activities') }}">Activities</a></li>
+                <li><a href="{{ url_for('get_categories') }}">Categories</a></li>
                 {% if session.user %}
                     <li><a href="{{ url_for('add_activity') }}">Add Activity</a></li>
-                    <li><a href="{{ url_for('get_categories') }}">Categories</a></li>
                 {% if session.user|lower == "admin"|lower %}
                     <li><a href="{{ url_for('add_category') }}">Add Category</a></li>
                 {% endif %}

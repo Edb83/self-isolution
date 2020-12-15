@@ -26,7 +26,7 @@ app = Flask(__name__)
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
-app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
+app.config['MAX_CONTENT_LENGTH'] = 8 * 1024 * 1024
 
 mongo = PyMongo(app)
 
@@ -117,6 +117,15 @@ def search():
     query = request.form.get("query")
     activities = list(mongo.db.activities.find({"$text": {"$search": query}}))
     return render_template("activities.html", activities=activities)
+
+
+@app.route("/filter/<category_id>")
+def filter_category(category_id):
+    category = mongo.db.categories.find_one({"_id": ObjectId(category_id)})
+    activities = list(mongo.db.activities.find(
+        {"category_name": category["category_name"]}))
+
+    return render_template("activities.html", category=category, activities=activities)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -287,7 +296,7 @@ def view_activity(activity_id):
     return render_template("view_activity.html", activity=activity)
 
 
-@app.route("/get_categories")
+@app.route("/categories")
 def get_categories():
     activities = list(mongo.db.activities.find())
     categories = list(mongo.db.categories.find())
