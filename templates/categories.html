@@ -13,20 +13,31 @@
                     </div>
                     <div class="card-content">
                         <div class="col-12 center-align">
-                            <span class="card-title activator grey-text text-darken-4">{{ category.category_name }}<i class="fas fa-angle-up right"></i></span>
+                            <span class="card-title activator grey-text text-darken-4">{{ category.category_name }}<i class="fas fa-info-circle right"></i></span>
                        </div>
                        <div class="col-12 center-align">
                         {% if session.user|lower == "admin"|lower %}
                             <a href="{{ url_for('edit_category', category_id=category._id) }}" class="waves-effect waves-light btn">Edit</a>
                             <button data-target="{{ category._id }}" class="btn modal-trigger">Delete</button>
                         {% endif %}
-                        <a href="{{ url_for('filter_category', category_id=category._id) }}" class="waves-effect waves-light btn">View All</a>
+                        <a href="{{ url_for('filter_category', category_id=category._id) }}" class="waves-effect waves-light btn">View ({{ category.activity_list|count }})</a>
                         </div>
                     </div>
                     <div class="card-reveal">
-                        <span class="card-title grey-text text-darken-4">Stats<i class="fas fa-times-circle right"></i></span>
+                        <span class="card-title grey-text text-darken-4">{{ category.category_name }} ?<i class="fas fa-times-circle right"></i></span>
                             <p>{{ category.category_summary }}</p>
-                            <p>Activity count: {{ category.activity_list|count }}</p>
+                            {% if category.activity_list|length > 0 %}
+                                <p>Exciting activities include:</p>
+                                <ul>
+                                    {% for i in category.activity_list[:3] %}
+                                        {% for activity in activities %}
+                                            {% if i == activity._id %}
+                                                <li>{{ activity.activity_name }}</li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
                     </div>
                 </div>
             </div>

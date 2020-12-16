@@ -109,7 +109,7 @@ def get_activities():
     categories = list(mongo.db.categories.find())
 
     return render_template(
-        "activities.html", activities=activities, categories=categories)
+        "activities.html", activities=activities, categories=categories, page_title="All Activities")
 
 
 @app.route("/search", methods=["GET", "POST"])
@@ -125,7 +125,7 @@ def filter_category(category_id):
     activities = list(mongo.db.activities.find(
         {"category_name": category["category_name"]}))
 
-    return render_template("activities.html", category=category, activities=activities)
+    return render_template("activities.html", category=category, activities=activities, page_title="Activities for " + str(category["category_name"]))
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -300,6 +300,7 @@ def view_activity(activity_id):
 def get_categories():
     activities = list(mongo.db.activities.find())
     categories = list(mongo.db.categories.find())
+
     return render_template("categories.html", categories=categories, activities=activities)
 
 
