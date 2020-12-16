@@ -29,12 +29,10 @@
                             {% if category.activity_list|length > 0 %}
                                 <p>Exciting activities include:</p>
                                 <ul>
-                                    {% for i in category.activity_list[:3] %}
-                                        {% for activity in activities %}
-                                            {% if i == activity._id %}
-                                                <li>{{ activity.activity_name }}</li>
-                                            {% endif %}
-                                        {% endfor %}
+                                    {% for activity in activities[:3] %}
+                                        {% if activity.category_name == category.category_name %}
+                                            <li>{{ activity.activity_name }}</li>
+                                        {% endif %}
                                     {% endfor %}
                                 </ul>
                             {% endif %}
@@ -47,14 +45,14 @@
                     <h4>Confirm deletion</h4>
                     <p>Are you sure you want to delete <strong>{{ category.category_name }}</strong> ?</p>
                     {% if category.activity_list|count > 0 %}
-                    <p>The following activities will be left without an associated category:</p>
-                        {% for activity in activities %}
-                            {% if activity.category_name == category.category_name %}
-                            <ul>
-                                <li>{{ activity.activity_name }}</li>
-                            </ul>
-                            {% endif %}
-                        {% endfor %}
+                        <p>The following activities will be left without an associated category:</p>
+                        <ul>
+                            {% for activity in activities %}
+                                {% if activity.category_name == category.category_name %}
+                                    <li>{{ activity.activity_name }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
                     {% endif %}
                 </div>
                 <div class="modal-footer">
