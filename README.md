@@ -11,6 +11,10 @@ Solution: missing enctype="multipart/form-data"
 # Bug: images not uploading on deployed site
 Solution: add AWS secret keys to cvars on heroku
 
+# Issue: pymongo.errors.InvalidOperation: cannot set options after executing query
+Solution: to various issues(!) - using list()
+
+
 # Todo:
 
 Features: 

@@ -29,9 +29,9 @@
                             {% if category.activity_list|length > 0 %}
                                 <p>Exciting activities include:</p>
                                 <ul>
-                                    {% for activity in activities[:3] %}
-                                        {% if activity.category_name == category.category_name %}
-                                            <li>{{ activity.activity_name }}</li>
+                                    {% for activity in activities if activity.category_name == category.category_name %}
+                                        {% if loop.index < 4 %}
+                                                <li>{{ activity.activity_name }}</li>
                                         {% endif %}
                                     {% endfor %}
                                 </ul>
@@ -47,10 +47,8 @@
                     {% if category.activity_list|count > 0 %}
                         <p>The following activities will be left without an associated category:</p>
                         <ul>
-                            {% for activity in activities %}
-                                {% if activity.category_name == category.category_name %}
-                                    <li>{{ activity.activity_name }}</li>
-                                {% endif %}
+                            {% for activity in activities if activity.category_name == category.category_name %}
+                                <li>{{ activity.activity_name }}</li>
                             {% endfor %}
                         </ul>
                     {% endif %}
