@@ -20,7 +20,9 @@
                             <a href="{{ url_for('edit_category', category_id=category._id) }}" class="waves-effect waves-light btn">Edit</a>
                             <button data-target="{{ category._id }}" class="btn modal-trigger">Delete</button>
                         {% endif %}
-                        <a href="{{ url_for('filter_category', category_id=category._id) }}" class="waves-effect waves-light btn">View ({{ category.activity_list|count }})</a>
+                        {% if category.activity_list|length > 0 %}
+                            <a href="{{ url_for('filter_category', category_id=category._id) }}" class="waves-effect waves-light btn">View ({{ category.activity_list|count }})</a>
+                        {% endif %}
                         </div>
                     </div>
                     <div class="card-reveal">
