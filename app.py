@@ -31,9 +31,9 @@ app.config['MAX_CONTENT_LENGTH'] = 8 * 1024 * 1024
 mongo = PyMongo(app)
 
 s3 = boto3.client(
-   "s3",
-   aws_access_key_id=S3_KEY,
-   aws_secret_access_key=S3_SECRET
+    "s3",
+    aws_access_key_id=S3_KEY,
+    aws_secret_access_key=S3_SECRET
 )
 
 
@@ -80,7 +80,6 @@ def upload_file():
 
 
 def upload_file_to_s3(file):
-
     """
     Docs: http://boto3.readthedocs.io/en/latest/guide/s3.html
     """
@@ -125,7 +124,8 @@ def filter_category(category_id):
     activities = list(mongo.db.activities.find(
         {"category_name": category["category_name"]}))
 
-    return render_template("activities.html", category=category, activities=activities, page_title="Activities for " + str(category["category_name"]))
+    return render_template("activities.html", category=category,
+                           activities=activities, page_title="Activities for " + str(category["category_name"]))
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -162,7 +162,7 @@ def login():
         if existing_user:
             # ensure hashed password matches user input
             if check_password_hash(
-                 existing_user["password"], request.form.get("password")):
+                    existing_user["password"], request.form.get("password")):
                 session["user"] = request.form.get("username").lower()
                 flash("Welcome, {}".format(request.form.get("username")))
                 return redirect(url_for(
@@ -209,7 +209,6 @@ def logout():
 def add_activity():
     ages = ["Under 2", "2-4", "4-6", "6+"]
     categories = mongo.db.categories.find().sort("category_name", 1)
-    image_path = upload_file()
 
     if request.method == "POST":
         activity = {
@@ -219,7 +218,7 @@ def add_activity():
             "activity_summary": request.form.get("activity_summary"),
             "activity_details": request.form.get("activity_details"),
             "activity_equipment": request.form.get("activity_equipment"),
-            "image_file": image_path,
+            "image_file": upload_file(),
             "created_by": session["user"],
             "date_added": date.today().strftime("%d %b %Y")
         }
@@ -240,11 +239,15 @@ def edit_activity(activity_id):
     activity = mongo.db.activities.find_one({"_id": ObjectId(activity_id)})
     categories = mongo.db.categories.find().sort("category_name", 1)
     ages = ["Under 2", "2-4", "4-6", "6+"]
-    edit_image_path = upload_file()
 
     current_category = mongo.db.categories.find_one({"category_name": activity["category_name"]})
 
     if request.method == "POST":
+        if request.files["image_file"].filename == "":
+            edit_image_path = activity["image_file"]
+        else:
+            edit_image_path = upload_file()
+
         edit = {"$set": {
             "activity_name": request.form.get("activity_name"),
             "category_name": request.form.get("category_name"),
@@ -256,7 +259,7 @@ def edit_activity(activity_id):
         }}
         mongo.db.activities.update_many(activity, edit)
         new_category = mongo.db.categories.find_one(
-                {"category_name": request.form.get("category_name")})
+            {"category_name": request.form.get("category_name")})
 
         if request.form.get("category_name") != current_category["category_name"]:
             mongo.db.categories.update_one(
@@ -306,12 +309,11 @@ def get_categories():
 
 @app.route("/add_category", methods=["GET", "POST"])
 def add_category():
-    image_path = upload_file()
     if request.method == "POST":
         category = {
             "category_name": request.form.get("category_name"),
             "category_summary": request.form.get("category_summary"),
-            "image_file": image_path,
+            "image_file": upload_file(),
             "activity_list": []
         }
 
@@ -325,18 +327,20 @@ def add_category():
 
 @app.route("/edit_category/<category_id>", methods=["GET", "POST"])
 def edit_category(category_id):
-    categories = mongo.db.categories.find()
     category = mongo.db.categories.find_one({"_id": ObjectId(category_id)})
-    edit_image_path = upload_file()
 
     if request.method == "POST":
+        if request.files["image_file"].filename == "":
+            edit_image_path = category["image_file"]
+        else:
+            edit_image_path = upload_file()
         submit = {"$set": {
             "category_summary": request.form.get("category_summary"),
             "image_file": edit_image_path,
         }}
         mongo.db.categories.update_many(category, submit)
         flash("Category Updated")
-        return render_template("categories.html", categories=categories)
+        return redirect(url_for("get_categories"))
 
     return render_template(
         "edit_category.html", category=category)
