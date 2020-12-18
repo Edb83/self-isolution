@@ -33,10 +33,8 @@
                         <div class="card-image">
                         <a href="{{ url_for('view_activity', activity_id=activity._id) }}">
                             {% if activity.image_file == "" %}
-                                {% for category in categories %}
-                                    {% if category.category_name == activity.category_name %}
+                                {% for category in categories if category.category_name == activity.category_name %}
                                         <img src="{{ category.image_file }}" />
-                                    {% endif %}
                                 {% endfor %}
                             {% else %}
                                 <img src="{{ activity.image_file }}" />
@@ -51,11 +49,17 @@
                         ></a>
                         {% endif %}
                         </div>
-                        <div class="card-content">
-                            <div class="card-summary truncate">{{ activity.activity_summary }}</div>
-                            <div class="activities-card-info-container">
-                                <p><i class="fas fa-child prefix"></i>  {{ activity.target_age }}</p>
-                                <p><i class="fas fa-folder-open prefix"></i> {{ activity.category_name }}</p>
+                        <div class="card-content activities-card-summary">
+                            {{ activity.activity_summary }}
+                        </div>
+                        <div class="row">
+                            <div class="card-action activities-card-info-container valign-wrapper center-align">
+                                <div class="col s5">
+                                    <span><i class="fas fa-child prefix"></i>  {{ activity.target_age }}</span>
+                                </div>
+                                <div class="col s7">
+                                    <span><i class="fas fa-folder-open prefix"></i> {{ activity.category_name }}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
