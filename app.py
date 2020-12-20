@@ -10,7 +10,6 @@ from werkzeug.utils import secure_filename
 from datetime import date
 from io import BytesIO
 from PIL import Image
-from resizeimage import resizeimage
 
 if os.path.exists("env.py"):
     import env
@@ -85,7 +84,7 @@ def upload_file_to_s3(file):
     try:
 
         new_image = Image.open(file)
-        new_image = resizeimage.resize_cover(new_image, [500, 500])
+        new_image.thumbnail((600, 600))
         # Save the image to an in-memory file
         in_mem_file = BytesIO()
         new_image.save(in_mem_file, format=new_image.format)
