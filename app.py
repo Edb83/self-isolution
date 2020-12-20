@@ -9,6 +9,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from werkzeug.exceptions import RequestEntityTooLarge
 from datetime import date
+from PIL import Image
+from resizeimage import resizeimage
+from io import BytesIO
 
 if os.path.exists("env.py"):
     import env
@@ -43,6 +46,23 @@ def app_handle_413(e):
     return 'File Too Large', 413
 
 
+# def resize_image(upload_image):
+#     fd_img = upload_image
+#     img = Image.open(fd_img)
+#     img = resizeimage.resize_crop(img, [200, 200])
+#     img.save('test-image-crop.jpeg', img.format)
+#     fd_img.close()
+
+def modify_image(image, format):
+    pil_image = Image.open(image)
+    # Save the image to an in-memory file
+    in_mem_file = BytesIO()
+    in_mem_file.seek(0)
+    pil_image.save(in_mem_file, format=pil_image.format)
+
+    return in_mem_file.seek
+
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -60,6 +80,7 @@ def upload_file():
 
     # If the key is in the object, we save it in a variable called file
     file = request.files["image_file"]
+    print(file)
 
     """
     We check the filename attribute on the object
@@ -74,8 +95,10 @@ def upload_file():
     """
 
     if file and allowed_file(file.filename):
+
         file.filename = secure_filename(file.filename)
-        output = upload_file_to_s3(file)
+        output = upload_file_to_s3(modify_image(file, "jpeg"))
+
     return output
 
 
