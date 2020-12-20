@@ -77,11 +77,11 @@ def upload_file_to_s3(file):
         # Load image
         new_image = Image.open(file)
 
-        # Resize to the longest side (max 400px)
-        new_image.thumbnail((400, 400))
-
         # Read EXIF data to handle portrait images being rotated
         ImageOps.exif_transpose(new_image)
+
+        # Resize to the longest side (max 400px)
+        new_image.thumbnail((500, 500))
 
         # Save the image to an in-memory file
         in_mem_file = BytesIO()
