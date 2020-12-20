@@ -7,11 +7,10 @@ from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
-from werkzeug.exceptions import RequestEntityTooLarge
 from datetime import date
+from io import BytesIO
 from PIL import Image
 from resizeimage import resizeimage
-from io import BytesIO
 
 if os.path.exists("env.py"):
     import env
@@ -40,29 +39,6 @@ s3 = boto3.client(
 )
 
 
-@app.errorhandler(413)
-@app.errorhandler(RequestEntityTooLarge)
-def app_handle_413(e):
-    return 'File Too Large', 413
-
-
-# def resize_image(upload_image):
-#     fd_img = upload_image
-#     img = Image.open(fd_img)
-#     img = resizeimage.resize_crop(img, [200, 200])
-#     img.save('test-image-crop.jpeg', img.format)
-#     fd_img.close()
-
-def modify_image(image, format):
-    pil_image = Image.open(image)
-    # Save the image to an in-memory file
-    in_mem_file = BytesIO()
-    in_mem_file.seek(0)
-    pil_image.save(in_mem_file, format=pil_image.format)
-
-    return in_mem_file.seek
-
-
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -80,7 +56,6 @@ def upload_file():
 
     # If the key is in the object, we save it in a variable called file
     file = request.files["image_file"]
-    print(file)
 
     """
     We check the filename attribute on the object
@@ -97,7 +72,7 @@ def upload_file():
     if file and allowed_file(file.filename):
 
         file.filename = secure_filename(file.filename)
-        output = upload_file_to_s3(modify_image(file, "jpeg"))
+        output = upload_file_to_s3(file)
 
     return output
 
@@ -108,8 +83,23 @@ def upload_file_to_s3(file):
     """
 
     try:
-        s3.upload_fileobj(file, S3_BUCKET, file.filename, ExtraArgs={
-            "ACL": "public-read", "ContentType": file.content_type}
+
+        new_image = Image.open(file)
+        new_image = resizeimage.resize_crop(new_image, [100, 100])
+        # Save the image to an in-memory file
+        in_mem_file = BytesIO()
+        new_image.save(in_mem_file, format=new_image.format)
+        in_mem_file.seek(0)
+        new_image.close()
+
+        # Upload image to s3
+        s3.upload_fileobj(
+            in_mem_file,
+            S3_BUCKET,
+            file.filename,
+            ExtraArgs={
+                'ACL': 'public-read'
+            }
         )
 
     except Exception as e:
