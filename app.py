@@ -9,7 +9,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from datetime import date
 from io import BytesIO
-from PIL import Image
+from PIL import Image, ImageOps
 
 if os.path.exists("env.py"):
     import env
@@ -84,6 +84,7 @@ def upload_file_to_s3(file):
     try:
 
         new_image = Image.open(file)
+        ImageOps.exif_transpose(new_image)
         new_image.thumbnail((600, 600))
         # Save the image to an in-memory file
         in_mem_file = BytesIO()
