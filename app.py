@@ -44,32 +44,28 @@ def allowed_file(filename):
 
 
 def upload_file():
-    """
-    We check the request.files object for an image_file key.
-    (image_file is the name of the file input in add_activity, edit_activity, add_category and edit_category)
-    If it's not there, we return blank output
-    """
     output = ""
+
+    """
+    Check the request.files object for an image_file key.
+    (image_file is the name of the file input in add_activity, edit_activity, add_category and edit_category)
+    If it's not there, return blank output (for handling default images where necessary)
+    """
     if "image_file" not in request.files:
         return output
 
-    # If the key is in the object, we save it in a variable called file
+    # If the key is in the object, save it in file variable
     file = request.files["image_file"]
 
     """
-    We check the filename attribute on the object
-    If empty, it means the user sumbmitted an empty form, so we return a blank output
+    Check the filename attribute on the object
+    If empty, it means the user sumbmitted an empty form, so return a blank output
     """
-
     if file.filename == "":
         return output
 
-    """Check that there is a file and that it has an allowed filetype
-    https://flask.palletsprojects.com/en/master/patterns/fileuploads/
-    """
-
+    # Check that there is a file and that it has an allowed filetype
     if file and allowed_file(file.filename):
-
         file.filename = secure_filename(file.filename)
         output = upload_file_to_s3(file)
 
@@ -77,18 +73,21 @@ def upload_file():
 
 
 def upload_file_to_s3(file):
-    """
-    Docs: http://boto3.readthedocs.io/en/latest/guide/s3.html
-    """
-
     try:
-
+        # Load image
         new_image = Image.open(file)
+
+        # Resize to the longest side (max 400px)
+        new_image.thumbnail((400, 400))
+
+        # Read EXIF data to handle portrait images being rotated
         ImageOps.exif_transpose(new_image)
-        new_image.thumbnail((600, 600))
+
         # Save the image to an in-memory file
         in_mem_file = BytesIO()
         new_image.save(in_mem_file, format=new_image.format)
+
+        # 'Rewind' the file-like object to prevent 0kd-sized files
         in_mem_file.seek(0)
         new_image.close()
 
