@@ -85,7 +85,7 @@ def upload_file_to_s3(file):
     try:
 
         new_image = Image.open(file)
-        new_image = resizeimage.resize_contain.validate(new_image, [1500, 1500])
+        new_image = resizeimage.resize_contain(new_image, [1500, 1500])
         # Save the image to an in-memory file
         in_mem_file = BytesIO()
         new_image.save(in_mem_file, format=new_image.format)
