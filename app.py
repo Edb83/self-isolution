@@ -75,21 +75,26 @@ def upload_file():
 def upload_file_to_s3(file):
     try:
         # Load image
-        new_image = Image.open(file)
+        raw_image = Image.open(file)
 
-        # Resize to the longest side (max 400px)
-        new_image.thumbnail((400, 400))
+        # Save format (as not copied on creation of new image)
+        saved_format = raw_image.format
 
         # Read EXIF data to handle portrait images being rotated
-        ImageOps.exif_transpose(new_image)
+        new_image = ImageOps.exif_transpose(raw_image)
+
+        # Reapply raw_image format
+        new_image.format = saved_format
+
+        # Resize image and set max-length in either axis
+        new_image.thumbnail((500, 500))
 
         # Save the image to an in-memory file
         in_mem_file = BytesIO()
         new_image.save(in_mem_file, format=new_image.format)
 
-        # 'Rewind' the file-like object to prevent 0kd-sized files
+        # 'Rewind' the file-like object to prevent 0kb-sized files
         in_mem_file.seek(0)
-        new_image.close()
 
         # Upload image to s3
         s3.upload_fileobj(
