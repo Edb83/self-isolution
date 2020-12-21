@@ -153,7 +153,7 @@ def register():
             {"username": request.form.get("username").lower()})
 
         if existing_user:
-            flash("Username already exists")
+            flash("Username '{}' aleady exists".format(request.form.get("username")))
             return redirect(url_for("register"))
 
         register = {
@@ -181,7 +181,7 @@ def login():
             if check_password_hash(
                     existing_user["password"], request.form.get("password")):
                 session["user"] = request.form.get("username").lower()
-                flash("Welcome, {}".format(request.form.get("username")))
+                flash("Logged in as {}".format(request.form.get("username")))
                 return redirect(url_for(
                     "profile", username=session["user"]))
 
@@ -243,7 +243,7 @@ def add_activity():
         new_activity = mongo.db.activities.insert_one(activity).inserted_id
         mongo.db.categories.update_one(
             {"category_name": activity["category_name"]}, {"$push": {"activity_list": ObjectId(new_activity)}})
-        flash("Activity Added")
+        flash("Activity added: {}".format(activity["activity_name"]))
 
         return redirect(url_for("get_activities"))
 
@@ -286,7 +286,7 @@ def edit_activity(activity_id):
                 current_category,
                 {"$pull": {"activity_list": activity["_id"]}})
 
-        flash("Activity Updated")
+        flash("Activity updated ({})".format(activity["activity_name"]))
         return redirect(url_for('view_activity', activity_id=ObjectId(activity_id)))
 
     return render_template(
@@ -306,7 +306,7 @@ def delete_activity(activity_id):
 
     mongo.db.activities.remove({"_id": ObjectId(activity_id)})
 
-    flash("Activity Deleted")
+    flash("Activity deleted ({})".format(activity["activity_name"]))
     return redirect(url_for('profile', username=session['user']))
 
 
@@ -335,7 +335,7 @@ def add_category():
         }
 
         mongo.db.categories.insert_one(category)
-        flash("Category Added")
+        flash("Category added ({})".format(category["category_name"]))
         return redirect(url_for("get_categories"))
 
     return render_template(
@@ -356,7 +356,7 @@ def edit_category(category_id):
             "image_file": edit_image_path,
         }}
         mongo.db.categories.update_many(category, submit)
-        flash("Category Updated")
+        flash("Category updated ({})".format(category["category_name"]))
         return redirect(url_for("get_categories"))
 
     return render_template(
@@ -368,7 +368,7 @@ def delete_category(category_id):
     category = mongo.db.categories.find_one({"_id": ObjectId(category_id)})
     mongo.db.categories.remove(category)
 
-    flash("Category Deleted")
+    flash("Category deleted ({})".format(category["category_name"]))
     return redirect(url_for('get_categories'))
 
 

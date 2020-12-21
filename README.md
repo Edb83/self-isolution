@@ -14,7 +14,7 @@
 ## DONE Add search functionality for categories.html
 ## DONE Add category stats (number of and list of 3)
 - Add search functionality for age and category show as chips
-- Fix views for admin and session user
+## DONE Combine user/admin options under Profile
 - Add toasts
 - Add delete user ??
 - Add likes/favourites (as list in mongodb?) ??
