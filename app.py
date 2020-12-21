@@ -89,6 +89,9 @@ def upload_file_to_s3(file):
         # Resize image and set max-length in either axis
         new_image.thumbnail((500, 500))
 
+        # Resize to the longest side (max 400px)
+        new_image.thumbnail((500, 500))
+
         # Save the image to an in-memory file
         in_mem_file = BytesIO()
         new_image.save(in_mem_file, format=new_image.format)
