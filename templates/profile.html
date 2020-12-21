@@ -12,49 +12,53 @@
 
     <h3 class="center-align">My activities</h3>
 
-    <div class="row">
-        <div class="col s12">
-            <ul class="collapsible popout">
-                {% for activity in activities %}
-                    {% if session.user|lower == activity.created_by|lower %}
-                        <li>
-                            <div class="collapsible-header">
-                                <div class="row">
-                                    <div class="col s6">
-                                        <i class="fas fa-caret-down"></i> <strong>{{ activity.activity_name }}</strong>
-                                    </div>
-                                    <div class="col s3 center-align">
-                                        <div class="chip activity-category-chip">
-                                            {{ activity.category_name }}
+    {% if activities|length > 0 %}
+        <div class="row">
+            <div class="col s12">
+                <ul class="collapsible popout">
+                    {% for activity in activities %}
+                        {% if session.user|lower == activity.created_by|lower %}
+                            <li>
+                                <div class="collapsible-header">
+                                    <div class="row">
+                                        <div class="col s6">
+                                            <i class="fas fa-caret-down"></i> <strong>{{ activity.activity_name }}</strong>
+                                        </div>
+                                        <div class="col s3 center-align">
+                                            <div class="chip activity-category-chip">
+                                                {{ activity.category_name }}
+                                            </div>
+                                        </div>
+                                        <div class="col s3 right-align">
+                                        {{ activity.date_added }}
                                         </div>
                                     </div>
-                                    <div class="col s3 right-align">
-                                    {{ activity.date_added }}
-                                    </div>
                                 </div>
-                            </div>
-                            <div class="collapsible-body">
-                                <p>{{ activity.activity_summary }}</p>
-                                <a href="{{ url_for('edit_activity', activity_id=activity._id) }}" class="waves-effect waves-light btn">Edit</a>
-                                <!-- <a href="{{ url_for('delete_activity', activity_id=activity._id) }}" class="waves-effect waves-light btn right">Delete</a> -->
-                                <button data-target="{{ activity._id }}" class="btn modal-trigger">Delete</button>
-                            </div>
-                        </li>
-                    {% endif %}
+                                <div class="collapsible-body">
+                                    <p>{{ activity.activity_summary }}</p>
+                                    <a href="{{ url_for('edit_activity', activity_id=activity._id) }}" class="waves-effect waves-light btn">Edit</a>
+                                    <!-- <a href="{{ url_for('delete_activity', activity_id=activity._id) }}" class="waves-effect waves-light btn right">Delete</a> -->
+                                    <button data-target="{{ activity._id }}" class="btn modal-trigger">Delete</button>
+                                </div>
+                            </li>
+                        {% endif %}
 
-                    <div id="{{ activity._id }}" class="modal">
-                        <div class="modal-content">
-                            <h4>Confirm deletion</h4>
-                            <p>Are you sure you want to delete <strong>{{ activity.activity_name }}</strong> ?</p>
+                        <div id="{{ activity._id }}" class="modal">
+                            <div class="modal-content">
+                                <h4>Confirm deletion</h4>
+                                <p>Are you sure you want to delete <strong>{{ activity.activity_name }}</strong> ?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#!" class="modal-close waves-effect waves-red btn-flat">Cancel</a>
+                                <a href="{{ url_for('delete_activity', activity_id=activity._id) }}" class="modal-close waves-effect waves-green btn-flat">Delete</a>
+                            </div>
                         </div>
-                        <div class="modal-footer">
-                            <a href="#!" class="modal-close waves-effect waves-red btn-flat">Cancel</a>
-                            <a href="{{ url_for('delete_activity', activity_id=activity._id) }}" class="modal-close waves-effect waves-green btn-flat">Delete</a>
-                        </div>
-                    </div>
-                {% endfor %}
-            </ul>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
-    </div>
+    {% else %}
+        <h3 class="red-text text-darken-4 center-align">You have not added any activities... yet! Click <a href="{{ url_for('add_activity') }}">here</a> to share your snippets of wisdom!</h3>
+    {% endif %}
 
 {% endblock %}
