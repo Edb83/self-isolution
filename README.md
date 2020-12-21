@@ -5,18 +5,19 @@
 ## DONE Change Ages into hard-coded options rather than mongo collection
 ## DONE Add delete confirmation for activity and category
 ## DONE Add image upload
-## Fix image upload edit
+## DONE Fix image upload edit
+ - Add image delete from S3 Bucket ??
 ## DONE Fix activity_lists not updating correctly - names need to be unique or use ObjectID
 ## DONE Add file_update for categories
 ## DONE Add handling of files > 1mb... see werkzeug 413 error handler - only in production version?
 ## DONE Add resizing of user image uploads and handling of portrait images rotating on resize
-## DONE Add search functionality
-  - inc. category, age, equipment chips
+## DONE Add search functionality for categories.html
+## DONE Add category stats (number of and list of 3)
+- Add search functionality for age and category show as chips
 - Fix views for admin and session user
 - Add toasts
 - Add delete user ??
 - Add likes/favourites (as list in mongodb?) ??
-- Add category stats ??
 - Add 'unassigned category' for activities on deletion of category
 
 
