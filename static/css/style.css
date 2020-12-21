@@ -25,6 +25,11 @@ select {
     -webkit-appearance: none; 
 }
 
+.dropdown-content li>a {
+    color: #8e24aa;
+}
+
+
 .file-field .file-path-wrapper {
     padding-left: 3rem;
 }

@@ -17,6 +17,15 @@
 
     <header>
         <!-- main navbar -->
+        <ul id="profile-dropdown" class="dropdown-content">
+            <li><a href="{{ url_for('profile', username=session['user']) }}">View</a></li>
+            <li><a href="{{ url_for('add_activity') }}">Add Activity</a></li>
+            {% if session.user|lower == "admin"|lower %}
+                <li><a href="{{ url_for('add_category') }}">Add Category</a></li>
+            {% endif %}
+            <li class="divider"></li>
+            <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+        </ul>
         <div class="navbar-fixed">
             <nav>
                 <div class="nav-wrapper purple darken-1 text-shadow">
@@ -27,12 +36,7 @@
                         <li><a href="{{ url_for('get_activities') }}">Activities</a></li>
                         <li><a href="{{ url_for('get_categories') }}">Categories</a></li>
                         {% if session.user %}
-                            <li><a href="{{ url_for('add_activity') }}">Add Activity</a></li>
-                        {% if session.user|lower == "admin"|lower %}
-                            <li><a href="{{ url_for('add_category') }}">Add Category</a></li>
-                        {% endif %}
-                            <li><a href="{{ url_for('profile', username=session['user']) }}">Profile</a></li>
-                            <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+                            <li><a class="dropdown-trigger" href="#!" data-target="profile-dropdown">Profile <i class="fas fa-caret-down"></i></a></li>
                         {% else %}
                             <li><a href="{{ url_for('register') }}">Register</a></li>
                             <li><a href="{{ url_for('login') }}">Log In</a></li>
@@ -49,9 +53,9 @@
                 <li><a href="{{ url_for('get_categories') }}">Categories</a></li>
                 {% if session.user %}
                     <li><a href="{{ url_for('add_activity') }}">Add Activity</a></li>
-                {% if session.user|lower == "admin"|lower %}
-                    <li><a href="{{ url_for('add_category') }}">Add Category</a></li>
-                {% endif %}
+                    {% if session.user|lower == "admin"|lower %}
+                        <li><a href="{{ url_for('add_category') }}">Add Category</a></li>
+                    {% endif %}
                     <li><a href="{{ url_for('profile', username=session['user']) }}">Profile</a></li>
                     <li><a href="{{ url_for('logout') }}">Log Out</a></li>
                 {% else %}
