@@ -14,7 +14,7 @@
                     <label for="query">Search Activities</label>
                 </div>
                 <div class="col s12">
-                    <a href="{{ url_for('get_activities') }}" class="btn text-shadow">
+                    <a href="{{ url_for('get_activities') }}" class="btn btn-reset text-shadow">
                         <i class="fas fa-redo center-align"></i>
                     </a>
                     <button type="submit" class="btn text-shadow">
@@ -52,7 +52,7 @@
                         <div class="card-content activities-card-summary">
                             {{ activity.activity_summary }}
                         </div>
-                            <div class="card-action left-align truncate">
+                            <div class="card-action center-align truncate">
                                 <div class="col s5">
                                     <span><i class="fas fa-child prefix"></i>  {{ activity.target_age }}</span>
                                 </div>
