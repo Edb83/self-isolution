@@ -5,7 +5,7 @@
 
     <h3 class="center-align">{{ page_title }}</h3>
 
-    <div class="row card-panel">
+    <div class="row card-panel grey lighten-5">
         <form action="{{ url_for('search') }}" method="post" class="col s12">
             <div class="row center-align">
                 <div class="input-field col s12">
@@ -29,7 +29,7 @@
         <div class="row">
             {% for activity in activities %}
                 <div id="activities-container" class="col s12 m6 xl4">
-                    <div class="card hoverable">
+                    <div class="card hoverable teal lighten-5">
                         <div class="card-image">
                         <a href="{{ url_for('view_activity', activity_id=activity._id) }}">
                             {% if activity.image_file == "" %}
