@@ -27,28 +27,32 @@
             <li><a href="{{ url_for('logout') }}">Log Out</a></li>
         </ul>
         <div class="navbar-fixed">
+            <div class="row">
             <nav>
-                <div class="nav-wrapper purple darken-1 text-shadow">
-                    <a href="{{ url_for('home') }}" class="brand-logo">Self Isolution</a>
-                    <a href="#" data-target="mobile-navbar" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
-                    <ul class="right hide-on-med-and-down">
-                        <li><a href="{{ url_for('home') }}">Home</a></li>
-                        <li><a href="{{ url_for('get_activities') }}">Activities</a></li>
-                        <li><a href="{{ url_for('get_categories') }}">Categories</a></li>
-                        {% if session.user %}
-                            <li><a class="dropdown-trigger" href="#!" data-target="profile-dropdown">Profile <i class="fas fa-caret-down"></i></a></li>
-                        {% else %}
-                            <li><a href="{{ url_for('register') }}">Register</a></li>
-                            <li><a href="{{ url_for('login') }}">Log In</a></li>
-                        {% endif %}
-                    </ul>
+                <div class="nav-wrapper indigo darken-4">
+                    <div class="col s12">
+                        <a href="{{ url_for('home') }}" class="brand-logo left text-shadow">Self Isolution</a>
+                        <a href="#" data-target="mobile-navbar" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
+                        <ul class="right hide-on-med-and-down text-shadow">
+                            <li><a href="{{ url_for('home') }}">Home</a></li>
+                            <li><a href="{{ url_for('get_activities') }}">Activities</a></li>
+                            <li><a href="{{ url_for('get_categories') }}">Categories</a></li>
+                            {% if session.user %}
+                                <li><a class="dropdown-trigger" href="#!" data-target="profile-dropdown">Profile <i class="fas fa-caret-down right"></i></a></li>
+                            {% else %}
+                                <li><a href="{{ url_for('register') }}">Register</a></li>
+                                <li><a href="{{ url_for('login') }}">Log In</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
                 </div>
             </nav>
+            </div>
         </div>
 
         <!-- mobile navbar -->
         <ul class="sidenav" id="mobile-navbar">
-            <li><a href="{{ url_for('home') }}"><h4 id="nav-sidebar-header" class="purple-text text-darken-1">Self Isolution</h4></a></li>
+            <li><a href="{{ url_for('home') }}"><h4 id="nav-sidebar-header" class="">Self Isolution</h4></a></li>
                 <li><a href="{{ url_for('get_activities') }}">Activities</a></li>
                 <li><a href="{{ url_for('get_categories') }}">Categories</a></li>
                 {% if session.user %}
@@ -85,20 +89,18 @@
         {% endblock %}
     </main>
 
-    <footer class="page-footer purple darken-1">
+    <footer class="page-footer indigo darken-4">
         <div class="container">
             <div class="row">
                 <div class="col l6 s12">
                     <h5 class="white-text">Footer Content</h5>
-                    <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+                    <p class="">You can use rows and columns here to organize your footer content.</p>
                 </div>
                 <div class="col l4 offset-l2 s12">
                     <h5 class="white-text">Links</h5>
                     <ul>
-                        <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-                        <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
-                        <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
-                        <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+                        <li><a class="" href="#!">Link 1</a></li>
+
                     </ul>
                 </div>
             </div>
@@ -106,7 +108,7 @@
         <div class="footer-copyright">
             <div class="container">
                 © 2014 Copyright Text
-                <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+                <a class="" href="#!">More Links</a>
             </div>
         </div>
     </footer>
