@@ -55,7 +55,7 @@
                         </div>
                             <div class="card-action center-align truncate">
                                 <div class="col s5">
-                                    <span><i class="fas fa-child prefix"></i>  {{ activity.target_age }}</span>
+                                    <a href="{{ url_for('filter_age', target_age=activity.target_age) }}" class="card-action-link"><i class="fas fa-child prefix"></i>  {{ activity.target_age }}</a>
                                 </div>
                                 <div class="col s7">
                                     {% for category in categories if category.category_name == activity.category_name %}
@@ -71,6 +71,6 @@
         </div>
     {% else %}
         <h3 class="">No Results Found</h3>
-    {% endif %}
+    {% endif %}        
 
 {% endblock %}
