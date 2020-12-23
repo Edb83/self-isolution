@@ -123,7 +123,7 @@
         {% with messages = get_flashed_messages() %}
             {% if messages %}
                 {% for message in messages %}
-                    M.toast({ html: "{{ message }}", classes: 'custom-toast', displayLength: 6000 });
+                    M.toast({ html: "{{ message }}", classes: 'custom-toast rounded', displayLength: 6000 });
                 {% endfor %}
             {% endif %}
         {% endwith %}

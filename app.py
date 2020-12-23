@@ -125,13 +125,13 @@ def home():
     return render_template("home.html")
 
 
-@app.route("/get_activities")
+@app.route("/activities")
 def get_activities():
     activities = list(mongo.db.activities.find().sort("_id", -1))
     categories = list(mongo.db.categories.find())
 
     return render_template(
-        "activities.html", activities=activities, categories=categories, page_title="All Activities")
+        "activities.html", activities=activities, categories=categories, page_heading="All Activities")
 
 
 @app.route("/search", methods=["GET", "POST"])
@@ -231,7 +231,7 @@ def profile(username):
             "profile.html", username=username,
             activities=activities, categories=categories)
 
-    return redirect(url_for("get_activities"))
+    return redirect(url_for("activities"))
 
 
 @app.route("/logout")
@@ -265,7 +265,7 @@ def add_activity():
             {"category_name": activity["category_name"]}, {"$push": {"activity_list": ObjectId(new_activity)}})
         flash("Activity added: {}".format(activity["activity_name"]))
 
-        return redirect(url_for("get_activities"))
+        return redirect(url_for("activities"))
 
     return render_template(
         "add_activity.html", categories=categories, ages=ages)

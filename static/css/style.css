@@ -71,8 +71,9 @@ nav ul a:hover {
 }
 
 /* Headings */
-h1, h3 {
+.section-heading, .card-heading {
     font-family: 'Bubblegum Sans', cursive;
+    color: #1a237e;
 }
 
 /* Forms */
@@ -88,7 +89,8 @@ h1, h3 {
 
 /* Toasts */
 .custom-toast {
-    border-radius: 5%;
+    background-color: #ffa726;
+    color: #1a237e;
 }
 
 
