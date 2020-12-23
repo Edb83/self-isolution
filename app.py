@@ -152,14 +152,15 @@ def filter_category(category_id):
                            activities=activities, categories=categories, page_title=category["category_name"])
 
 
-# @app.route("/filter/")
-# def filter_age(target_age):
-#     categories = mongo.db.categories.find()
-#     activities = list(mongo.db.activities.find(
-#         {"target_age": target_age}))
+@app.route("/filter_by_age/<target_age>")
+def filter_age(target_age):
+    categories = mongo.db.categories.find()
+    activities = list(mongo.db.activities.find(
+        {"target_age": target_age}))
 
-#     return render_template("activities.html",
-#                            activities=activities, categories=categories)
+    return render_template("activities.html",
+                           activities=activities, categories=categories,
+                           page_title=f"Activities for {target_age.lower()} year olds", )
 
 
 @app.route("/register", methods=["GET", "POST"])
