@@ -27,7 +27,7 @@ main {
 }
 
 #welcome-img {
-    width: 100%;
+    width: 90%;
 }
 
 /* Remove iOS display of carets on select forms */
@@ -64,6 +64,10 @@ nav ul a:hover {
 #profile-dropdown a {
     color: #1a237e;
     text-shadow: none;
+}
+
+#profile-dropdown li>a:hover {
+    background-color: #e8eaf6;
 }
 
 /* Headings */

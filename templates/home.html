@@ -5,9 +5,15 @@
 
 {% block welcome %}
 <section>
-    <div id="welcome-img-container">
+    <div id="welcome-img-container" class="center">
         <img id="welcome-img" src="{{ url_for('static', filename='images/street-1431207_1920.jpg') }}" alt="Crayon drawing of a grey street with one colourful house and tall sunflower">
     </div>
+        <div class="row">
+            <div class="col s12 center">
+                <h3>Trapped with your kids at home?</h3>
+            </div>
+        </div>
+    
 </section>
 
 {% endblock %}

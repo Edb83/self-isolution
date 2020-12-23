@@ -15,7 +15,8 @@
 ## DONE Add category stats (number of and list of 3)
 - Add search functionality for age and category show as chips
 ## DONE Combine user/admin options under Profile
-- Add toasts
+## DONE Add toasts
+- Add edit user ??
 - Add delete user ??
 - Add likes/favourites (as list in mongodb?) ??
 - Add 'unassigned category' for activities on deletion of category
