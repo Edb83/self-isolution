@@ -52,7 +52,7 @@ nav ul a {
 }
 
 nav ul a:hover {
-    background-color: #283593;
+    background-color: #1a237e;
 }
 
 #profile-dropdown a {
@@ -63,7 +63,6 @@ nav ul a:hover {
 /* Headings */
 h3 {
     font-family: 'Bubblegum Sans', cursive;
-    color: #382396;
 }
 
 /* Forms */
@@ -72,18 +71,13 @@ h3 {
 }
 
 /* Buttons */
-.btn-reset {
-    background-color: #EE6055;
-}
 
-.btn-submit {
-    background-color: #79B791;
+.btn-floating.halfway-fab {
+    border: solid 1px;
 }
 
 /* Toasts */
 .custom-toast {
-    background-color: #79B791;
-    color: #fff;
     border-radius: 5%;
 }
 
@@ -104,12 +98,15 @@ h3 {
         text-overflow: ellipsis;
 }
 
-.card-action {
-    color: #1A237E;
-}
 
 .card .card-action {
     padding: 16px 24px 16px 12px;
+}
+
+.card-action-link {
+    text-transform: none !important;
+    color: #000 !important;
+    margin-right: 0 !important;
 }
 
 /* .card-summary {

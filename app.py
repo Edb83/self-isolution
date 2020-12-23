@@ -137,12 +137,23 @@ def search():
 
 @app.route("/filter/<category_id>")
 def filter_category(category_id):
+    categories = list(mongo.db.categories.find())
     category = mongo.db.categories.find_one({"_id": ObjectId(category_id)})
     activities = list(mongo.db.activities.find(
         {"category_name": category["category_name"]}))
 
     return render_template("activities.html", category=category,
-                           activities=activities, page_title="Activities for " + str(category["category_name"]))
+                           activities=activities, categories=categories, page_title=category["category_name"])
+
+
+# @app.route("/filter/")
+# def filter_age(target_age):
+#     categories = mongo.db.categories.find()
+#     activities = list(mongo.db.activities.find(
+#         {"target_age": target_age}))
+
+#     return render_template("activities.html",
+#                            activities=activities, categories=categories)
 
 
 @app.route("/register", methods=["GET", "POST"])
