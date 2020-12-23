@@ -138,10 +138,11 @@ def get_activities():
 def search():
     query = request.form.get("query")
     activities = list(mongo.db.activities.find({"$text": {"$search": query}}))
-    return render_template("activities.html", activities=activities)
+    return render_template("activities.html", activities=activities,
+                           page_heading=f"Results for '{query}'")
 
 
-@app.route("/filter/<category_id>")
+@app.route("/filter/category/<category_id>")
 def filter_category(category_id):
     categories = list(mongo.db.categories.find())
     category = mongo.db.categories.find_one({"_id": ObjectId(category_id)})
@@ -149,18 +150,19 @@ def filter_category(category_id):
         {"category_name": category["category_name"]}))
 
     return render_template("activities.html", category=category,
-                           activities=activities, categories=categories, page_title=category["category_name"])
+                           activities=activities, categories=categories,
+                           page_heading=f"Activities for {category['category_name']}")
 
 
-@app.route("/filter_by_age/<target_age>")
+@app.route("/filter/age/<target_age>")
 def filter_age(target_age):
-    categories = mongo.db.categories.find()
+    categories = list(mongo.db.categories.find())
     activities = list(mongo.db.activities.find(
         {"target_age": target_age}))
 
     return render_template("activities.html",
                            activities=activities, categories=categories,
-                           page_title=f"Activities for {target_age.lower()} year olds", )
+                           page_heading=f"Activities for {target_age.lower()} years old")
 
 
 @app.route("/register", methods=["GET", "POST"])
