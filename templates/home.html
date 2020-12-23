@@ -1,17 +1,24 @@
 {% extends "base.html" %}
 {% block title %}Self Isolution - Home{% endblock %}
+{% block nav_home %}active{% endblock %}
+{% block nav_home_mob %}active{% endblock %}
 
 {% block welcome %}
-<section id="welcome">
-    <div id="hero-img">
-        
+<section>
+    <div id="welcome-img-container">
+        <img id="welcome-img" src="{{ url_for('static', filename='images/street-1431207_1920.jpg') }}" alt="Crayon drawing of a grey street with one colourful house and tall sunflower">
     </div>
 </section>
+
 {% endblock %}
 
 {% block content %}
 
-<section id="popular-activities"></section>
+<section>
+    <container>
+        
+    </container>
+</section>
 
 
 {% endblock %}

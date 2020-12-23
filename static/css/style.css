@@ -12,7 +12,7 @@ main {
 }
 
 /* Home page */
-#hero-img {
+/* #hero-img {
     background-image: url(../images/street-1431207_1920.jpg);
     background-size: contain;
     background-position: top;
@@ -20,14 +20,20 @@ main {
     width: 100%;
     height: 50vh;
     margin-top: 2rem;
+} */
+
+#welcome-img-container {
+    margin-top: 2rem;
+}
+
+#welcome-img {
+    width: 100%;
 }
 
 /* Remove iOS display of carets on select forms */
 select {
     -webkit-appearance: none; 
 }
-
-
 
 
 /* Text */
@@ -61,7 +67,7 @@ nav ul a:hover {
 }
 
 /* Headings */
-h3 {
+h1, h3 {
     font-family: 'Bubblegum Sans', cursive;
 }
 
