@@ -34,14 +34,14 @@
                             <a href="{{ url_for('home') }}" class="brand-logo left text-shadow">Self Isolution</a>
                             <a href="#" data-target="mobile-navbar" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
                             <ul class="right hide-on-med-and-down text-shadow">
-                                <li><a href="{{ url_for('home') }}">Home</a></li>
-                                <li><a href="{{ url_for('get_activities') }}">Activities</a></li>
-                                <li><a href="{{ url_for('get_categories') }}">Categories</a></li>
+                                <li class="{% block nav_home %}{% endblock %}"><a href="{{ url_for('home') }}">Home</a></li>
+                                <li class="{% block nav_activities %}{% endblock %}"><a href="{{ url_for('get_activities') }}">Activities</a></li>
+                                <li class="{% block nav_categories %}{% endblock %}"><a href="{{ url_for('get_categories') }}">Categories</a></li>
                                 {% if session.user %}
-                                    <li><a class="dropdown-trigger" href="#!" data-target="profile-dropdown">Profile <i class="fas fa-caret-down right"></i></a></li>
+                                    <li class="{% block nav_profile %}{% endblock %}"><a class="dropdown-trigger" href="#!" data-target="profile-dropdown">Profile <i class="fas fa-caret-down right"></i></a></li>
                                 {% else %}
-                                    <li><a href="{{ url_for('register') }}">Register</a></li>
-                                    <li><a href="{{ url_for('login') }}">Log In</a></li>
+                                    <li class="{% block nav_register %}{% endblock %}"><a href="{{ url_for('register') }}">Register</a></li>
+                                    <li class="{% block nav_login %}{% endblock %}"><a href="{{ url_for('login') }}">Log In</a></li>
                                 {% endif %}
                             </ul>
                         </div>
@@ -53,21 +53,21 @@
         <!-- mobile navbar -->
         <ul class="sidenav" id="mobile-navbar">
             <li><a href="#!"><h4 id="nav-sidebar-header" class="brand-logo indigo-text text-darken-4">Self Isolution</h4></a></li>
-            <li><a href="{{ url_for('home') }}">Home</a></li>
-            <li><a href="{{ url_for('get_activities') }}">Activities</a></li>
-            <li><a href="{{ url_for('get_categories') }}">Categories</a></li>
+            <li class="{% block nav_home_mob %}{% endblock %}"><a href="{{ url_for('home') }}">Home</a></li>
+            <li class="{% block nav_activities_mob %}{% endblock %}"><a href="{{ url_for('get_activities') }}">Activities</a></li>
+            <li class="{% block nav_categories_mob %}{% endblock %}"><a href="{{ url_for('get_categories') }}">Categories</a></li>
             {% if session.user %}
                 <li class="divider"></li>
-                <li><a href="{{ url_for('add_activity') }}">Add Activity</a></li>
+                <li class="{% block nav_add_activity_mob %}{% endblock %}"><a href="{{ url_for('add_activity') }}">Add Activity</a></li>
                 {% if session.user|lower == "admin"|lower %}
-                    <li><a href="{{ url_for('add_category') }}">Add Category</a></li>
+                    <li class="{% block nav_add_category_mob %}{% endblock %}"><a href="{{ url_for('add_category') }}">Add Category</a></li>
                 {% endif %}
-                <li><a href="{{ url_for('profile', username=session['user']) }}">Profile</a></li>
+                <li class="{% block nav_profile_mob %}{% endblock %}"><a href="{{ url_for('profile', username=session['user']) }}">Profile</a></li>
                 <li><a href="{{ url_for('logout') }}">Log Out</a></li>
             {% else %}
                 <li class="divider"></li>
-                <li><a href="{{ url_for('register') }}">Register</a></li>
-                <li><a href="{{ url_for('login') }}">Log In</a></li>
+                <li class="{% block nav_register_mob %}{% endblock %}"><a href="{{ url_for('register') }}">Register</a></li>
+                <li class="{% block nav_login_mob %}{% endblock %}"><a href="{{ url_for('login') }}">Log In</a></li>
             {% endif %}
         </ul>
     </header>
