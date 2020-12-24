@@ -2,9 +2,39 @@
 {% block title %}Self Isolution - {{ activity.activity_name }}{% endblock %}
 
 {% block content %}
+    <div class="view-activity-image-container center-align">
+        <img src="{{ activity.image_file }}" alt="" class="view-activity-image responsive-img">
+    </div>
+    <div class="activity-heading-container">
+        <h3 class="section-heading center">
+        {{ activity.activity_name }}
+            {% if session.user|lower == activity.created_by|lower %}
+                <a href="{{ url_for('edit_activity', activity_id=activity._id) }}"><i class="activity-edit-icon fas fa-edit right"></i></a>
+            {% endif %}
+        </h3>    
+    </div>
+    
+    <div class="activity-creation-summary-container center-align">
+        <p class="activity-creation-summary">
+            added by {{ activity.created_by }} on {{ activity.date_added }}
+        </p> 
+    </div>
+    <div class="activity-details-container">
+        {% for para in activity.activity_details.splitlines() %}
+            <p class="flow-text">{{ para }}</p>
+        {% endfor %}
+    </div>
+    <div class="activity-equipment-container center-align">
+        {% for item in activity.activity_equipment.splitlines() %}
+            <div class="chip activity-equipment-chip">
+                {{ item }}
+            </div>
+        {% endfor %}
+    </div>
+    
 
-    <div class="row card-panel">
-        <div class="col s12 center-align" id="activity-header">
+    <!-- <div class="row">
+        <div class="col s12" id="activity-header">
             <div class="col s6">
                 <div class="chip activity-age-chip">
                     <i class="fas fa-child"></i><span class="activity-chip-text"> {{ activity.target_age }}</span>
@@ -49,7 +79,7 @@
             {% endif %}
         </div>
 
-    </div>
+    </div> -->
     
 
 {% endblock %}
