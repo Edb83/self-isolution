@@ -114,9 +114,9 @@ nav ul a:hover {
         text-overflow: ellipsis;
 }
 
-.card .card-action {
+/* .card .card-action {
     padding: 16px 24px 16px 12px;
-}
+} */
 
 .card-action-link {
     text-transform: none !important;

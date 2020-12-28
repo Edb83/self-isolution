@@ -11,13 +11,13 @@
                 {{ activity.activity_name }}
             </h3>
         </div>
-            {% if session.user|lower == activity.created_by|lower %}
+        {% if session.user|lower == activity.created_by|lower %}
             <div class="col s2">
                 <h3 class="activity-heading">
                     <a href="{{ url_for('edit_activity', activity_id=activity._id) }}" class="btn-floating teal darken-1"><i class="fas fa-pencil-alt"></i></a>
                 </h3>
             </div>
-            {% endif %}
+        {% endif %}
     </div>
     
     <div class="activity-creation-summary-container center-align">
