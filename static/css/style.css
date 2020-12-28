@@ -74,6 +74,7 @@ nav ul a:hover {
 .section-heading, .card-heading {
     font-family: 'Bubblegum Sans', cursive;
     color: #1a237e;
+    display: inline-flex;
 }
 
 /* Forms */
@@ -147,8 +148,12 @@ nav ul a:hover {
     margin: 0 0.5rem;
 }
 
-.activity-edit-icon:before {
-    position: absolute;
+.activity-heading-row {
+    margin-bottom: 0;
+}
+
+.activity-creation-summary {
+    margin-top: 0;
 }
 
 

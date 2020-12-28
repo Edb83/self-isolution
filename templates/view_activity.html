@@ -5,13 +5,19 @@
     <div class="view-activity-image-container center-align">
         <img src="{{ activity.image_file }}" alt="" class="view-activity-image responsive-img">
     </div>
-    <div class="activity-heading-container">
-        <h3 class="section-heading center">
-        {{ activity.activity_name }}
+    <div class="row center activity-heading-row">
+        <div class="col s8 offset-s2">
+            <h3 class="section-heading">
+                {{ activity.activity_name }}
+            </h3>
+        </div>
             {% if session.user|lower == activity.created_by|lower %}
-                <a href="{{ url_for('edit_activity', activity_id=activity._id) }}"><i class="activity-edit-icon fas fa-edit right"></i></a>
+            <div class="col s2">
+                <h3 class="section-heading">
+                    <a href="{{ url_for('edit_activity', activity_id=activity._id) }}" class="btn-floating teal darken-1"><i class="fas fa-pencil-alt"></i></a>
+                </h3>
+            </div>
             {% endif %}
-        </h3>    
     </div>
     
     <div class="activity-creation-summary-container center-align">
