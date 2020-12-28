@@ -91,6 +91,11 @@ nav ul a:hover {
     border: solid 1px;
 }
 
+.category-icon {
+    padding: 0 !important;
+    margin: .75rem !important;
+}
+
 /* Toasts */
 .custom-toast {
     background-color: #ffa726;

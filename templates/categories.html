@@ -13,21 +13,31 @@
                     <div class="card-image waves-effect waves-block waves-light">
                         <img class="activator" src="{{ category.image_file }}">
                     </div>
-                    <div class="card-content">
-                        <div class="col-12 center-align">
-                            <span class="card-title activator grey-text text-darken-4">{{ category.category_name }}<i class="fas fa-info-circle right"></i></span>
-                       </div>
+                    <div class="center valign-wrapper">
+                        <div class="col s2 category-icon">
+                            {% if session.user|lower == "admin"|lower %}
+                                <button data-target="{{ category._id }}" class="btn-floating modal-trigger red">
+                                    <i class="fas fa-trash-alt "></i>
+                                </button>
+                            {% endif %}
+                        </div>
+                        <div class="col s8 card-title activator grey-text text-darken-4 truncate">
+                            {{ category.category_name }}
+                        </div>
+                        <div class="col s2 category-icon">
+                            {% if session.user|lower == "admin"|lower %}
+                                <a href="{{ url_for('edit_category', category_id=category._id) }}"
+                                    class="btn-floating teal darken-1">
+                                    <i class="fas fa-pencil-alt "></i>
+                                </a>
+                            {% endif %}
+                        </div>
                     </div>
-                <div class="col s12 card-action">
-                    <div class="col-12 center-align">
-                    {% if session.user|lower == "admin"|lower %}
-                        <a href="{{ url_for('edit_category', category_id=category._id) }}" class="waves-effect waves-light btn teal darken-1">Edit</a>
-                        <!-- <button data-target="{{ category._id }}" class="btn modal-trigger red">Delete</button> -->
-                    {% endif %}
+                    
+                <div class="col s12 card-action center">
                     {% if category.activity_list|length > 0 %}
                         <a href="{{ url_for('filter_category', category_id=category._id) }}" class="waves-effect waves-light btn indigo darken-1">View ({{ category.activity_list|count }})</a>
                     {% endif %}
-                    </div>
                 </div>
                     <div class="card-reveal light-green lighten-5">
                         <span class="card-title grey-text text-darken-4">{{ category.category_name }} ?<i class="fas fa-times-circle right"></i></span>
