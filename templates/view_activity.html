@@ -13,7 +13,7 @@
         </div>
             {% if session.user|lower == activity.created_by|lower %}
             <div class="col s2">
-                <h3 class="section-heading">
+                <h3 class="activity-heading">
                     <a href="{{ url_for('edit_activity', activity_id=activity._id) }}" class="btn-floating teal darken-1"><i class="fas fa-pencil-alt"></i></a>
                 </h3>
             </div>

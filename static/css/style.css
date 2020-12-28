@@ -74,6 +74,9 @@ nav ul a:hover {
 .section-heading, .card-heading {
     font-family: 'Bubblegum Sans', cursive;
     color: #1a237e;
+}
+
+.activity-heading {
     display: inline-flex;
 }
 
