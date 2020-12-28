@@ -3,8 +3,22 @@
 {% block nav_activities %}active{% endblock %}
 {% block nav_activities_mob %}active{% endblock %}
 {% block content %}
-
-    <h3 class="center-align section-heading">{{ page_heading }}</h3>
+    <div class="row section-heading center">
+        <div class="col s8 offset-s2">
+            <h3>{{ page_heading }}</h3>
+        </div>
+        <div class="col s2">
+             {% if session.user %}
+                <h3>
+                    <a href="{{ url_for('add_activity') }}"
+                    class="btn-floating teal darken-1 pulse">
+                    <i class="fas fa-plus"></i>
+                </a>
+                </h3>
+            {% endif %}
+        </div>
+    </div>
+    
 
     <div class="row card-panel grey lighten-5">
         <form action="{{ url_for('search') }}" method="post" class="col s12">
