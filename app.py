@@ -245,7 +245,7 @@ def logout():
 @app.route("/add_activity", methods=["GET", "POST"])
 def add_activity():
     ages = ["Under 2", "2-4", "4-6", "6+"]
-    categories = mongo.db.categories.find().sort("category_name", 1)
+    categories = list(mongo.db.categories.find().sort("category_name", 1))
 
     if request.method == "POST":
         activity = {
@@ -274,7 +274,7 @@ def add_activity():
 @app.route("/edit_activity/<activity_id>", methods=["GET", "POST"])
 def edit_activity(activity_id):
     activity = mongo.db.activities.find_one({"_id": ObjectId(activity_id)})
-    categories = mongo.db.categories.find().sort("category_name", 1)
+    categories = list(mongo.db.categories.find().sort("category_name", 1))
     ages = ["Under 2", "2-4", "4-6", "6+"]
 
     current_category = mongo.db.categories.find_one({"category_name": activity["category_name"]})
