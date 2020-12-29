@@ -265,7 +265,7 @@ def add_activity():
             {"category_name": activity["category_name"]}, {"$push": {"activity_list": ObjectId(new_activity)}})
         flash("Activity added: {}".format(activity["activity_name"]))
 
-        return redirect(url_for("activities"))
+        return redirect(url_for("get_activities"))
 
     return render_template(
         "add_activity.html", categories=categories, ages=ages)
