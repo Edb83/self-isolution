@@ -231,7 +231,7 @@ def profile(username):
             "profile.html", username=username,
             activities=activities, categories=categories)
 
-    return redirect(url_for("activities"))
+    return redirect(url_for("get_activities"))
 
 
 @app.route("/logout")
