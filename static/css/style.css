@@ -87,6 +87,10 @@ nav ul a:hover {
 
 /* Buttons */
 
+.add-item-button-container {
+    place-content: center;
+}
+
 .btn-floating.halfway-fab {
     border: solid 1px;
 }
@@ -94,6 +98,10 @@ nav ul a:hover {
 .category-icon {
     padding: 0 !important;
     margin: .75rem !important;
+}
+
+.pulse::before {
+    animation: pulse-animation 2.5s cubic-bezier(0.24, 0, 0.38, 1) infinite;
 }
 
 /* Toasts */
