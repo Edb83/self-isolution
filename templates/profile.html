@@ -59,7 +59,10 @@
             </div>
         </div>
     {% else %}
-        <h3 class="red-text text-darken-4 center-align">You have not added any activities... yet! Click <a href="{{ url_for('add_activity') }}">here</a> to share your snippets of wisdom!</h3>
+        <div class="no-results-container flow-text indigo-text text-darken-4 center-align">
+            <p>You have not added any activities... yet!</p>
+            <p>Click <a href="{{ url_for('add_activity') }}">here</a> to share your snippets of wisdom!</p>
+        </div>
     {% endif %}
 
 {% endblock %}

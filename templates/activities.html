@@ -84,7 +84,15 @@
             {% endfor %}
         </div>
     {% else %}
-        <h3 class="">No Results Found</h3>
+        <div class="no-results-container flow-text indigo-text text-darken-4 center-align">
+            {% if session.user %}
+                <p>There were no activities to be found...</p>
+                <p>Click <a href="{{ url_for('add_activity') }} ">here</a> to add your own!</p>
+            {% else %}
+                <p>No results were found <i class="fas fa-sad-cry"></i></p>
+                <p><a href="{{ url_for('login') }}">Log In</a> or <a href="{{ url_for('register') }}">Register</a> to fill in the blanks!</p>
+            {% endif %}
+        </div>
     {% endif %}        
 
 {% endblock %}
