@@ -3,7 +3,14 @@
 
 {% block content %}
     <div class="view-activity-image-container center-align">
-        <img src="{{ activity.image_file }}" alt="" class="view-activity-image responsive-img">
+        {% if activity.image_file == "" %}
+            {% for category in categories if category.category_name == activity.category_name %}
+                <img src="{{ category.image_file }}" alt="" class="view-activity-image responsive-img">
+            {% endfor %}
+        {% else %}
+            <img src="{{ activity.image_file }}" alt="" class="view-activity-image responsive-img">
+        {% endif %}
+        <!-- <img src="{{ activity.image_file }}" alt="" class="view-activity-image responsive-img"> -->
     </div>
     <div class="row center activity-heading-row">
         <div class="col s8 offset-s2">
@@ -33,9 +40,9 @@
     <div class="activity-equipment-container center-align">
         {% if activity.activity_equipment.splitlines()|length > 0 %}
             <p class="equipment-needed-text"><i class="fas fa-box-open prefix"></i> Things you'll need:</p>
-            {% for item in activity.activity_equipment.splitlines() %}
+            {% for item in activity.activity_equipment.splitlines()|unique %}
                 <div class="chip activity-equipment-chip">
-                    {{ item }}
+                    {{- item -}}
                 </div>
             {% endfor %}
         {% else %}
