@@ -31,11 +31,16 @@
         {% endfor %}
     </div>
     <div class="activity-equipment-container center-align">
-        {% for item in activity.activity_equipment.splitlines() %}
-            <div class="chip activity-equipment-chip">
-                {{ item }}
-            </div>
-        {% endfor %}
+        {% if activity.activity_equipment.splitlines()|length > 0 %}
+            <p class="equipment-needed-text"><i class="fas fa-box-open prefix"></i> Things you'll need:</p>
+            {% for item in activity.activity_equipment.splitlines() %}
+                <div class="chip activity-equipment-chip">
+                    {{ item }}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="equipment-needed-text"><i class="fas fa-box-open prefix"></i> You won't need anything extra for this one!</p>
+        {% endif %}
     </div>
     
 

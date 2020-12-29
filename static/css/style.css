@@ -172,6 +172,12 @@ nav ul a:hover {
     margin-top: 0;
 }
 
+.equipment-needed-text {
+    color: #1a237e;
+    font-weight: 600;
+    word-spacing: 0.2rem;
+}
+
 
 /* .card-summary {
     font-size: 1.2em;
