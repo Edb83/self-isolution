@@ -39,7 +39,6 @@
                                 <div class="collapsible-body">
                                     <p>{{ activity.activity_summary }}</p>
                                     <a href="{{ url_for('edit_activity', activity_id=activity._id) }}" class="waves-effect waves-light btn">Edit</a>
-                                    <!-- <a href="{{ url_for('delete_activity', activity_id=activity._id) }}" class="waves-effect waves-light btn right">Delete</a> -->
                                     <button data-target="{{ activity._id }}" class="btn modal-trigger">Delete</button>
                                 </div>
                             </li>

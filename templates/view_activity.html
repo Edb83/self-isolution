@@ -10,7 +10,6 @@
         {% else %}
             <img src="{{ activity.image_file }}" alt="" class="view-activity-image responsive-img">
         {% endif %}
-        <!-- <img src="{{ activity.image_file }}" alt="" class="view-activity-image responsive-img"> -->
     </div>
     <div class="row center activity-heading-row">
         <div class="col s8 offset-s2">
@@ -49,55 +48,5 @@
             <p class="equipment-needed-text"><i class="fas fa-box-open prefix"></i> You won't need anything extra for this one!</p>
         {% endif %}
     </div>
-    
-
-    <!-- <div class="row">
-        <div class="col s12" id="activity-header">
-            <div class="col s6">
-                <div class="chip activity-age-chip">
-                    <i class="fas fa-child"></i><span class="activity-chip-text"> {{ activity.target_age }}</span>
-                </div>
-            </div>
-            <div class="col s6">
-                <div class="chip activity-category-chip">
-                    <i class="fas fa-folder-open"></i><span class="activity-chip-text"> {{ activity.category_name }}</span>
-                </div>
-            </div>
-        </div>
-        <h3 class="center-align card-heading">{{ activity.activity_name }}</h3>
-        <div id="activity-body" class="col s12">
-            <div id="activity-image" class="col s12 xl6 center-align">
-                <img class="responsive-img" src="{{ activity.image_file }}" alt="">
-            </div>
-            <div class="col s12 xl6">
-                <h5>{{ activity.activity_summary }}</h5>
-                <div class="row activity-creation-container">
-                    <div class="col s6">{{ activity.created_by }}</div>
-                    <div class="col s6 right-align">{{ activity.date_added }}</div>
-                    
-                </div>
-                
-                {% for para in activity.activity_details.splitlines() %}
-                    <p>{{ para }}</p>
-                {% endfor %}
-            </div>
-        </div>
-        <div id="activity-equipment-container" class="col s12 center-align">
-                {% for item in activity.activity_equipment.splitlines() %}
-                    <div class="chip activity-equipment-chip">
-                       {{ item }}
-                    </div>
-                {% endfor %}
-        </div>
-
-        <div class="col s12 center-align" id="activity-buttons-container">
-            <a href="{{ url_for('get_activities') }}" class="waves-effect waves-light btn">Back</a>
-            {% if session.user|lower == activity.created_by|lower %}
-            <a href="{{ url_for('edit_activity', activity_id=activity._id) }}" class="waves-effect waves-light btn">Edit</a>
-            {% endif %}
-        </div>
-
-    </div> -->
-    
 
 {% endblock %}

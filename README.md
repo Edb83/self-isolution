@@ -26,7 +26,7 @@
 
 ## DONE Flesh out view_activity
 - Flesh out home
-- Revise category card content
+## DONE Revise category card content
 - Flesh out profile
 - Flesh out footer
 
@@ -37,8 +37,8 @@
 # Styling:
 
 ## DONE Add password/field requirements
-- Fix image handling within cards
-- Check duplicate equipment chips
+## DONE Fix image handling within cards
+## DONE Check duplicate equipment chips
 
 # Project:
 
