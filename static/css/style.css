@@ -1,14 +1,28 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v7.0.29,
+* Autoprefixer: v9.7.6
+* Browsers: last 4 version
+*/
+
 @import url('https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Montserrat&display=swap');
 
 body {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   min-height: 100vh;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   font-family: 'Montserrat', sans-serif;
 }
 
 main {
-  flex: 1 0 auto;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 auto;
+          flex: 1 0 auto;
 }
 
 /* Home page */
@@ -68,6 +82,8 @@ nav ul a:hover {
 }
 
 .activity-heading {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
     display: inline-flex;
 }
 
@@ -92,7 +108,8 @@ nav ul a:hover {
 }
 
 .pulse::before {
-    animation: pulse-animation 2.5s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+    -webkit-animation: pulse-animation 2.5s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+            animation: pulse-animation 2.5s cubic-bezier(0.24, 0, 0.38, 1) infinite;
 }
 
 /* Toasts */
@@ -109,8 +126,10 @@ nav ul a:hover {
 }
 .card .card-image img {
     height: 200px;
-    object-fit: cover;
-    filter: brightness(0.8);
+    -o-object-fit: cover;
+       object-fit: cover;
+    -webkit-filter: brightness(0.8);
+            filter: brightness(0.8);
     width: 100% !important;
 }
 
@@ -120,8 +139,12 @@ nav ul a:hover {
 
 .card-stacked .card-action {
     padding: 0.6rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: space-evenly;
+    -webkit-box-pack: space-evenly;
+        -ms-flex-pack: space-evenly;
+            justify-content: space-evenly;
 }
 
 .card-action-link {
@@ -133,7 +156,8 @@ nav ul a:hover {
 .activities-card-summary {
     overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+       text-overflow: ellipsis;
 }
 
 .profile-card-name-container {
@@ -158,7 +182,8 @@ nav ul a:hover {
 
 .view-activity-image {
     border-radius: 5%;
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+            box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
 }
 
 .view-activity-heading-row {
