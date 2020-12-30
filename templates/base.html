@@ -98,6 +98,9 @@
             <!-- If logged in, show Add Activity -->
             {% if session.user %}
                 <li class="divider"></li>
+                <li class="{% block nav_profile_mob %}{% endblock %}"><a
+                    href="{{ url_for('profile', username=session['user']) }}">Profile</a>
+                </li>
                 <li class="{% block nav_add_activity_mob %}{% endblock %}"><a href="{{ url_for('add_activity') }}">
                     Add Activity</a>
                 </li>
@@ -108,8 +111,6 @@
                         Add Category</a>
                     </li>
                 {% endif %}
-            <li class="{% block nav_profile_mob %}{% endblock %}"><a
-                    href="{{ url_for('profile', username=session['user']) }}">Profile</a></li>
             <li><a href="{{ url_for('logout') }}">Log Out</a></li>
 
             <!-- Otherwise, show Register and Log In -->
