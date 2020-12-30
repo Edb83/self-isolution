@@ -38,10 +38,7 @@
         </div>
     </div>
 
-    <div class="activity-category-and-age-container center-align">
-        <!-- <div class="chip activity-chip--category hoverable">
-            {{ activity.category_name}}
-        </div> -->
+    <div class="activity-category-and-age-container">
         <a href="{{ url_for('filter_age', target_age=activity.target_age) }}">
             <div class="chip activity-chip--age hoverable">
                 <i class="fas fa-child prefix"></i>  {{ activity.target_age }}
@@ -67,10 +64,9 @@
             added by {{ activity.created_by }} on {{ activity.date_added }}
         </p> 
     </div>
-
-    <div class="activity-equipment-container center-align">
+    <p class="equipment-needed-text center"><i class="fas fa-box-open prefix"></i> Things you'll need:</p>
+    <div class="activity-equipment-container">
         {% if activity.activity_equipment.splitlines()|length > 0 %}
-            <p class="equipment-needed-text"><i class="fas fa-box-open prefix"></i> Things you'll need:</p>
             {% for item in activity.activity_equipment.splitlines()|unique %}
                 <div class="chip activity-chip--equipment">
                     {{- item -}}

@@ -214,6 +214,11 @@ nav ul a:hover {
     margin-bottom: 0;
 }
 
+.activity-category-and-age-container {
+    display: flex;
+    place-content: space-evenly;
+}
+
 .activity-chip--category {
     color: #000;
     background-color: #ffa726;
@@ -226,6 +231,8 @@ nav ul a:hover {
 
 .activity-equipment-container {
     margin: 2rem 0;
+    display: flex;
+    place-content: center;
 }
 
 .activity-chip--equipment {
