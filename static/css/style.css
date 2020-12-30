@@ -112,6 +112,15 @@ nav ul a:hover {
             animation: pulse-animation 2.5s cubic-bezier(0.24, 0, 0.38, 1) infinite;
 }
 
+.form-button-container {
+    display: flex;
+    place-content: center;
+}
+
+.form-button {
+    padding: 0.5em;
+}
+
 /* Toasts */
 .custom-toast {
     background-color: #ffa726;
