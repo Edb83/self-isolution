@@ -136,6 +136,15 @@ nav ul a:hover {
     text-overflow: ellipsis;
 }
 
+.profile-card-name-container {
+    min-height: 66%;
+}
+
+.profile-card-name {
+    color: #1a237e;
+    font-weight: 600;
+}
+
 .no-results-container {
     padding: 2rem;
 }
@@ -181,7 +190,7 @@ nav ul a:hover {
 }
 
 .activity-creation-summary {
-    margin-top: 0;
+    color: #3949ab;
     border-bottom: thin solid #3949ab;
     padding-bottom: 2rem;
 }
