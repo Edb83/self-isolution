@@ -114,11 +114,11 @@ nav ul a:hover {
     width: 100% !important;
 }
 
-.card .card-content {
+.card-stacked .card-content {
     padding: 1rem;
 }
 
-.card .card-action {
+.card-stacked .card-action {
     padding: 0.6rem;
     display: flex;
     justify-content: space-evenly;
@@ -130,11 +130,11 @@ nav ul a:hover {
     margin-right: 0 !important;
 }
 
-.activities-card-summary {
+/* .activities-card-summary {
     overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-}
+    white-space: nowrap;
+    text-overflow: ellipsis;
+} */
 
 .no-results-container {
     padding: 2rem;
@@ -180,122 +180,6 @@ nav ul a:hover {
     font-weight: 600;
     word-spacing: 0.2rem;
 }
-
-
-/* .card-summary {
-    font-size: 1.2em;
-    color: #13557e;
-}
-
-
-.card-headline {
-    letter-spacing: 0.1px;
-} */
-
-/* .activities-card-info-container {
-    min-height: 5rem;
-} */
-
-
-/* .dropdown-content li>a {
-    color: #8e24aa;
-} */
-
-
-/* .file-field .file-path-wrapper {
-    padding-left: 3rem;
-} */
-
-/* .card {
-    border-radius: 5%;
-} */
-
-/* .card .card-image img {
-    border-radius: 5% 5% 0 0;
-    height: 200px;
-    object-fit: cover;
-    filter: brightness(0.8);
-} */
-
-/* .card-summary {
-    font-size: 1.2em;
-    color: #13557e;
-} */
-
-
-/* .card-headline {
-    letter-spacing: 0.1px;
-} */
-
-/* .activities-card-info-container {
-    min-height: 5rem;
-} */
-
-/* .activities-card-summary {
-    overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-} */
-
-/* #activity-header {
-    border-bottom: solid thin;
-    margin-bottom: inherit;
-    padding-bottom: 1rem;
-} */
-
-/* #activity-body {
-    margin-bottom: 2rem;
-} */
-
-/* #activity-body img {
-    border-radius: 5%;
-} */
-
-/* #activity-buttons-container .btn{
-    margin: 0 1rem;
-} */
-
-/* #activity-equipment-container {
-    margin-bottom: 2rem;
-}
-
-.chip {
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
-    white-space: nowrap;
-}
-
-.activity-age-chip {
-    color: rgb(255 255 255);
-    background-color: #2a9a6f;
-}
-
-.activity-category-chip {
-    color: rgb(255 255 255);
-    background-color: #da1f56;
-}
-.activity-equipment-chip {
-    color: rgb(255 255 255);
-    background-color: #0077ff;
-    margin: 0 0.5rem;
-} */
-
-
-
-/* nav ul a {
-    font-size: 1.2rem;
-} */
-
-/* h3 {
-    font-family: 'Bubblegum Sans', cursive;
-} */
-
-/* #nav-sidebar-header {
-    margin-left: 2rem;
-} */
-
-
-
-
 
 /* Media queries */
 
