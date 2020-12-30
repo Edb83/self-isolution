@@ -11,8 +11,18 @@
             <img src="{{ activity.image_file }}" alt="" class="view-activity-image responsive-img">
         {% endif %}
     </div>
+
     <div class="row center activity-heading-row">
-        <div class="col s8 offset-s2">
+        {% if session.user|lower == activity.created_by|lower %}
+            <div class="col s2">
+                <h3 class="activity-heading">
+                    <button data-target="{{ activity._id }}" class="btn-floating modal-trigger red">
+                        <i class="fas fa-trash-alt "></i>
+                    </button>
+                </h3>
+            </div>
+        {% endif %}
+        <div class="col s8">
             <h3 class="section-heading">
                 {{ activity.activity_name }}
             </h3>
@@ -31,11 +41,13 @@
             added by {{ activity.created_by }} on {{ activity.date_added }}
         </p> 
     </div>
+
     <div class="activity-details-container">
         {% for para in activity.activity_details.splitlines() %}
             <p class="flow-text">{{ para }}</p>
         {% endfor %}
     </div>
+
     <div class="activity-equipment-container center-align">
         {% if activity.activity_equipment.splitlines()|length > 0 %}
             <p class="equipment-needed-text"><i class="fas fa-box-open prefix"></i> Things you'll need:</p>
@@ -47,6 +59,17 @@
         {% else %}
             <p class="equipment-needed-text"><i class="fas fa-box-open prefix"></i> You won't need anything extra for this one!</p>
         {% endif %}
+    </div>
+
+    <div id="{{ activity._id }}" class="modal">
+        <div class="modal-content">
+            <h4>Confirm deletion</h4>
+            <p>Are you sure you want to delete {{ activity.activity_name }} ?</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-red btn-flat">Cancel</a>
+            <a href="{{ url_for('delete_activity', activity_id=activity._id) }}" class="modal-close waves-effect waves-green btn-flat">Delete</a>
+        </div>
     </div>
 
 {% endblock %}
