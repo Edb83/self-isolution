@@ -169,6 +169,12 @@ nav ul a:hover {
        text-overflow: ellipsis;
 }
 
+.profile-intro {
+    padding-bottom: 1rem;
+    border-bottom: thin solid #3949ab;
+}
+
+
 .profile-card-name-container {
     min-height: 66%;
 }
