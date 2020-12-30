@@ -4,60 +4,76 @@
 {% block nav_profile_mob %}active{% endblock %}
 {% block content %}
 
-    <div class="row">
-        <div class="col s12 m8 offset-m2">
-            <div class="card-panel">
-                {{ username }}
-            </div>
+    <div class="flow-text">
+        <p>
+            Hey <strong>{{ username }}!</strong> This is where you can keep track of all the activities you've created, then edit or delete them as you see fit.
+        </p>
+    </div>
+
+    <div class="row section-heading center">
+        <div class="col s8 offset-s2">
+            <h3>My Activities</h3>
+        </div>
+        <div class="col s2">
+            <h3 class="add-item-button-container valign-wrapper">
+                <a href="{{ url_for('add_activity') }}"
+                class="btn-floating orange accent-4 pulse">
+                <i class="fas fa-plus"></i>
+                </a>
+            </h3>
         </div>
     </div>
 
-    <h3 class="center-align section-heading">My activities</h3>
-
     {% if activities|length > 0 %}
         <div class="row">
-            <div class="col s12">
-                <ul class="collapsible popout">
-                    {% for activity in activities %}
-                        {% if session.user|lower == activity.created_by|lower %}
-                            <li>
-                                <div class="collapsible-header">
-                                    <div class="row">
-                                        <div class="col s6">
-                                            <i class="fas fa-caret-down"></i> <strong>{{ activity.activity_name }}</strong>
-                                        </div>
-                                        <div class="col s3 center-align">
-                                            <div class="chip activity-category-chip">
-                                                {{ activity.category_name }}
-                                            </div>
-                                        </div>
-                                        <div class="col s3 right-align">
-                                        {{ activity.date_added }}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="collapsible-body">
-                                    <p>{{ activity.activity_summary }}</p>
-                                    <a href="{{ url_for('edit_activity', activity_id=activity._id) }}" class="waves-effect waves-light btn">Edit</a>
-                                    <button data-target="{{ activity._id }}" class="btn modal-trigger">Delete</button>
-                                </div>
-                            </li>
-                        {% endif %}
-
-                        <div id="{{ activity._id }}" class="modal">
-                            <div class="modal-content">
-                                <h4>Confirm deletion</h4>
-                                <p>Are you sure you want to delete <strong>{{ activity.activity_name }}</strong> ?</p>
+            {% for activity in activities if session.user|lower == activity.created_by|lower %}
+                <div class="col s12 m6 xl4 xxl3">
+                    <div class="card horizontal hoverable indigo lighten-5">
+                        <div class="card-image">
+                            {% if activity.image_file == "" %}
+                                {% for category in categories if category.category_name == activity.category_name %}
+                                        <img src="{{ category.image_file }}" class="responsive-img"/>
+                                {% endfor %}
+                            {% else %}
+                                <img src="{{ activity.image_file }}" />
+                            {% endif %}
+                        </div>
+                        <div class="card-stacked">
+                            <div class="card-content">
+                                <h6>
+                                    {{ activity.activity_name }}
+                                </h6>
                             </div>
-                            <div class="modal-footer">
-                                <a href="#!" class="modal-close waves-effect waves-red btn-flat">Cancel</a>
-                                <a href="{{ url_for('delete_activity', activity_id=activity._id) }}" class="modal-close waves-effect waves-green btn-flat">Delete</a>
+                            <div class="card-action">
+                                <div>
+                                    <button data-target="{{ activity._id }}" class="btn-floating modal-trigger red">
+                                        <i class="fas fa-trash-alt "></i>
+                                    </button>
+                                </div>
+                                <div>
+                                    <a href="{{ url_for('edit_activity', activity_id=activity._id) }}"
+                                        class="btn-floating teal darken-1">
+                                        <i class="fas fa-pencil-alt "></i>
+                                    </a>
+                                </div>
+
                             </div>
                         </div>
-                    {% endfor %}
-                </ul>
-            </div>
+                    </div>
+                </div>
+                <div id="{{ activity._id }}" class="modal">
+                    <div class="modal-content">
+                        <h4>Confirm deletion</h4>
+                        <p>Are you sure you want to delete {{ activity.activity_name }} ?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#!" class="modal-close waves-effect waves-red btn-flat">Cancel</a>
+                        <a href="{{ url_for('delete_activity', activity_id=activity._id) }}" class="modal-close waves-effect waves-green btn-flat">Delete</a>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
+
     {% else %}
         <div class="no-results-container flow-text indigo-text text-darken-4 center-align">
             <p>You have not added any activities... yet!</p>

@@ -111,17 +111,29 @@ nav ul a:hover {
     height: 200px;
     object-fit: cover;
     filter: brightness(0.8);
+    width: 100% !important;
 }
-.activities-card-summary {
-    overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
+
+.card .card-content {
+    padding: 1rem;
+}
+
+.card .card-action {
+    padding: 0.6rem;
+    display: flex;
+    justify-content: space-evenly;
 }
 
 .card-action-link {
     text-transform: none !important;
     color: #000 !important;
     margin-right: 0 !important;
+}
+
+.activities-card-summary {
+    overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
 }
 
 .no-results-container {

@@ -27,7 +27,7 @@
                     <div class="card-image waves-effect waves-block waves-light">
                         <img class="activator" src="{{ category.image_file }}">
                     </div>
-                    <div class="center valign-wrapper">
+                    <div class="card-content center valign-wrapper">
                         <div class="col s2 category-icon">
                             {% if session.user|lower == "admin"|lower %}
                                 <button data-target="{{ category._id }}" class="btn-floating modal-trigger red">
