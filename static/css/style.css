@@ -130,11 +130,11 @@ nav ul a:hover {
     margin-right: 0 !important;
 }
 
-/* .activities-card-summary {
+.activities-card-summary {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-} */
+}
 
 .no-results-container {
     padding: 2rem;
