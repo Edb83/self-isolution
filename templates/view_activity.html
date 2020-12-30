@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Self Isolution - {{ activity.activity_name }}{% endblock %}
+{% block nav_activities %}active{% endblock %}
+{% block nav_activities_mob %}active{% endblock %}
 
 {% block content %}
     <div class="view-activity-image-container center-align">
@@ -12,7 +14,7 @@
         {% endif %}
     </div>
 
-    <div class="row center activity-heading-row">
+    <div class="row view-activity-heading-row center">
         <div class="col s2">
             {% if session.user|lower == activity.created_by|lower %}
                 <h3 class="activity-heading">
@@ -35,24 +37,42 @@
             {% endif %}
         </div>
     </div>
-    
-    <div class="activity-creation-summary-container center-align">
-        <p class="activity-creation-summary">
-            added by {{ activity.created_by }} on {{ activity.date_added }}
-        </p> 
-    </div>
 
+    <div class="activity-category-and-age-container center-align">
+        <!-- <div class="chip activity-chip--category hoverable">
+            {{ activity.category_name}}
+        </div> -->
+        <a href="{{ url_for('filter_age', target_age=activity.target_age) }}">
+            <div class="chip activity-chip--age hoverable">
+                <i class="fas fa-child prefix"></i>  {{ activity.target_age }}
+            </div>
+        </a>
+        {% for category in categories if category.category_name == activity.category_name %}
+            <a href="{{ url_for('filter_category', category_id=category._id) }}" >
+                <div class="chip activity-chip--category hoverable">
+                    <i class="fas fa-folder-open prefix"></i> {{ activity.category_name }}
+                </div>
+            </a>
+        {% endfor %}
+        
+        
+    </div>
     <div class="activity-details-container">
         {% for para in activity.activity_details.splitlines() %}
             <p class="flow-text">{{ para }}</p>
         {% endfor %}
+    </div>
+    <div class="activity-creation-summary-container left-align">
+        <p class="activity-creation-summary">
+            added by {{ activity.created_by }} on {{ activity.date_added }}
+        </p> 
     </div>
 
     <div class="activity-equipment-container center-align">
         {% if activity.activity_equipment.splitlines()|length > 0 %}
             <p class="equipment-needed-text"><i class="fas fa-box-open prefix"></i> Things you'll need:</p>
             {% for item in activity.activity_equipment.splitlines()|unique %}
-                <div class="chip activity-equipment-chip">
+                <div class="chip activity-chip--equipment">
                     {{- item -}}
                 </div>
             {% endfor %}
