@@ -173,11 +173,26 @@ nav ul a:hover {
     padding: 2rem;
 }
 
+/* Categories */
+
+.category-card-action,
+.category-card-content {
+    padding: 1rem !important;
+}
+
+.category-card-icon,
+.category-card-button {
+    padding: 0 !important;
+}
+
+.category-card-reveal {
+    padding: 1rem !important;
+}
+
 /* View Activity */
 
 .view-activity-image-container {
     margin-top: 2rem;
-
 }
 
 .view-activity-image {
