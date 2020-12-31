@@ -137,7 +137,7 @@ def get_activities():
 @app.route("/search", methods=["GET", "POST"])
 def search():
     query = request.form.get("query")
-    activities = list(mongo.db.activities.find({"$text": {"$search": query}}))
+    activities = list(mongo.db.activities.find({"$text": {"$search": query}}).sort("_id", -1))
     return render_template("activities.html", activities=activities,
                            page_heading=f"Results for '{query}'")
 
@@ -147,7 +147,7 @@ def filter_category(category_id):
     categories = list(mongo.db.categories.find())
     category = mongo.db.categories.find_one({"_id": ObjectId(category_id)})
     activities = list(mongo.db.activities.find(
-        {"category_name": category["category_name"]}))
+        {"category_name": category["category_name"]}).sort("_id", -1))
 
     return render_template("activities.html", category=category,
                            activities=activities, categories=categories,
@@ -158,7 +158,7 @@ def filter_category(category_id):
 def filter_age(target_age):
     categories = list(mongo.db.categories.find())
     activities = list(mongo.db.activities.find(
-        {"target_age": target_age}))
+        {"target_age": target_age}).sort("_id", -1))
 
     return render_template("activities.html",
                            activities=activities, categories=categories,
@@ -340,7 +340,7 @@ def view_activity(activity_id):
 @app.route("/categories")
 def get_categories():
     activities = list(mongo.db.activities.find())
-    categories = list(mongo.db.categories.find())
+    categories = list(mongo.db.categories.find().sort("category_name", 1))
 
     return render_template("categories.html", categories=categories, activities=activities)
 

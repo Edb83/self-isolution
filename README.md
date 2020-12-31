@@ -27,7 +27,7 @@
 ## DONE Flesh out view_activity
 - Flesh out home
 ## DONE Revise category card content
-- Flesh out profile
+## DONE Flesh out profile
 - Flesh out footer
 
 # Structure:

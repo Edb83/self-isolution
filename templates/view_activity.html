@@ -65,7 +65,7 @@
         </p> 
     </div>
 
-    <p class="equipment-needed-text center"><i class="fas fa-box-open"></i> Things you'll need:</p>
+    <div class="equipment-needed-text center"><i class="fas fa-box-open"></i> Things you'll need:</div>
     <div class="col s12 activity-equipment-container">
         {% if activity.activity_equipment.splitlines()|length > 0 %}
             {% for item in activity.activity_equipment.splitlines()|unique %}
@@ -74,7 +74,7 @@
                 </div>
             {% endfor %}
         {% else %}
-            <p class="equipment-needed-text"><i class="fas fa-box-open prefix"></i> You won't need anything extra for this one!</p>
+            <div class="equipment-needed-text">You won't need any specialized tools for this one!</div>
         {% endif %}
     </div>
 

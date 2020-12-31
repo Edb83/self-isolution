@@ -255,7 +255,7 @@ nav ul a:hover {
     display: flex;
     place-content: center;
     flex-flow: wrap;
-    padding: 0 2rem 2rem;
+    padding: 1rem 2rem 4rem 2rem;
 }
 
 .activity-equipment-chip {
