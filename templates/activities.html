@@ -3,6 +3,7 @@
 {% block nav_activities %}active{% endblock %}
 {% block nav_activities_mob %}active{% endblock %}
 {% block content %}
+
     <div class="row section-heading center">
         <div class="col s8 offset-s2">
             <h3>{{ page_heading }}</h3>
@@ -19,7 +20,6 @@
         </div>
     </div>
     
-
     <div class="row card-panel grey lighten-5">
         <form action="{{ url_for('search') }}" method="post" class="col s12">
             <div class="row center-align">
@@ -28,13 +28,17 @@
                     <input type="text" name="query" id="query" minlength="3" class="validate" required>
                     <label for="query">Search Activities</label>
                 </div>
-                <div class="col s12">
-                    <a href="{{ url_for('get_activities') }}" class="btn red text-shadow">
-                        <i class="fas fa-redo center-align"></i>
-                    </a>
-                    <button type="submit" class="btn indigo text-shadow">
-                        <i class="fas fa-search center-align"></i>
-                    </button>
+                <div class="col s12 search-button-container">
+                    <div class="search-button">
+                        <a href="{{ url_for('get_activities') }}" class="btn red text-shadow">
+                            <i class="fas fa-redo center-align"></i>
+                        </a>
+                    </div>
+                    <div class="search-button">
+                        <button type="submit" class="btn indigo text-shadow">
+                            <i class="fas fa-search center-align"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </form>
