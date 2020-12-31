@@ -393,6 +393,24 @@ def delete_category(category_id):
     return redirect(url_for('get_categories'))
 
 
+@app.errorhandler(403)
+def forbidden(e):
+    '''Handles any 403 error'''
+    return render_template('403.html'), 403
+
+
+@app.errorhandler(404)
+def not_found(e):
+    '''Handles any 404 error'''
+    return render_template('404.html'), 404
+
+
+@app.errorhandler(500)
+def internal_error(e):
+    '''Handles any 500 error'''
+    return render_template('500.html'), 500
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),

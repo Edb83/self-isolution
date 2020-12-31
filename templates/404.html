@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Self Isolution - Oops!{% endblock %}
+
+{% block content %}
+<div class="row center">
+    <div class="col s12">
+        <div class="error-container">
+            <div class="error-heading">
+                <h1>Oops!</h1>
+            </div>
+            <div class="error-message flow-text">
+                <p>The page couldn't be found.</p>
+                <p><a href="{{ url_for('get_activities') }}">Get back to the activities!</a></p>
+            </div>
+            
+        </div>
+    </div>
+</div>
+{% endblock %}

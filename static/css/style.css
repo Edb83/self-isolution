@@ -285,6 +285,13 @@ nav ul a:hover {
     font-size: 1.1em;
 }
 
+/* 403, 404 and 500 errors */
+
+.error-container {
+    display: flex;
+    flex-direction: column;    
+}
+
 /* Media queries */
 
 @media only screen and (max-width: 600px) {
