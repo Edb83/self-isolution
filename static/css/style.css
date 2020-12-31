@@ -246,10 +246,9 @@ nav ul a:hover {
 }
 
 .activity-details-container {
-    margin: 3rem;
+    margin: 3rem 0;
     border-bottom: thin solid #3949ab;
     border-top: thin solid #3949ab;
-    padding: 1rem 2rem;
 }
 
 .activity-equipment-container {
@@ -293,5 +292,12 @@ nav ul a:hover {
     bottom: auto !important;
     left: auto !important;
     top: 10%;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    .activity-details-container {
+    margin: 3rem;
+    padding: 1rem 2rem;
     }
 }
