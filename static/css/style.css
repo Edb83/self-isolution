@@ -170,6 +170,10 @@ nav ul a:hover {
     margin-right: 0 !important;
 }
 
+.card-action-link:hover {
+    color: #00897b !important;
+}
+
 .activities-card-summary {
     overflow: hidden;
     white-space: nowrap;
@@ -243,6 +247,10 @@ nav ul a:hover {
 
 .activity-info {
     padding: 0.5rem 1rem;
+}
+
+.activity-info a:hover {
+    color: #00897b !important;
 }
 
 .activity-details-container {

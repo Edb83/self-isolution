@@ -12,6 +12,7 @@
 ## DONE Add handling of files > 1mb... see werkzeug 413 error handler - only in production version?
 ## DONE Add resizing of user image uploads and handling of portrait images rotating on resize
 ## DONE Add search functionality for categories.html
+## DONE Add filter by user
 ## DONE Add category stats (number of and list of 3)
 - Add search functionality for age and category show as chips
 ## DONE Combine user/admin options under Profile
@@ -20,7 +21,6 @@
 - Add delete user ??
 - Add likes/favourites (as list in mongodb?) ??
 - Add 'unassigned category' for activities on deletion of category
-
 
 # Content:
 
@@ -33,6 +33,7 @@
 # Structure:
 
 - Merge add category and delete user into 'manage'/admin area
+- Fix routing/error handling - permissions for page access?
 
 # Styling:
 
@@ -72,6 +73,8 @@
 ## Issue: pymongo.errors.InvalidOperation: cannot set options after executing query
 - Solution: to various issues(!) - using list()
 
+## Issue: session-only pages e.g. add activity are accessible even if not logged in by entering url
+- Solution: 
 
 
 

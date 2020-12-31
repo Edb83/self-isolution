@@ -18,7 +18,7 @@
         <div class="col s2">
             {% if session.user|lower == activity.created_by|lower %}
                 <h3 class="activity-heading">
-                    <button data-target="{{ activity._id }}" class="btn-floating modal-trigger white">
+                    <button data-target="{{ activity._id }}" class="btn-floating modal-trigger hoverable white">
                         <i class="fas fa-trash-alt fa-activity-delete"></i>
                     </button>
                 </h3>
@@ -32,7 +32,7 @@
         <div class="col s2">
             {% if session.user|lower == activity.created_by|lower %}
                 <h3 class="activity-heading">
-                    <a href="{{ url_for('edit_activity', activity_id=activity._id) }}" class="btn-floating white">
+                    <a href="{{ url_for('edit_activity', activity_id=activity._id) }}" class="btn-floating hoverable white">
                         <i class="fas fa-pencil-alt fa-activity-edit"></i>
                     </a>
                 </h3>
@@ -43,26 +43,29 @@
     <div class="activity-info-container">
         <div class="activity-info">
             <a href="{{ url_for('filter_age', target_age=activity.target_age) }}" class="grey-text text-darken-3">
-                <i class="fas fa-child prefix"></i>  {{ activity.target_age }}
+                <i class="fas fa-child"></i>  {{ activity.target_age }}
             </a>
         </div>
+
         {% for category in categories if category.category_name == activity.category_name %}
             <div class="activity-info">
                 <a href="{{ url_for('filter_category', category_id=category._id) }}" class="grey-text text-darken-3" >
-                    <i class="fas fa-folder-open prefix"></i> {{ activity.category_name }}
+                    <i class="fas fa-folder-open"></i> {{ activity.category_name }}
                 </a>
             </div>
         {% endfor %}
         
-        
+        <div class="activity-info">
+            <a href="{{ url_for('filter_user', username=activity.created_by) }}" class="grey-text text-darken-3">
+                <i class="fas fa-user"></i>  {{ activity.created_by }}
+            </a>
+        </div>
+
     </div>
     <div class="activity-details-container">
         {% for para in activity.activity_details.splitlines() %}
             <p class="flow-text">{{ para }}</p>
         {% endfor %}
-        <p class="activity-creation-summary">
-            added by {{ activity.created_by }} on {{ activity.date_added }}
-        </p> 
     </div>
 
     <div class="equipment-needed-text center"><i class="fas fa-box-open"></i> Things you'll need:</div>

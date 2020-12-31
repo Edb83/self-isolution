@@ -165,6 +165,17 @@ def filter_age(target_age):
                            page_heading=f"Activities for {target_age.lower()} years old")
 
 
+@app.route("/filter/user/<username>")
+def filter_user(username):
+    categories = list(mongo.db.categories.find())
+    activities = list(mongo.db.activities.find(
+        {"created_by": username}).sort("_id", -1))
+
+    return render_template("activities.html",
+                           activities=activities, categories=categories,
+                           page_heading=f"Activities from {username}")
+
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -333,8 +344,10 @@ def delete_activity(activity_id):
 @app.route("/view_activity/<activity_id>")
 def view_activity(activity_id):
     activity = mongo.db.activities.find_one({"_id": ObjectId(activity_id)})
+    user = mongo.db.users.find_one({"username": activity["created_by"]})
     categories = list(mongo.db.categories.find())
-    return render_template("view_activity.html", activity=activity, categories=categories)
+    return render_template("view_activity.html", activity=activity,
+                           categories=categories, user=user)
 
 
 @app.route("/categories")
