@@ -4,6 +4,12 @@
 {% block nav_activities_mob %}active{% endblock %}
 
 {% block content %}
+    <div>
+        <a href="{{ url_for('get_activities') }}" class="waves-effect waves-light btn teal darken-1">
+            <i class="fas fa-undo-alt left"></i>Back to Activities
+        </a>
+    </div>
+
     <div class="view-activity-image-container center-align">
         {% if activity.image_file == "" %}
             {% for category in categories if category.category_name == activity.category_name %}
@@ -15,29 +21,33 @@
     </div>
 
     <div class="row view-activity-heading-row center">
-        <div class="col s2">
-            {% if session.user|lower == activity.created_by|lower %}
+        {% if (session.user|lower == activity.created_by|lower) or (session.user|lower == "admin") %}
+            <div class="col s2">
                 <h3 class="activity-heading">
                     <button data-target="{{ activity._id }}" class="btn-floating modal-trigger hoverable white">
                         <i class="fas fa-trash-alt fa-activity-delete"></i>
                     </button>
                 </h3>
-            {% endif %}
-        </div>
-        <div class="col s8">
-            <h3 class="section-heading">
-                {{ activity.activity_name }}
-            </h3>
-        </div>
-        <div class="col s2">
-            {% if session.user|lower == activity.created_by|lower %}
+            </div>
+            <div class="col s8">
+                <h3 class="section-heading">
+                    {{ activity.activity_name }}
+                </h3>
+            </div>
+            <div class="col s2">
                 <h3 class="activity-heading">
                     <a href="{{ url_for('edit_activity', activity_id=activity._id) }}" class="btn-floating hoverable white">
                         <i class="fas fa-pencil-alt fa-activity-edit"></i>
                     </a>
                 </h3>
-            {% endif %}
-        </div>
+            </div>
+        {% else %}
+            <div class="col s12">
+                <h3 class="section-heading">
+                    {{ activity.activity_name }}
+                </h3>
+            </div>
+        {% endif %}
     </div>
 
     <div class="activity-info-container center-align">
