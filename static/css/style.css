@@ -300,6 +300,14 @@ nav ul a:hover {
     flex-direction: column;    
 }
 
+.error-image-container {
+    margin-top: 2rem;
+}
+
+.error-img {
+    border-radius: 5%;
+}
+
 /* Media queries */
 
 @media only screen and (max-width: 600px) {

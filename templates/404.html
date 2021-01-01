@@ -3,16 +3,19 @@
 
 {% block content %}
 <div class="row center">
+    <div class="col s6 offset-s3 l4 offset-l4">
+        <div class="error-image-container">
+            <img src="{{ url_for('static', filename='images/404.jpg') }}" alt="" class="responsive-img error-img">
+        </div>
+    </div>
     <div class="col s12">
         <div class="error-container">
             <div class="error-heading">
-                <h1>Oops!</h1>
+                <h2>Oops!</h2>
             </div>
             <div class="error-message flow-text">
-                <p>The page couldn't be found.</p>
                 <p><a href="{{ url_for('get_activities') }}">Get back to the activities!</a></p>
             </div>
-            
         </div>
     </div>
 </div>
