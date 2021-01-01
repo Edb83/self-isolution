@@ -246,7 +246,13 @@ nav ul a:hover {
 }
 
 .activity-info {
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.9rem;
+    display: flex;
+}
+
+.activity-info-icon,
+.activity-info-element {
+    display: inherit;
 }
 
 .activity-info a:hover {
@@ -255,6 +261,7 @@ nav ul a:hover {
 
 .activity-details-container {
     margin: 3rem 0;
+    padding: 1rem 0;
     border-bottom: thin solid #3949ab;
     border-top: thin solid #3949ab;
 }
@@ -308,19 +315,29 @@ nav ul a:hover {
     border-radius: 5%;
 }
 
+#toast-container {
+    bottom: auto !important;
+    left: auto !important;
+    top: 10%;
+}
+
 /* Media queries */
 
-@media only screen and (max-width: 600px) {
+/* @media only screen and (max-width: 600px) {
     #toast-container {
     bottom: auto !important;
     left: auto !important;
     top: 10%;
     }
-}
+} */
 
 @media only screen and (min-width: 600px) {
     .activity-details-container {
     margin: 3rem;
     padding: 1rem 2rem;
+    }
+
+    .activity-info {
+    display: block;
     }
 }
