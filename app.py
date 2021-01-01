@@ -122,7 +122,10 @@ def upload_file_to_s3(file):
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template("home.html")
+    activities = list(mongo.db.activities.find().sort("_id", -1))
+    categories = list(mongo.db.categories.find())
+
+    return render_template("home.html", activities=activities, categories=categories)
 
 
 @app.route("/activities")
