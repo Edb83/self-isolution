@@ -125,6 +125,8 @@ nav ul a:hover {
 }
 
 .form-button-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     place-content: center;
 }
@@ -134,8 +136,12 @@ nav ul a:hover {
 }
 
 .search-button-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
 }
 
 .search-button {
@@ -254,12 +260,16 @@ nav ul a:hover {
 }
 
 .activity-info-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     place-content: center;
 }
 
 .activity-info {
     padding: 0.5rem 0.9rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
 }
 
@@ -280,9 +290,12 @@ nav ul a:hover {
 }
 
 .activity-equipment-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     place-content: center;
-    flex-flow: wrap;
+    -ms-flex-flow: wrap;
+        flex-flow: wrap;
     padding: 1rem 2rem 4rem 2rem;
 }
 
@@ -316,8 +329,13 @@ nav ul a:hover {
 /* 403, 404 and 500 errors */
 
 .error-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;    
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;    
 }
 
 /* .error-image-container {
