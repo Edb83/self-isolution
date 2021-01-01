@@ -40,7 +40,7 @@ main {
 }
 
 .welcome-intro {
-    padding-bottom: 2rem;
+    padding-bottom: 2rem !important;
 }
 
 .welcome-block {
@@ -338,9 +338,6 @@ nav ul a:hover {
             flex-direction: column;    
 }
 
-/* .error-image-container {
-    margin-top: 2rem;
-} */
 
 .error-img {
     border-radius: 5%;
