@@ -135,7 +135,7 @@ nav ul a:hover {
     padding: 0.5em;
 }
 
-.search-button-container {
+#search-button-container {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
