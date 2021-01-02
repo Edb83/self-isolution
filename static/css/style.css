@@ -29,6 +29,27 @@ main {
     padding: 2rem 0;
 }
 
+#footer-menu li {
+  display:inline-block;
+  padding: 0 1rem;
+  border-right: thin solid;
+}
+
+#footer-menu li:last-child {
+  border-right: none;
+  padding: 0.5rem 0 0 1rem;
+}
+
+#footer-links li {
+  display:inline-block;
+  padding: 0 1rem;
+}
+
+#footer-menu a,
+#footer-links a {
+    color: #fff;
+}
+
 /* Home page */
 
 #welcome-img-container {

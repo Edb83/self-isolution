@@ -53,27 +53,32 @@
                             <ul class="right hide-on-med-and-down text-shadow">
 
                                 <!-- Various blocks allow to pipe in 'active' class when page loaded -->
-                                <li class="{% block nav_home %}{% endblock %}"><a href="{{ url_for('home') }}">Home</a>
+                                <li class="{% block nav_home %}{% endblock %}">
+                                    <a href="{{ url_for('home') }}">Home</a>
                                 </li>
-                                <li class="{% block nav_activities %}{% endblock %}"><a
-                                        href="{{ url_for('get_activities') }}">Activities</a></li>
-                                <li class="{% block nav_categories %}{% endblock %}"><a
-                                        href="{{ url_for('get_categories') }}">Categories</a></li>
+                                <li class="{% block nav_activities %}{% endblock %}">
+                                    <a href="{{ url_for('get_activities') }}">Activities</a>
+                                </li>
+                                <li class="{% block nav_categories %}{% endblock %}">
+                                    <a href="{{ url_for('get_categories') }}">Categories</a>
+                                </li>
 
                                 <!-- If logged in, show Profile dropdown list (see above) -->
                                 {% if session.user %}
-                                    <li class="{% block nav_profile %}{% endblock %}"><a class="dropdown-trigger" href="#!"
-                                            data-target="profile-dropdown">Profile <i
-                                                class="fas fa-caret-down right"></i></a>
+                                    <li class="{% block nav_profile %}{% endblock %}">
+                                        <a class="dropdown-trigger" href="#!"
+                                            data-target="profile-dropdown">
+                                            Profile <i class="fas fa-caret-down right"></i>
+                                        </a>
                                     </li>
 
                                 <!-- Otherwise, show Register and Log In -->
                                 {% else %}
-                                    <li class="{% block nav_register %}{% endblock %}"><a
-                                            href="{{ url_for('register') }}">Register</a>
+                                    <li class="{% block nav_register %}{% endblock %}">
+                                        <a href="{{ url_for('register') }}">Register</a>
                                     </li>
-                                    <li class="{% block nav_login %}{% endblock %}"><a href="{{ url_for('login') }}">
-                                        Log In</a>
+                                    <li class="{% block nav_login %}{% endblock %}">
+                                        <a href="{{ url_for('login') }}">Log In</a>
                                     </li>
                                 {% endif %}
                             </ul>
@@ -88,36 +93,47 @@
         <ul class="sidenav" id="mobile-navbar">
             <li><a href="#!">
                     <h4 id="nav-sidebar-header" class="brand-logo indigo-text text-darken-4">Self Isolution</h4>
-                </a></li>
-            <li class="{% block nav_home_mob %}{% endblock %}"><a href="{{ url_for('home') }}">Home</a></li>
-            <li class="{% block nav_activities_mob %}{% endblock %}"><a
-                    href="{{ url_for('get_activities') }}">Activities</a></li>
-            <li class="{% block nav_categories_mob %}{% endblock %}"><a
-                    href="{{ url_for('get_categories') }}">Categories</a></li>
+                </a>
+            </li>
+            <li class="{% block nav_home_mob %}{% endblock %}">
+                <a href="{{ url_for('home') }}">Home</a>
+            </li>
+            <li class="{% block nav_activities_mob %}{% endblock %}">
+                <a href="{{ url_for('get_activities') }}">Activities</a>
+            </li>
+            <li class="{% block nav_categories_mob %}{% endblock %}">
+                <a href="{{ url_for('get_categories') }}">Categories</a>
+            </li>
 
             <!-- If logged in, show Add Activity -->
             {% if session.user %}
                 <li class="divider"></li>
-                <li class="{% block nav_profile_mob %}{% endblock %}"><a
-                    href="{{ url_for('profile', username=session['user']) }}">Profile</a>
+                <li class="{% block nav_profile_mob %}{% endblock %}">
+                    <a href="{{ url_for('profile', username=session['user']) }}">Profile</a>
                 </li>
-                <li class="{% block nav_add_activity_mob %}{% endblock %}"><a href="{{ url_for('add_activity') }}">
-                    Add Activity</a>
+                <li class="{% block nav_add_activity_mob %}{% endblock %}">
+                    <a href="{{ url_for('add_activity') }}">Add Activity</a>
                 </li>
 
                 <!-- If admin, show Add Category -->
                 {% if session.user|lower == "admin"|lower %}
-                    <li class="{% block nav_add_category_mob %}{% endblock %}"><a href="{{ url_for('add_category') }}">
-                        Add Category</a>
+                    <li class="{% block nav_add_category_mob %}{% endblock %}">
+                        <a href="{{ url_for('add_category') }}">Add Category</a>
                     </li>
                 {% endif %}
-            <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+            <li>
+                <a href="{{ url_for('logout') }}">Log Out</a>
+            </li>
 
             <!-- Otherwise, show Register and Log In -->
             {% else %}
                 <li class="divider"></li>
-                <li class="{% block nav_register_mob %}{% endblock %}"><a href="{{ url_for('register') }}">Register</a></li>
-                <li class="{% block nav_login_mob %}{% endblock %}"><a href="{{ url_for('login') }}">Log In</a></li>
+                <li class="{% block nav_register_mob %}{% endblock %}">
+                    <a href="{{ url_for('register') }}">Register</a>
+                </li>
+                <li class="{% block nav_login_mob %}{% endblock %}">
+                    <a href="{{ url_for('login') }}">Log In</a>
+                </li>
             {% endif %}
         </ul>
     </header>
@@ -135,24 +151,46 @@
     <!-- Footer -->
 
     <footer class="page-footer indigo darken-1">
-        <div class="container">
-            <div class="row">
-                <div class="col l6 s12">
-                    <h5 class="white-text">Footer Content</h5>
-                    <p class="">You can use rows and columns here to organize your footer content.</p>
-                </div>
-                <div class="col l4 offset-l2 s12">
-                    <h5 class="white-text">Links</h5>
-                    <ul>
-                        <li><a class="" href="#!">Link 1</a></li>
-                    </ul>
-                </div>
+        <div class="row">
+            <div class="col s12 l6 center-align">
+                <h5 class="hide-on-med-and-down white-text">Menu</h5>
+                <ul id="footer-menu">
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('get_activities') }}">Activities</a></li>
+                    <li><a href="{{ url_for('get_categories') }}">Categories</a></li>
+                    {% if session.user %}
+                        <li><a href="{{ url_for('profile', username=session['user']) }}">Profile</a></li>
+                        <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('login') }}">Log In</a></li>
+                        <li><a href="{{ url_for('register') }}">Register</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="col s12 l6 center-align">
+                <h5 class="hide-on-med-and-down white-text">Links</h5>
+                <ul id="footer-links">
+                    <li>
+                        <a href="https://github.com/Edb83" target="_blank" rel="noopener">
+                            <i class="fab fa-github fa-2x"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.instagram.com/" target="_blank" rel="noopener">
+                            <i class="fab fa-instagram fa-2x"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.facebook.com/" target="_blank" rel="noopener">
+                            <i class="fab fa-facebook fa-2x"></i>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
-        <div class="footer-copyright">
-            <div class="container">
-                © 2014 Copyright Text
-                <a class="" href="#!">More Links</a>
+        <div class="row">
+            <div class="col s12 l6 offset-l6 center-align">
+                © 2020 Ed Bradley
             </div>
         </div>
     </footer>
