@@ -39,8 +39,8 @@ main {
     width: 90%;
 }
 
-.welcome-intro {
-    padding-bottom: 2rem !important;
+#welcome-intro {
+    padding-bottom: 1rem !important;
 }
 
 .welcome-block {
@@ -353,5 +353,14 @@ nav ul a:hover {
 
     .activity-info {
     display: block;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    #browse-block {
+        padding-right: 3rem;
+    }
+    #share-block {
+        padding-left: 1rem;
     }
 }

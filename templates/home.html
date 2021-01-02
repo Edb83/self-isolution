@@ -22,7 +22,7 @@
 <section>
 
     <div class="row center">
-        <div class="col s12 welcome-intro">
+        <div class="col s12" id="welcome-intro">
             <h3 class="section-heading">Trapped with your kids at home?</h3>
             <p class="flow-text">
                 As most parents with small children will now realize, the pain of self-isolation due to school closures or coronavirus cases in your bubble is very real. If you're trying to hold a job down while catering to your kids' meritless demands, you'll recognise the need for quick solutions which don't involve a petulant pig or some stultifying electro-gizmo.</p>
@@ -34,7 +34,7 @@
 
     <div class="row center">
         <div class="col s12 l6">
-            <div class="welcome-block">
+            <div class="welcome-block" id="browse-block">
                 <h4 class="section-heading">
                     Browse
                 </h4>
@@ -45,7 +45,7 @@
         </div>
 
         <div class="col s12 l6">
-            <div class="welcome-block">
+            <div class="welcome-block" id="share-block">
                 <h4 class="section-heading">
                     Share
                 </h4>
@@ -77,26 +77,26 @@
     <div class="row">
         {% for activity in activities %}
             {% if loop.index < 4 %}
-                <div id="activities-container" class="col s12 m6 xl4">
+                <div class="col s12 m6 xl4">
                     <div class="card hoverable indigo lighten-5">
                         <div class="card-image">
-                        <a href="{{ url_for('view_activity', activity_id=activity._id) }}">
-                            {% if activity.image_file == "" %}
-                                {% for category in categories if category.category_name == activity.category_name %}
-                                        <img src="{{ category.image_file }}" />
-                                {% endfor %}
-                            {% else %}
-                                <img src="{{ activity.image_file }}" />
-                            {% endif %}
-                            <span class="card-title text-shadow">{{ activity.activity_name }}</span>
-                        </a>
-                        {% if session.user|lower == activity.created_by|lower or session.user|lower == "admin"|lower %}
-                        <a
-                            href="{{ url_for('edit_activity', activity_id=activity._id) }}"
-                            class="btn-floating halfway-fab teal darken-1"
-                            ><i class="fas fa-pencil-alt"></i
-                        ></a>
-                        {% endif %}
+                            <a href="{{ url_for('view_activity', activity_id=activity._id) }}">
+                                {% if activity.image_file == "" %}
+                                    {% for category in categories if category.category_name == activity.category_name %}
+                                            <img src="{{ category.image_file }}" />
+                                    {% endfor %}
+                                {% else %}
+                                    <img src="{{ activity.image_file }}" />
+                                {% endif %}
+                                <span class="card-title text-shadow">{{ activity.activity_name }}</span>
+                            </a>
+                                {% if session.user|lower == activity.created_by|lower or session.user|lower == "admin"|lower %}
+                                    <a
+                                        href="{{ url_for('edit_activity', activity_id=activity._id) }}"
+                                        class="btn-floating halfway-fab teal darken-1"
+                                        ><i class="fas fa-pencil-alt"></i
+                                    ></a>
+                                {% endif %}
                         </div>
                         <div class="card-content activities-card-summary">
                             {{ activity.activity_summary }}
