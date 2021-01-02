@@ -333,7 +333,7 @@ nav ul a:hover {
     font-size: 1.1em;
 }
 
-/* 403, 404 and 500 errors */
+/* 403 and 500 errors */
 
 .error-container {
     display: -webkit-box;
@@ -345,28 +345,14 @@ nav ul a:hover {
             flex-direction: column;    
 }
 
-
 .error-img {
     border-radius: 5%;
 }
 
-#toast-container {
-    bottom: auto !important;
-    left: auto !important;
-    top: 10%;
-}
 
 /* Media queries */
 
-/* @media only screen and (max-width: 600px) {
-    #toast-container {
-    bottom: auto !important;
-    left: auto !important;
-    top: 10%;
-    }
-} */
-
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 601px) {
     .activity-details-container {
     margin: 3rem;
     padding: 1rem 2rem;
@@ -383,5 +369,11 @@ nav ul a:hover {
     }
     #share-block {
         padding-left: 1rem;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .modal .modal-footer {
+    text-align: center !important;
     }
 }
