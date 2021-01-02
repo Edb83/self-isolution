@@ -29,7 +29,7 @@
                     </div>
                     <div class="card-content category-card-content valign-wrapper center">
                         <div class="col s12 card-title activator grey-text text-darken-4">
-                            {{ category.category_name }}
+                            {{ category.category_name }} <i class="fas fa-info-circle fa-xs"></i>
                         </div>
                     </div>
 
@@ -43,7 +43,10 @@
                         </div>
                         <div class="col s6 category-card-button">
                             {% if category.activity_list|length > 0 %}
-                                <a href="{{ url_for('filter_category', category_id=category._id) }}" class="waves-effect waves-light btn indigo darken-1">View ({{ category.activity_list|count }})</a>
+                                <a href="{{ url_for('filter_category', category_id=category._id) }}"
+                                class="waves-effect waves-light btn indigo darken-1">
+                                    View ({{ category.activity_list|count }})
+                                </a>
                             {% else %}
                                 <a href="#" class="btn disabled">View ({{ category.activity_list|count }})</a>
                             {% endif %}
@@ -93,8 +96,13 @@
                     {% endif %}
                 </div>
                 <div class="modal-footer">
-                    <a href="#!" class="btn modal-close indigo text-shadow">Cancel <i class="fas fa-undo-alt right"></i></a>
-                    <a href="{{ url_for('delete_category', category_id=category._id) }}" class="btn modal-close white-text red text-shadow">Delete <i class="far fa-trash-alt right"></i></a>
+                    <a href="#!" class="btn modal-close indigo text-shadow">
+                        Cancel <i class="fas fa-undo-alt right"></i>
+                    </a>
+                    <a href="{{ url_for('delete_category', category_id=category._id) }}"
+                    class="btn modal-close white-text red text-shadow">
+                        Delete <i class="far fa-trash-alt right"></i>
+                    </a>
                 </div>
             </div>
         {% endfor %}
@@ -103,6 +111,3 @@
     
 
 {% endblock %}
-<!-- 
-<a href="#" class="btn-floating halfway-fab left blue"><i class="fas fa-edit"></i></a>
-<a href="#" class="btn-floating halfway-fab right red"><i class="fas fa-trash"></i></a> -->

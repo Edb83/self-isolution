@@ -57,7 +57,8 @@
             <div class="row">
                 <div class="input-field col s12">
                     <i class="fas fa-quote-left prefix"></i>
-                    <textarea id="activity_summary" name="activity_summary" minlength="10" maxlength="50" data-length="50" class="materialize-textarea validate" required>
+                    <textarea id="activity_summary" name="activity_summary" minlength="10" maxlength="50" data-length="50"
+                    class="materialize-textarea validate" required>
                         {{- activity.activity_summary -}}
                     </textarea>
                     <label for="activity_summary">Summary</label>
@@ -68,7 +69,8 @@
             <div class="row">
                 <div class="input-field col s12">
                     <i class="fas fa-align-left prefix"></i>
-                    <textarea id="activity_details" name="activity_details" minlength="10" maxlength="500" data-length="500" class="materialize-textarea validate" required>
+                    <textarea id="activity_details" name="activity_details" minlength="10" maxlength="500" data-length="500"
+                    class="materialize-textarea validate" required>
                         {{- activity.activity_details -}}
                     </textarea>
                     <label for="activity_details">Details</label>
@@ -79,7 +81,8 @@
             <div class="row">
                 <div class="input-field col s12">
                     <i class="fas fa-box-open prefix"></i>
-                    <textarea id="activity_equipment" name="activity_equipment" minlength="3" maxlength="50" data-length="50" class="materialize-textarea validate">
+                    <textarea id="activity_equipment" name="activity_equipment" minlength="3" maxlength="50" data-length="50"
+                    class="materialize-textarea validate">
                         {{- activity.activity_equipment -}}
                     </textarea>
                     <label for="activity_equipment">What you'll need</label>
@@ -102,10 +105,10 @@
             <!-- Submit -->
             <div class="row">
                 <div class="col s12 center-align">
-                    <a href="{{ url_for('get_activities') }}" class="waves-effect waves-light btn red">
+                    <a href="{{ url_for('get_activities') }}" class="btn red">
                         Cancel <i class="fas fa-times-circle right"></i>
                     </a>
-                    <button type="submit" class="waves-effect waves-light btn teal darken-1">
+                    <button type="submit" class="btn teal darken-1">
                         Update <i class="fas fa-edit right"></i>
                     </button>
                 </div>

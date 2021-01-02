@@ -73,7 +73,9 @@
                     </div>
                     <div class="modal-footer">
                         <a href="#!" class="btn modal-close indigo text-shadow">Cancel <i class="fas fa-undo-alt right"></i></a>
-                        <a href="{{ url_for('delete_activity', activity_id=activity._id) }}" class="btn modal-close white-text red text-shadow">Delete <i class="far fa-trash-alt right"></i></a>
+                        <a href="{{ url_for('delete_activity', activity_id=activity._id) }}" class="btn modal-close white-text red text-shadow">
+                            Delete <i class="far fa-trash-alt right"></i>
+                        </a>
                     </div>
                 </div>
             {% endfor %}
