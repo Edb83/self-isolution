@@ -259,23 +259,9 @@ nav ul a:hover {
     margin-bottom: 0;
 }
 
-.activity-info-container {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    place-content: center;
-}
-
 .activity-info {
-    padding: 0.5rem 0.9rem;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-}
+    padding: 0.5rem 0.9rem !important;
 
-.activity-info-icon,
-.activity-info-element {
-    display: inherit;
 }
 
 .activity-info a:hover {

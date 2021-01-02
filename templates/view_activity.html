@@ -50,39 +50,24 @@
         {% endif %}
     </div>
 
-    <div class="activity-info-container center-align">
-        <div class="activity-info">
+    <div class="row activity-info-container center-align">
+        <div class="col s6 m4 activity-info">
             <a href="{{ url_for('filter_age', target_age=activity.target_age) }}" class="grey-text text-darken-3">
-                <div class="activity-info-icon">
-                    <i class="fas fa-child"></i>
-                </div>
-                <div class="activity-info-element">
-                    {{- activity.target_age -}}
-                </div>
+                    <i class="fas fa-child"></i> {{ activity.target_age }}
             </a>
         </div>
 
         {% for category in categories if category.category_name == activity.category_name %}
-            <div class="activity-info">
+            <div class="col s6 m4 activity-info">
                 <a href="{{ url_for('filter_category', category_id=category._id) }}" class="grey-text text-darken-3" >
-                    <div class="activity-info-icon">
-                        <i class="fas fa-folder-open"></i>
-                    </div>
-                    <div class="activity-info-element">
-                        {{- activity.category_name -}}
-                    </div>
+                        <i class="fas fa-folder-open"></i> {{ activity.category_name }}
                 </a>
             </div>
         {% endfor %}
         
-        <div class="activity-info">
+        <div class="col s12 m4 activity-info">
             <a href="{{ url_for('filter_user', username=activity.created_by) }}" class="grey-text text-darken-3">
-                <div class="activity-info-icon">
-                    <i class="fas fa-user"></i>
-                </div>
-                <div class="activity-info-element">
-                    {{- activity.created_by -}}
-                </div>
+                    <i class="fas fa-user"></i> {{ activity.created_by }}
             </a>
         </div>
 
