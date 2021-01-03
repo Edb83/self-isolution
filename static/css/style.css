@@ -353,9 +353,13 @@ nav ul a:hover {
 /* Media queries */
 
 @media only screen and (min-width: 601px) {
+    #back-button {
+        margin: 0 4rem;
+    }
+    
     .activity-details-container {
     margin: 3rem;
-    padding: 1rem 2rem;
+    padding: 1rem 0;
     }
 
     .activity-info {
