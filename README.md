@@ -77,7 +77,6 @@
 - Solution: 
 
 
-
 # RESOURCES:
 
 - Handling file uploads with Flask: (https://blog.miguelgrinberg.com/post/handling-file-uploads-with-flask)
@@ -86,3 +85,313 @@
 - Resizing images prior to S3 upload: (https://stackoverflow.com/a/56241877)
 - Pillow: (https://pillow.readthedocs.io/en/stable/index.html)
 - Image processing with Pillow: (https://dzone.com/articles/image-processing-in-python-with-pillow)
+
+# Self Isolution
+
+![alt text](# "Responsive sample")
+
+**[Live demo](https://dashboard.heroku.com/apps/edb83-kids-activities/)**
+
+---
+
+<span id="top"></span>
+
+## Index
+
+- <a href="#context">Context</a>
+- <a href="#ux">UX</a>
+  - <a href="#ux-overview">Overview</a>
+  - <a href="#ux-stories">User stories</a>
+  - <a href="#ux-wireframes">Wireframes</a>
+  - <a href="#ux-design">Design</a>
+- <a href="#features">Features</a>
+  - <a href="#features-current">Current</a>
+  - <a href="#features-future">Future</a>
+- <a href="#technologies">Technologies Used</a>
+- <a href="#testing">Testing</a>
+  - <a href="#testing-auto">Automated</a>
+  - <a href="#testing-manual">Manual</a>
+  - <a href="#testing-responsive">Responsiveness</a>
+  - <a href="#testing-resolved">Resolved issues</a>
+  - <a href="#testing-unresolved">Unresolved issues</a>
+- <a href="#deployment">Deployment</a>
+- <a href="#credits">Credits</a>
+
+---
+
+<span id="context"></span>
+
+## Context
+
+TBC
+
+<div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
+<span id="ux"></span>
+
+## UX
+
+<span id="ux-overview"></span>
+
+### Overview
+
+TBC
+
+<span id="ux-stories"></span>
+
+### User stories
+
+#### As a first-time user I want:
+
+- To...
+
+#### As a returning user I want:
+
+- To...
+
+<span id="ux-wireframes"></span>
+
+### Wireframes
+
+Wireframes for **mobile** and **desktop** can be accessed [here](wireframes/).
+
+There were some noteworthy deviations from the plan. These were:
+
+1. TBC
+
+<span id="ux-design"></span>
+
+### Design choices
+
+#### Colours
+
+TBC
+
+##### Core
+
+TBC
+
+- ![#ffffff](https://via.placeholder.com/15/ffffff/000000?text=+) #ffffff (White)
+
+
+#### Fonts
+
+[Orbitron](https://fonts.google.com/specimen/Orbitron#about)
+
+TBC
+
+<div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
+
+<span id="features"></span>
+
+## Features
+
+<span id="features-current"></span>
+
+### Current
+
+**1. TBC**
+
+- TBC
+
+
+<span id="features-future"></span>
+
+### Future
+
+**TBC**
+
+- TBC
+
+
+
+<div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
+
+<span id="technologies"></span>
+
+## Technologies Used
+
+### Languages
+
+- HTML
+- CSS
+- Javascript
+  - [jQuery](https://jquery.com/) - 
+
+### Project management
+
+- [Balsamiq](https://balsamiq.com/wireframes/) - Wireframe creation tool
+- [GitHub](https://github.com/) - Version control and deployment
+- [GitPod](https://gitpod.io/) - IDE used to code the game
+
+### Style and theme
+
+- [Autoprefixer](https://autoprefixer.github.io/) - a PostCSS plugin which parses CSS and adds vendor prefixes
+- [Favicon.io](https://favicon.io//) - to generate the app's favicons for a variety of devices
+- [Google Fonts](https://fonts.google.com/) - TBC
+- [Materialize](https://materializecss.com/) - TBC
+
+### Online resources
+
+- [Am I Responsive?](http://ami.responsivedesign.is/) - to produce the README showcase image
+
+<div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
+
+<span id="testing"></span>
+
+## Testing
+
+<span id="testing-auto"></span>
+
+### Automated testing
+
+[Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools) - audit summary for both desktop and mobile:
+
+- Performance: **X - X%**
+- Accessibility: **X - X%**
+- Best Practices: **X - X%**
+- SEO: **X - X%**
+
+[W3C - HTML](https://validator.w3.org/) - ? errors, ? warnings - **PASS**
+
+[W3C - CSS](https://jigsaw.w3.org/css-validator/) - ? errors, ? warnings - **PASS**
+
+Details TBC
+
+- Use of...
+
+[CSS Lint](http://csslint.net/) - X errors, X warnings - **PASS**
+
+Details TBC
+
+- Use of...
+
+
+[Unicorn revealer - overflow](https://chrome.google.com/webstore/detail/unicorn-revealer/lmlkphhdlngaicolpmaakfmhplagoaln/related) - no evidence of overflow - **PASS**
+
+[JS Hint](https://jshint.com/) - X errors, X warnings - **PASS**
+
+Details TBC
+
+- Use of...
+
+<span id="testing-manual"></span>
+
+### Manual testing
+
+**Summary**:
+
+TBC... :
+
+**1. TBC**
+
+- TBC
+
+
+<span id="testing-responsive"></span>
+
+### Responsiveness
+
+TBC
+
+#### Browsers
+
+Tested on:
+
+- Chrome
+- Edge
+- Firefox
+- Safari (iOS)
+
+#### Screen sizes
+
+Tested with Chrome DevTools using profiles for:
+
+- Moto G4
+- Galaxy S5
+- Pixel 2
+- Pixel 2 XL
+- iPhone 5 SE
+- iPhone 6/7/8
+- iPhone 6/7/8 Plus
+- iPhone X
+- iPad
+- iPad Pro
+
+... and also using the responsive profiles of:
+
+- Mobile S (320px)
+- Mobile M (375px)
+- Mobile L (425px)
+- Tablet (768px)
+- Laptop (1024px)
+- Laptop L (1440px)
+
+Real world testing on:
+
+- iPhone 6S
+- iPhone SE
+- iPhone 11 Pro
+- Asus ZenBook
+- Dell XPS 7590
+
+### Issues and resolutions
+
+<span id="testing-resolved"></span>
+
+#### Resolved
+
+**TBC**
+
+- TBC
+
+<span id="testing-unresolved"></span>
+
+#### Unresolved
+
+- **TBC**
+
+TBC
+
+
+## Deployment
+
+There is just one branch of this project (master) and the deployed version of this site is the most current version in the repository.
+
+### How to deploy
+
+TBC
+
+### How to run locally
+
+TBC
+
+
+<div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
+
+<span id="credits"></span>
+
+## Credits
+
+#### Tutorials and inspiration
+
+- [Title](#)
+
+
+#### Code used/modified from other sources
+
+- [Title](#)
+
+
+### Content
+
+- All text outssde of user-generated content is original
+
+### Acknowledgements
+
+- Jonathan Munz (Code Institute Mentor) - for his reassurance, support and invaluable suggestions
+
+### Disclaimer
+
+This site was developed for educational purposes.
+
+<div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
