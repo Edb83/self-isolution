@@ -169,6 +169,10 @@ nav ul a:hover {
     padding: 0 0.5rem;
 }
 
+.input-field>label {
+    color: #1a237e;
+}
+
 /* Toasts */
 .custom-toast {
     background-color: #ffa726;

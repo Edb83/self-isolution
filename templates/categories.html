@@ -25,7 +25,7 @@
             <div class="col s12 m6 xl4">
                 <div class="card light-green lighten-5 hoverable">
                     <div class="card-image waves-effect waves-block waves-light">
-                        <img class="activator" src="{{ category.image_file }}">
+                        <img class="activator" src="{{ category.image_file }}" alt="category.category_name">
                     </div>
                     <div class="card-content category-card-content valign-wrapper center">
                         <div class="col s12 card-title activator grey-text text-darken-4">
@@ -36,7 +36,7 @@
                     <div class="col s12 card-action category-card-action valign-wrapper center">
                         <div class="col s3 category-card-icon">
                             {% if session.user|lower == "admin"|lower %}
-                                <button data-target="{{ category._id }}" class="btn-floating modal-trigger btn-small red">
+                                <button data-target="{{ category._id }}" class="btn-floating modal-trigger btn-small red" aria-label="delete category">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                             {% endif %}

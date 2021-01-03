@@ -13,10 +13,10 @@
     <div class="view-activity-image-container center-align">
         {% if activity.image_file == "" %}
             {% for category in categories if category.category_name == activity.category_name %}
-                <img src="{{ category.image_file }}" alt="" class="view-activity-image responsive-img">
+                <img src="{{ category.image_file }}" alt="{{ category.category_name }}" class="view-activity-image responsive-img">
             {% endfor %}
         {% else %}
-            <img src="{{ activity.image_file }}" alt="" class="view-activity-image responsive-img">
+            <img src="{{ activity.image_file }}" alt="{{ activity.activity_summary }}" class="view-activity-image responsive-img">
         {% endif %}
     </div>
 

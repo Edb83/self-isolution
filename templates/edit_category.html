@@ -5,7 +5,8 @@
     <h3 class="center-align section-heading">{{ category.category_name }}</h3>
 
     <div class="row">
-        <form class="col s12" method="POST" action="{{ url_for('edit_category', category_id=category._id) }}" enctype="multipart/form-data">
+        <form class="col s12" method="POST" action="{{ url_for('edit_category', category_id=category._id) }}"
+        enctype="multipart/form-data">
 
             <!-- Title -->
             <div class="row">
@@ -21,7 +22,8 @@
             <div class="row">
                 <div class="input-field col s12">
                     <i class="fas fa-quote-left prefix"></i>
-                    <textarea id="category_summary" name="category_summary" minlength="10" maxlength="200" data-length="200" class="materialize-textarea validate" required>
+                    <textarea id="category_summary" name="category_summary" minlength="10" maxlength="200" data-length="200"
+                    class="materialize-textarea validate" required>
                         {{- category.category_summary -}}
                     </textarea>
                     <label for="category_summary">Summary</label>
@@ -43,10 +45,10 @@
             <!-- Submit -->
             <div class="row">
                 <div class="col s12 center-align">
-                    <a href="{{ url_for('get_categories') }}" class="btn red">
+                    <a href="{{ url_for('get_categories') }}" class="btn red text-shadow">
                         Cancel <i class="fas fa-times-circle right"></i>
                     </a>
-                    <button type="submit" class="btn teal darken-1">
+                    <button type="submit" class="btn teal darken-1 text-shadow">
                         Update <i class="fas fa-edit right"></i>
                     </button>
                 </div>

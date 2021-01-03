@@ -83,10 +83,10 @@
                             <a href="{{ url_for('view_activity', activity_id=activity._id) }}">
                                 {% if activity.image_file == "" %}
                                     {% for category in categories if category.category_name == activity.category_name %}
-                                            <img src="{{ category.image_file }}" />
+                                            <img src="{{ category.image_file }}" alt="{{ category.category_name }}" />
                                     {% endfor %}
                                 {% else %}
-                                    <img src="{{ activity.image_file }}" />
+                                    <img src="{{ activity.image_file }}" alt="activity.activity_summary" />
                                 {% endif %}
                                 <span class="card-title text-shadow">{{ activity.activity_name }}</span>
                             </a>
