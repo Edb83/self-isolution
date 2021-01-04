@@ -90,7 +90,7 @@
 
 ![alt text](# "Responsive sample")
 
-**[Live demo](https://dashboard.heroku.com/apps/edb83-kids-activities/)**
+**[Live demo](https://self-isolution.herokuapp.com/)**
 
 ---
 
