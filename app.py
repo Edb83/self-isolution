@@ -245,7 +245,7 @@ def profile(username):
             "profile.html", username=username,
             activities=activities, categories=categories)
 
-    return redirect(url_for("get_activities"))
+    return redirect(url_for("login"))
 
 
 @app.route("/logout")
@@ -274,12 +274,18 @@ def add_activity():
             "date_added": date.today().strftime("%d %b %Y")
         }
 
-        new_activity = mongo.db.activities.insert_one(activity).inserted_id
-        mongo.db.categories.update_one(
-            {"category_name": activity["category_name"]}, {"$push": {"activity_list": ObjectId(new_activity)}})
-        flash("Activity added: {}".format(activity["activity_name"]))
+        existing_activities = mongo.db.activities.find({"activity_name": activity["activity_name"]})
 
-        return redirect(url_for("get_activities"))
+        if any(d["activity_name"] == activity["activity_name"] for d in existing_activities):
+            flash("'{}' already exists, please choose another name".format(activity["activity_name"]))
+            return redirect(url_for("add_activity"))
+
+        else:
+            new_activity = mongo.db.activities.insert_one(activity).inserted_id
+            mongo.db.categories.update_one(
+                {"category_name": activity["category_name"]}, {"$push": {"activity_list": ObjectId(new_activity)}})
+            flash("Activity added: {}".format(activity["activity_name"]))
+            return redirect(url_for("get_activities"))
 
     return render_template(
         "add_activity.html", categories=categories, ages=ages)
@@ -308,20 +314,30 @@ def edit_activity(activity_id):
             "activity_equipment": request.form.get("activity_equipment"),
             "image_file": edit_image_path,
         }}
-        mongo.db.activities.update_many(activity, edit)
-        new_category = mongo.db.categories.find_one(
-            {"category_name": request.form.get("category_name")})
+        existing_activities = mongo.db.activities.find({"activity_name": request.form.get("activity_name")})
 
-        if request.form.get("category_name") != current_category["category_name"]:
-            mongo.db.categories.update_one(
-                new_category,
-                {"$push": {"activity_list": activity["_id"]}})
-            mongo.db.categories.update_one(
-                current_category,
-                {"$pull": {"activity_list": activity["_id"]}})
+        if any(d["activity_name"] == request.form.get("activity_name") for d in existing_activities):
+            flash("'{}' already exists, please choose another name".format(request.form.get("activity_name")))
+            return render_template(
+                "edit_activity.html",
+                activity=activity,
+                categories=categories,
+                ages=ages)
+        else:
+            mongo.db.activities.update_many(activity, edit)
+            new_category = mongo.db.categories.find_one(
+                {"category_name": request.form.get("category_name")})
 
-        flash("Activity updated ({})".format(activity["activity_name"]))
-        return redirect(url_for('view_activity', activity_id=ObjectId(activity_id)))
+            if request.form.get("category_name") != current_category["category_name"]:
+                mongo.db.categories.update_one(
+                    new_category,
+                    {"$push": {"activity_list": activity["_id"]}})
+                mongo.db.categories.update_one(
+                    current_category,
+                    {"$pull": {"activity_list": activity["_id"]}})
+
+            flash("Activity updated ({})".format(activity["activity_name"]))
+            return redirect(url_for('view_activity', activity_id=ObjectId(activity_id)))
 
     return render_template(
         "edit_activity.html",

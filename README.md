@@ -8,10 +8,6 @@
 - skip deletion of this category
 
 
-# RESOURCES:
-
-
-
 # Self Isolution
 
 ![alt text](# "Responsive sample")
@@ -181,6 +177,7 @@ TBC
 - Resizing images prior to S3 upload: (https://stackoverflow.com/a/56241877)
 - Pillow: (https://pillow.readthedocs.io/en/stable/index.html)
 - Image processing with Pillow: (https://dzone.com/articles/image-processing-in-python-with-pillow)
+- Checking duplicate key value pairs: (https://stackoverflow.com/a/3897516)
 
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
