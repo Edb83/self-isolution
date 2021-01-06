@@ -419,20 +419,27 @@ def edit_category(category_id):
 
 @app.route("/delete_category/<category_id>")
 def delete_category(category_id):
+    # find the category
     category = mongo.db.categories.find_one({"_id": ObjectId(category_id)})
-    unassigned_category = mongo.db.categories.find_one({"category_name": "Unassigned"})
+    # get all activities with that category name
     dependent_activities = list(mongo.db.activities.find(
         {"category_name": category["category_name"]}))
-    reassign = {"$set": {
-            "category_name": "Unassigned"
-        }}
-
+    # find the category of "Unassigned"
+    unassigned_category = mongo.db.categories.find_one(
+        {"category_name": "Unassigned"})
+    # prepare an empty list
+    activities = []
     for activity in dependent_activities:
-        mongo.db.categories.update_one(
-                unassigned_category,
-                {"$push": {"activity_list": activity["_id"]}})
-        mongo.db.activities.update_one(activity, reassign)
+        # update the "category_name" to "Unassigned"
+        mongo.db.activities.find_one_and_update(
+            activity, {"$set": {"category_name": "Unassigned"}})
+        # append this ObjectID to the activities list
+        activities.append(activity["_id"])
+    # push each activity into the "Unassigned" category's activity_list key
+    mongo.db.categories.find_one_and_update(
+        unassigned_category, {"$addToSet": {"activity_list": {"$each": activities}}})
 
+    # remove the category from MongoDB
     mongo.db.categories.remove(category)
 
     flash("Category deleted ({})".format(category["category_name"]))
