@@ -315,8 +315,9 @@ def edit_activity(activity_id):
             "image_file": edit_image_path,
         }}
         existing_activities = mongo.db.activities.find({"activity_name": request.form.get("activity_name")})
-
-        if any(d["activity_name"] == request.form.get("activity_name") for d in existing_activities):
+        if request.form.get("activity_name") != activity["activity_name"] and any(
+            d["activity_name"] == request.form.get(
+                "activity_name") for d in existing_activities):
             flash("'{}' already exists, please choose another name".format(request.form.get("activity_name")))
             return render_template(
                 "edit_activity.html",
@@ -419,6 +420,19 @@ def edit_category(category_id):
 @app.route("/delete_category/<category_id>")
 def delete_category(category_id):
     category = mongo.db.categories.find_one({"_id": ObjectId(category_id)})
+    unassigned_category = mongo.db.categories.find_one({"category_name": "Unassigned"})
+    dependent_activities = list(mongo.db.activities.find(
+        {"category_name": category["category_name"]}))
+    reassign = {"$set": {
+            "category_name": "Unassigned"
+        }}
+
+    for activity in dependent_activities:
+        mongo.db.categories.update_one(
+                unassigned_category,
+                {"$push": {"activity_list": activity["_id"]}})
+        mongo.db.activities.update_one(activity, reassign)
+
     mongo.db.categories.remove(category)
 
     flash("Category deleted ({})".format(category["category_name"]))
