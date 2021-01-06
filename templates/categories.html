@@ -35,7 +35,7 @@
 
                     <div class="col s12 card-action category-card-action valign-wrapper center">
                         <div class="col s3 category-card-icon">
-                            {% if session.user|lower == "admin"|lower %}
+                            {% if session.user|lower == "admin" and not category.category_name == "Unassigned" %}
                                 <button data-target="{{ category._id }}" class="btn-floating modal-trigger btn-small red" aria-label="delete category">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
@@ -52,7 +52,7 @@
                             {% endif %}
                         </div>
                         <div class="col s3 category-card-icon">
-                            {% if session.user|lower == "admin"|lower %}
+                            {% if session.user|lower == "admin" %}
                                 <a href="{{ url_for('edit_category', category_id=category._id) }}"
                                     class="btn-floating btn-small teal darken-1">
                                     <i class="fas fa-pencil-alt "></i>

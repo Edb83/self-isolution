@@ -24,13 +24,23 @@
                     <i class="fas fa-folder-open prefix"></i>
                     <select id="category_name" name="category_name" class="validate" required>
                         <option value="" disabled>Choose category</option>
-                        {% for category in categories %}
-                            {% if category.category_name == activity.category_name %}
-                                <option value="{{category.category_name}}" selected>{{category.category_name}}</option>
-                            {% else %}
-                                <option value="{{category.category_name}}">{{category.category_name}}</option>
-                            {% endif %}
-                        {% endfor %}
+                        {% if session.user|lower == "admin" %}
+                            {% for category in categories %}
+                                {% if category.category_name == activity.category_name %}
+                                    <option value="{{category.category_name}}" selected>{{category.category_name}}</option>
+                                {% else %}
+                                    <option value="{{category.category_name}}">{{category.category_name}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            {% for category in categories if not category.category_name == "Unassigned" %}
+                                {% if category.category_name == activity.category_name %}
+                                    <option value="{{category.category_name}}" selected>{{category.category_name}}</option>
+                                {% else %}
+                                    <option value="{{category.category_name}}">{{category.category_name}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
                     </select>
                     <label for="category_name">Category</label>
                 </div>
