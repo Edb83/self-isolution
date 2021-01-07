@@ -1,13 +1,3 @@
-# Todo:
-
-## Enable renaming of categories - tie to id
-- if renamed - alert showing affected activities - modal?
-## Add 'unassigned category' inc image
-## DONE if cat deleted including activites, move to unassigned
-## DONE unassigned not an option in choosing categories unless admin?
-## DONE skip deletion of this category
-
-
 # Self Isolution
 
 ![alt text](# "Responsive sample")
@@ -45,7 +35,11 @@
 
 ## Context
 
-TBC
+The COVID-19 pandemic has had a dramatic effect on everyone's lives, not least those of working parents who can no longer rely on childcare due to the restrictions put in place.
+When a case occurs in your child's bubble and they are forced to self-isolate at home, you can expect to spend your days fitting work in around your children's homeschooling
+and other needs. Without the option of leaving the house you'll be climbing the walls in no time, feeling guilty that you've left them to watch Peppa Pig for 4 hours straight, again.
+You need to break the cycle and find some inspiration without having to create elaborate plans which will likely be greeted with a slow clap and roll of the eyes, leaving you
+ever more frustrated with them, yourself and the situation at large. You need a Self Isolution.
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 <span id="ux"></span>
@@ -56,19 +50,37 @@ TBC
 
 ### Overview
 
-TBC
+Self Isolution is a site aimed at parents of young children who have been put into self-isolation. Users are looking for ideas for simple activities to entertain, educate and somehow enrich the lives of their offspring, without leaving the comfort of their own homes. All content is available without registering, but once logged in users can add their
+own activity ideas and share the collective burden of raising this misfortunate generation. All design decisions have been made with the following goals in mind:
+- Accessibility
+- Ease of use
+- Responsiveness
+- Simplicity
 
 <span id="ux-stories"></span>
 
 ### User stories
 
-#### As a first-time user I want:
+#### As a first-time visitor I want:
 
-- To...
+- To immediately understand what the purpose of the site is and what it can provide
+- To see all content without having to register
+- To be able to search for keywords
+- To be able to filter activities by category
+- To be able to register easily without needing to input lots of information
 
 #### As a returning user I want:
 
-- To...
+- To log in and out easily
+- To be able to add new activities easily
+- To be able to edit or delete activities I have added
+- To be able to see all the activities I have added in one place
+- To be able to 'favourite' activities created by other users
+
+#### As the site owner I want:
+
+- To be able to edit or remove content created by users
+- To be able to add, edit or remove categories
 
 <span id="ux-wireframes"></span>
 
@@ -78,11 +90,22 @@ Wireframes for **mobile** and **desktop** can be accessed [here](wireframes/).
 
 There were some noteworthy deviations from the plan. These were:
 
-1. TBC
+1. Search bar given greater prominance within Activities page rather than being housed in navbar
+2. Prep time not included
+3. Ages hardcoded instead of residing in separate MongoDB collection
+4. Likes not included, and therefore 'Popular activities' became 'Recent activities'
+5. Categories dropdown moved to separate Categories page
+6. Ages dropdown removed, but users can still filter by age by clicking on existing activity's target age
+7. Users complexity reduced to just username and password
+8. Activities card content revised based on testing
+9. Activity page layout revised due to awkward styling presentation, but functionality mostly unchanged
+
 
 <span id="ux-design"></span>
 
 ### Design choices
+
+The decision to use Materialize means customisation is somewhat limited, but this is an acceptible compromise given the site's purpose of displaying user content clearly. Judicious use of the framework's cards gives the site a solid and consistent feel which does a good job of highlighting the content displayed. 
 
 #### Colours
 
@@ -97,7 +120,11 @@ TBC
 
 #### Fonts
 
-[Orbitron](https://fonts.google.com/specimen/Orbitron#about)
+[Bubblegum Sans](https://fonts.google.com/specimen/Bubblegum+Sans#about)
+
+TBC
+
+[Montserrat](https://fonts.google.com/specimen/Montserrat#about)
 
 TBC
 
@@ -111,18 +138,74 @@ TBC
 
 ### Current
 
-**1. TBC**
+**?. Material design**
 
-- TBC
+MaterializeCSS features:
+- Cards
+- Chips
+- Forms
+- Input character counter
+- Menu dropdown
+- Modals
+- Side navigation bar
+- Toasts
 
-- image uploads and hosting inc resizing
-- activities associated with categories
-- delete confirmation for activity and category (modal)
-- search
-- filter by category, age, user
-- category summary
-- admin privileges
-- toasts
+**?. Online database**
+
+MongoDB
+
+**?. Secure user login**
+
+Werkzeug hashed passwords
+
+**?. User profile**
+
+A user can view all activities they have created in one place and easily edit or delete them
+
+**?. CRUD functionality**
+
+All visitors can
+- view all activities
+- view all categories
+
+User can
+- add own activities
+- edit own activities 
+- delete own activities
+
+Admin can
+- add own activities
+- edit any activity
+- delete any activity
+- add category
+- edit category
+- delete category
+
+**?. Search**
+
+**?. Filter**
+
+All visitors can filter activities by
+- category
+- target age
+- author
+
+**?. Image uploads**
+
+Amazon AWS using S3 Bucket
+
+**?. Image resizing**
+
+Pillow
+
+**?. Admin rights**
+
+The admin 
+
+**?. Defensive programming**
+- user session check for accessing restricted content (add, edit, delete activity; add, edit, delete category, PROFILE?)
+- moving activities to "Unassigned" category if associated category deleted by admin
+- delete confirmation for activities and categories
 - 404 and 500 error handling
 
 
@@ -132,14 +215,18 @@ TBC
 
 **TBC**
 
-- TBC
-
-- Add edit user
-- Add delete user
-- Add likes/favourites
-- Merge add category and delete user into 'manage'/admin area
-- Add image delete from S3 Bucket
-- Add speeding hosting of S3 Bucket images
+- Edit user
+- Delete user
+- Favourite activities
+- Superuser rather than single admin
+- Admin area (page to view all site content in one place and edit as required inc delete user)
+- Contact admin
+- Pagination
+- Deeper profile (number of kids, interests)
+- Ability to view other profiles
+- Add comments to activities
+- Image delete from S3 Bucket
+- Speedier hosting of S3 Bucket images
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 
@@ -152,7 +239,8 @@ TBC
 - HTML
 - CSS
 - Javascript
-  - [jQuery](https://jquery.com/) - 
+  - [jQuery](https://jquery.com/)
+- Python
 
 ### Project management
 
@@ -356,11 +444,15 @@ TBC
 
 ### Content
 
-- All text outssde of user-generated content is original
+- All text outside of user-generated content is original
+- [Favicon](https://favicon.io/emoji-favicons/house)
 
 ### Acknowledgements
 
 - Jonathan Munz (Code Institute Mentor) - for his reassurance, support and invaluable suggestions
+- Tim (Code Institute Tutor) - for his patience and help solving pushing a list to a MongoDB array
+- Michael (Code Institute Tutor) - for walking through a merge conflict resolution
+- ? (Code Institute Tutor) - for help spotting a key missing `enctype="multipart/form-data"` on a template
 
 ### Disclaimer
 

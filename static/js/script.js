@@ -3,7 +3,6 @@ $(document).ready(function () {
   $(".sidenav").sidenav({ edge: "right" });
   $("select").formSelect();
   $('input#activity_name, textarea#activity_summary, textarea#activity_details, textarea#activity_equipment, input#category_name, textarea#category_summary').characterCounter();
-  $('.collapsible').collapsible();
   $('.modal').modal();
   $('.chips').chips();
 
