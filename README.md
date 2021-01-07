@@ -3,9 +3,9 @@
 ## Enable renaming of categories - tie to id
 - if renamed - alert showing affected activities - modal?
 ## Add 'unassigned category' inc image
-- if cat deleted including activites, move to unassigned
-- unassigned not an option in choosing categories unless admin?
-- skip deletion of this category
+## DONE if cat deleted including activites, move to unassigned
+## DONE unassigned not an option in choosing categories unless admin?
+## DONE skip deletion of this category
 
 
 # Self Isolution

@@ -353,7 +353,7 @@ def edit_activity(activity_id):
                 ages=ages)
         else:
             return render_template("view_activity.html", activity=activity,
-                                categories=categories, user=activity_owner)
+                                   categories=categories, user=activity_owner)
     else:
         return render_template("view_activity.html", activity=activity,
                                categories=categories, user=activity_owner)

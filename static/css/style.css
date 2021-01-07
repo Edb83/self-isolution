@@ -112,6 +112,8 @@ nav ul a:hover {
 .section-heading, .card-heading {
     font-family: 'Bubblegum Sans', cursive;
     color: #1a237e;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .activity-heading {
@@ -362,12 +364,19 @@ nav ul a:hover {
     }
     
     .activity-details-container {
-    margin: 3rem;
-    padding: 1rem 0;
+        margin: 3rem;
+        padding: 1rem 0;
     }
 
     .activity-info {
-    display: block;
+        display: block;
+    }
+
+    .activity-info-container .activity-info:first-child {
+        text-align: right;
+    }
+    .activity-info-container .activity-info:last-child {
+        text-align: left;
     }
 }
 
