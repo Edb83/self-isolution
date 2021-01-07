@@ -207,6 +207,7 @@ The admin
 - moving activities to "Unassigned" category if associated category deleted by admin
 - delete confirmation for activities and categories
 - 404 and 500 error handling
+- utilising `ObjectId` wherever sensible, to prevent reference to a key which a user could change (e.g. `category.activity_list`)
 
 
 <span id="features-future"></span>
@@ -259,15 +260,6 @@ The admin
 
 - [Am I Responsive?](http://ami.responsivedesign.is/) - to produce the README showcase image
 
-- Handling file uploads with Flask: (https://blog.miguelgrinberg.com/post/handling-file-uploads-with-flask)
-- Boto S3: (https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html#id224)
-- Uploading to AWS S3 using boto: (https://www.zabana.me/notes/flask-tutorial-upload-files-amazon-s3)
-- Resizing images prior to S3 upload: (https://stackoverflow.com/a/56241877)
-- Pillow: (https://pillow.readthedocs.io/en/stable/index.html)
-- Image processing with Pillow: (https://dzone.com/articles/image-processing-in-python-with-pillow)
-- Checking duplicate key value pairs: (https://stackoverflow.com/a/3897516)
-
-
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 
 <span id="testing"></span>
@@ -319,9 +311,6 @@ TBC... :
 **1. TBC**
 
 - TBC
-
-
-
 
 <span id="testing-responsive"></span>
 
@@ -381,26 +370,33 @@ Real world testing on:
 - TBC
 
 **Materialize select dropdown does not function correctly on iOS. Either dropdown does not appear or selects the wrong item when clicked**
-- Solution: Stopping propagation on touchend event (https://stackoverflow.com/a/52851046)
+- Solution: Stopping propagation on `touchend` event (https://stackoverflow.com/a/52851046)
 
 **iOS select caret visible when using the Materialize fix above**
 - Solution: adding `-webkit-appeance: none` to select elements (https://stackoverflow.com/questions/7638677/how-can-i-remove-the-gloss-on-a-select-element-in-safari-on-mac)
 
 **Portrait images rotating on resize**
-- Solution: caused by PIL not reading image EXIF metadata. Fixed by importing ImageOps and using ImageOps.exif_transpose(image) (https://www.mmbyte.com/article/46440.html)
+- Solution: caused by PIL not reading image EXIF metadata. Fixed by importing ImageOps and using `ImageOps.exif_transpose(image)` (https://www.mmbyte.com/article/46440.html)
 
 **Images uploaded to AWS not updating on edit**
-- Solution: missing enctype="multipart/form-data"
+- Solution: missing `enctype="multipart/form-data"`
 
 **Images not uploading on deployed site**
 - Solution: add AWS secret keys to cvars on heroku
 
 **Unable to use PIL.ImageOps on image files once opened**
-- Solution: save format of raw_image to pass into new_image so that it can be accessed by ImageOps (https://stackoverflow.com/questions/29374072/why-does-resizing-image-in-pillow-python-remove-image-format)
+- Solution: save format of `raw_imag`e to pass into `new_image` so that it can be accessed by ImageOps (https://stackoverflow.com/questions/29374072/why-does-resizing-image-in-pillow-python-remove-image-format)
 
 **pymongo.errors.InvalidOperation: cannot set options after executing query**
-- Solution: to various issues(!) - using list()
+- Solution: to various issues(!) - using `list()`
 
+**Session-only pages and functions are accessible even if not logged in 'brute-forcing' url**
+- Affects: `add_activity`, `edit_activity`, `delete_activity`, `add_category`, `edit_category`, `delete_category`
+- Solution: add conditional `if "user" in session` around functions with redirect to appropriate page if not found
+
+**On category deletion and subsequent reallocation of child activities to "Unassigned" category, only first item reallocated in MongoDB**
+- Solution: create a list of dependent activities and use `$addToSet` and `$each` options to add to the `unassigned_category` rather than `$push` inside a `for` loop:
+`mongo.db.categories.find_one_and_update(unassigned_category, {"$addToSet": {"activity_list": {"$each": activities}}})`
 
 <span id="testing-unresolved"></span>
 
@@ -410,8 +406,6 @@ Real world testing on:
 
 TBC
 
-**Session-only pages e.g. add activity are accessible even if not logged in by entering url**
-- Solution: error handling (does not stop non-session user from viewing page)
 
 ## Deployment
 
@@ -434,12 +428,18 @@ TBC
 
 #### Tutorials and inspiration
 
-- [Title](#)
+- [Code Institute Task Manager Project](#)
+- [Boto S3](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html#id224)
+- [Pillow](https://pillow.readthedocs.io/en/stable/index.html)
 
 
 #### Code used/modified from other sources
 
-- [Title](#)
+- [Handling file uploads with Flask](https://blog.miguelgrinberg.com/post/handling-file-uploads-with-flask)
+- [Uploading to AWS S3 using boto](https://www.zabana.me/notes/flask-tutorial-upload-files-amazon-s3)
+- [Resizing images prior to S3 upload](https://stackoverflow.com/a/56241877)
+- [Image processing with Pillow](https://dzone.com/articles/image-processing-in-python-with-pillow)
+- [Checking duplicate key value pairs](https://stackoverflow.com/a/3897516)
 
 
 ### Content
