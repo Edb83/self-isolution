@@ -4,6 +4,7 @@ from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for)
 from flask_pymongo import PyMongo
+from flask_paginate import Pagination, get_page_args
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
@@ -132,16 +133,40 @@ def home():
 def get_activities():
     activities = list(mongo.db.activities.find().sort("_id", -1))
     categories = list(mongo.db.categories.find())
+    activities_paginated = paginated(activities)
+    pagination = pagination_args(activities)
 
-    return render_template(
-        "activities.html", activities=activities, categories=categories, page_heading="All Activities")
+    return render_template('activities.html',
+                           activities=activities_paginated,
+                           categories=categories,
+                           page_heading="All Activities",
+                           pagination=pagination,
+                           )
+
+
+def paginated(activities):
+    page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
+    per_page = 9
+    offset = page * per_page - per_page
+
+    # Gets all the values
+    return activities[offset: offset + per_page]
+
+
+def pagination_args(activities):
+    page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
+    total = len(activities)
+    return Pagination(page=page, per_page=9, total=total)
 
 
 @app.route("/search", methods=["GET", "POST"])
 def search():
     query = request.form.get("query")
+    categories = list(mongo.db.categories.find())
     activities = list(mongo.db.activities.find({"$text": {"$search": query}}).sort("_id", -1))
-    return render_template("activities.html", activities=activities,
+    activities_paginated = paginated(activities)
+    pagination = pagination_args(activities)
+    return render_template("activities.html", categories=categories, activities=activities_paginated, pagination=pagination,
                            page_heading=f"Results for '{query}'")
 
 
@@ -151,10 +176,12 @@ def filter_category(category_id):
     category = mongo.db.categories.find_one({"_id": ObjectId(category_id)})
     activities = list(mongo.db.activities.find(
         {"category_name": category["category_name"]}).sort("_id", -1))
+    activities_paginated = paginated(activities)
+    pagination = pagination_args(activities)
 
     return render_template("activities.html", category=category,
-                           activities=activities, categories=categories,
-                           page_heading=f"Activities for {category['category_name']}")
+                           activities=activities_paginated, categories=categories, pagination=pagination,
+                           page_heading=f"{category['category_name']} Activities")
 
 
 @app.route("/filter/age/<target_age>")
@@ -162,10 +189,12 @@ def filter_age(target_age):
     categories = list(mongo.db.categories.find())
     activities = list(mongo.db.activities.find(
         {"target_age": target_age}).sort("_id", -1))
+    activities_paginated = paginated(activities)
+    pagination = pagination_args(activities)
 
     return render_template("activities.html",
-                           activities=activities, categories=categories,
-                           page_heading=f"Activities for {target_age.lower()} years old")
+                           activities=activities_paginated, categories=categories, pagination=pagination,
+                           page_heading=f"If they're {target_age}")
 
 
 @app.route("/filter/user/<username>")
@@ -173,9 +202,11 @@ def filter_user(username):
     categories = list(mongo.db.categories.find())
     activities = list(mongo.db.activities.find(
         {"created_by": username}).sort("_id", -1))
+    activities_paginated = paginated(activities)
+    pagination = pagination_args(activities)
 
     return render_template("activities.html",
-                           activities=activities, categories=categories,
+                           activities=activities_paginated, categories=categories, pagination=pagination,
                            page_heading=f"Activities from {username}")
 
 

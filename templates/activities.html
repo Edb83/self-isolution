@@ -87,6 +87,7 @@
                 </div>
             {% endfor %}
         </div>
+    {{ pagination.links }}
     {% else %}
         <div class="no-results-container flow-text indigo-text text-darken-4 center-align">
             {% if session.user %}

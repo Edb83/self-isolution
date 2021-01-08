@@ -3,6 +3,7 @@ botocore==1.19.35
 click==7.1.2
 dnspython==2.0.0
 Flask==1.1.2
+flask-paginate==0.7.1
 Flask-PyMongo==2.3.0
 itsdangerous==1.1.0
 jmespath==0.10.0
