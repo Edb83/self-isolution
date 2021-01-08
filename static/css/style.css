@@ -50,6 +50,16 @@ main {
     color: #fff;
 }
 
+/* Pagination */
+
+.pagination {
+    text-align: center;
+}
+
+.pagination li.active {
+    background-color: #26a69a;
+}
+
 /* Home page */
 
 #welcome-img-container {
