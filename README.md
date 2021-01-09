@@ -147,37 +147,37 @@ MongoDB's non-relational/document-based database structure makes sense for this 
 
 #### Activities collection
 
-**Key**|**Type**|**Notes**
-:-----:|:-----:|:-----:
-_id|ObjectId|
-activity_name|string|The user's chosen title of the activity.
-category_name|string|To avoid potential muddling of activity categories the decision was made to prevent category names being changed by the admin, which meant using a string rather than ObjectID was preferable.
-target_age|string|Options such as 'Under 2' and '6+' meant using int was not appropriate here.
-activity_summary|string|Brief summary used to flesh out cards on Activities page.
-activity_details|string|The main content of the View Activity page.
-image_file|string|This is a link to a user image uploaded to Amazon AWS. If left blank the relevant category.image_file will be used, but this field will be left unaltered.
-created_by|string|Set on activity creation. As users cannot change username, simpler to store as a string.
-date_added|string|Set on activity creation. Activities are sorted by _id therefore simplest to store as a string.
-activity_equipment|string|Rather than storing as an array, it was simpler to request users enter each item on new line and manipulate in Python.
+|**Key**|**Type**|**Notes**|
+|:-----:|:-----:|:-----|
+|_id|ObjectId||
+|activity_name|string|The user's chosen title of the activity.|
+|category_name|string|To avoid potential muddling of activity categories the decision was made to prevent category names being changed by the admin, which meant using a string rather than ObjectID was preferable.|
+target_age|string|Options such as 'Under 2' and '6+' meant using int was not appropriate here.|
+|activity_summary|string|Brief summary used to flesh out cards on Activities page.|
+|activity_details|string|The main content of the View Activity page.|
+|image_file|string|This is a link to a user image uploaded to Amazon AWS. If left blank the relevant category.image_file will be used, but this field will be left unaltered.|
+|created_by|string|Set on activity creation. As users cannot change username, simpler to store as a string.|
+|date_added|string|Set on activity creation. Activities are sorted by _id therefore simplest to store as a string.|
+|activity_equipment|string|Rather than storing as an array, it was simpler to request users enter each item on new line and manipulate in Python.|
 
 #### Categories collection
 
-**Key**|**Type**|**Notes**
-:-----:|:-----:|:-----:
-_id|ObjectId|
-category_name|string|The admin's chosen title of the category. Cannot be changed.
-category_summary|string|Brief summary to add some meat to the Categories cards.
-image_file|string|This is a link to an image uploaded to Amazon AWS by the admin.
-activity_list|Array|Given the possibility of users changing the name of their activity, the decision was made to store activity ObjectIDs in array.
+|**Key**|**Type**|**Notes**|
+|:-----:|:-----:|:-----|
+|_id|ObjectId||
+|category_name|string|The admin's chosen title of the category. Cannot be changed.|
+|category_summary|string|Brief summary to add some meat to the Categories cards.|
+|image_file|string|This is a link to an image uploaded to Amazon AWS by the admin.|
+|activity_list|Array|Given the possibility of users changing the name of their activity, the decision was made to store activity ObjectIDs in array.|
 
 
 #### Users collection
 
-**Key**|**Type**
-:-----:|:-----:
-_id|ObjectId|
-username|string|Chosen by user on account creation. Cannot be changed.
-password|string|Chosen by user on account creation and hashed using Werkzeug Security.
+|**Key**|**Type**|**Notes**|
+|:-----:|:-----:|:-----|
+|_id|ObjectId||
+|username|string|Chosen by user on account creation. Cannot be changed.|
+|password|string|Chosen by user on account creation and hashed using Werkzeug Security.|
 
 #### Ages collection
 
