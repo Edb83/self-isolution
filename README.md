@@ -242,6 +242,7 @@ The admin
 - Javascript
   - [jQuery](https://jquery.com/)
 - Python
+  - [Flask Paginate](https://pythonhosted.org/Flask-paginate/)
 
 ### Project management
 
@@ -398,13 +399,15 @@ Real world testing on:
 - Solution: create a list of dependent activities and use `$addToSet` and `$each` options to add to the `unassigned_category` rather than `$push` inside a `for` loop:
 `mongo.db.categories.find_one_and_update(unassigned_category, {"$addToSet": {"activity_list": {"$each": activities}}})`
 
+
+
 <span id="testing-unresolved"></span>
 
 #### Unresolved
 
-- **TBC**
-
-TBC
+**Paginate linting error**
+`Possible unbalanced tuple unpacking with sequence defined at line 233 of flask_paginate: left side has 3 label(s), right side has 2 value(s)pylint(unbalanced-tuple-unpacking)`
+- Solution: 
 
 
 ## Deployment

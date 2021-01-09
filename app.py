@@ -13,7 +13,7 @@ from io import BytesIO
 from PIL import Image, ImageOps
 
 if os.path.exists("env.py"):
-    import env
+    import env  # noqa: F401
 
 # Amazon S3 Bucket
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
@@ -22,6 +22,8 @@ S3_BUCKET = os.environ.get("S3_BUCKET")
 S3_KEY = os.environ.get("S3_KEY")
 S3_SECRET = os.environ.get("S3_SECRET_ACCESS_KEY")
 S3_LOCATION = os.environ.get("S3_LOCATION")
+
+AGES = ["Under 2", "2-4", "4-6", "6+"]
 
 app = Flask(__name__)
 
@@ -166,7 +168,8 @@ def search():
     activities = list(mongo.db.activities.find({"$text": {"$search": query}}).sort("_id", -1))
     activities_paginated = paginated(activities)
     pagination = pagination_args(activities)
-    return render_template("activities.html", categories=categories, activities=activities_paginated, pagination=pagination,
+    return render_template("activities.html", categories=categories,
+                           activities=activities_paginated, pagination=pagination,
                            page_heading=f"Results for '{query}'")
 
 
@@ -289,40 +292,38 @@ def logout():
 
 @app.route("/add_activity", methods=["GET", "POST"])
 def add_activity():
-    if "user" in session:
-        ages = ["Under 2", "2-4", "4-6", "6+"]
-        categories = list(mongo.db.categories.find().sort("category_name", 1))
+    categories = list(mongo.db.categories.find().sort("category_name", 1))
 
-        if request.method == "POST":
-            activity = {
-                "activity_name": request.form.get("activity_name"),
-                "category_name": request.form.get("category_name"),
-                "target_age": request.form.get("target_age"),
-                "activity_summary": request.form.get("activity_summary"),
-                "activity_details": request.form.get("activity_details"),
-                "activity_equipment": request.form.get("activity_equipment"),
-                "image_file": upload_file(),
-                "created_by": session["user"],
-                "date_added": date.today().strftime("%d %b %Y")
-            }
-
-            existing_activities = mongo.db.activities.find({"activity_name": activity["activity_name"]})
-
-            if any(d["activity_name"] == activity["activity_name"] for d in existing_activities):
-                flash("'{}' already exists, please choose another name".format(activity["activity_name"]))
-                return redirect(url_for("add_activity"))
-
-            else:
-                new_activity = mongo.db.activities.insert_one(activity).inserted_id
-                mongo.db.categories.update_one(
-                    {"category_name": activity["category_name"]}, {"$push": {"activity_list": ObjectId(new_activity)}})
-                flash("Activity added: {}".format(activity["activity_name"]))
-                return redirect(url_for("get_activities"))
-
-        return render_template(
-            "add_activity.html", categories=categories, ages=ages)
-    else:
+    if "user" not in session:
         return redirect(url_for("login"))
+    elif request.method != "POST":
+        return render_template(
+            "add_activity.html", categories=categories, ages=AGES)
+    else:
+        activity = {
+            "activity_name": request.form.get("activity_name"),
+            "category_name": request.form.get("category_name"),
+            "target_age": request.form.get("target_age"),
+            "activity_summary": request.form.get("activity_summary"),
+            "activity_details": request.form.get("activity_details"),
+            "activity_equipment": request.form.get("activity_equipment"),
+            "image_file": upload_file(),
+            "created_by": session["user"],
+            "date_added": date.today().strftime("%d %b %Y")
+        }
+
+        existing_activities = mongo.db.activities.find({"activity_name": activity["activity_name"]})
+
+        if any(d["activity_name"] == activity["activity_name"] for d in existing_activities):
+            flash("'{}' already exists, please choose another name".format(activity["activity_name"]))
+            return redirect(url_for("add_activity"))
+
+        else:
+            new_activity = mongo.db.activities.insert_one(activity).inserted_id
+            mongo.db.categories.update_one(
+                {"category_name": activity["category_name"]}, {"$push": {"activity_list": ObjectId(new_activity)}})
+            flash("Activity added: {}".format(activity["activity_name"]))
+            return redirect(url_for("get_activities"))
 
 
 @app.route("/edit_activity/<activity_id>", methods=["GET", "POST"])
@@ -330,64 +331,59 @@ def edit_activity(activity_id):
     activity = mongo.db.activities.find_one({"_id": ObjectId(activity_id)})
     activity_owner = activity["created_by"]
     categories = list(mongo.db.categories.find().sort("category_name", 1))
-    ages = ["Under 2", "2-4", "4-6", "6+"]
-    if "user" in session:
-        if (session["user"] == activity_owner or session["user"] == "admin"):
+    current_category = mongo.db.categories.find_one({"category_name": activity["category_name"]})
 
-            current_category = mongo.db.categories.find_one({"category_name": activity["category_name"]})
+    if "user" not in session or (session["user"] != activity_owner or session["user"] != "admin"):
+        return render_template("view_activity.html", activity=activity,
+                               categories=categories, user=activity_owner)
 
-            if request.method == "POST":
-                if request.files["image_file"].filename == "":
-                    edit_image_path = activity["image_file"]
-                else:
-                    edit_image_path = upload_file()
+    elif request.method != "POST":
+        return render_template(
+            "edit_activity.html",
+            activity=activity,
+            categories=categories,
+            ages=AGES)
+    else:
+        if request.files["image_file"].filename == "":
+            edit_image_path = activity["image_file"]
+        else:
+            edit_image_path = upload_file()
 
-                edit = {"$set": {
-                    "activity_name": request.form.get("activity_name"),
-                    "category_name": request.form.get("category_name"),
-                    "target_age": request.form.get("target_age"),
-                    "activity_summary": request.form.get("activity_summary"),
-                    "activity_details": request.form.get("activity_details"),
-                    "activity_equipment": request.form.get("activity_equipment"),
-                    "image_file": edit_image_path,
-                }}
-                existing_activities = mongo.db.activities.find({"activity_name": request.form.get("activity_name")})
-                if request.form.get("activity_name") != activity["activity_name"] and any(
-                    d["activity_name"] == request.form.get(
-                        "activity_name") for d in existing_activities):
-                    flash("'{}' already exists, please choose another name".format(request.form.get("activity_name")))
-                    return render_template(
-                        "edit_activity.html",
-                        activity=activity,
-                        categories=categories,
-                        ages=ages)
-                else:
-                    mongo.db.activities.update_many(activity, edit)
-                    new_category = mongo.db.categories.find_one(
-                        {"category_name": request.form.get("category_name")})
+        edit = {"$set": {
+            "activity_name": request.form.get("activity_name"),
+            "category_name": request.form.get("category_name"),
+            "target_age": request.form.get("target_age"),
+            "activity_summary": request.form.get("activity_summary"),
+            "activity_details": request.form.get("activity_details"),
+            "activity_equipment": request.form.get("activity_equipment"),
+            "image_file": edit_image_path,
+        }}
+        existing_activities = mongo.db.activities.find({"activity_name": request.form.get("activity_name")})
 
-                    if request.form.get("category_name") != current_category["category_name"]:
-                        mongo.db.categories.update_one(
-                            new_category,
-                            {"$push": {"activity_list": activity["_id"]}})
-                        mongo.db.categories.update_one(
-                            current_category,
-                            {"$pull": {"activity_list": activity["_id"]}})
-
-                    flash("Activity updated ({})".format(activity["activity_name"]))
-                    return redirect(url_for('view_activity', activity_id=ObjectId(activity_id)))
-
+        if request.form.get("activity_name") != activity["activity_name"] and any(
+            d["activity_name"] == request.form.get(
+                "activity_name") for d in existing_activities):
+            flash("'{}' already exists, please choose another name".format(request.form.get("activity_name")))
             return render_template(
                 "edit_activity.html",
                 activity=activity,
                 categories=categories,
-                ages=ages)
+                ages=AGES)
         else:
-            return render_template("view_activity.html", activity=activity,
-                                   categories=categories, user=activity_owner)
-    else:
-        return render_template("view_activity.html", activity=activity,
-                               categories=categories, user=activity_owner)
+            mongo.db.activities.update_many(activity, edit)
+            new_category = mongo.db.categories.find_one(
+                {"category_name": request.form.get("category_name")})
+
+            if request.form.get("category_name") != current_category["category_name"]:
+                mongo.db.categories.update_one(
+                    new_category,
+                    {"$push": {"activity_list": activity["_id"]}})
+                mongo.db.categories.update_one(
+                    current_category,
+                    {"$pull": {"activity_list": activity["_id"]}})
+
+            flash("Activity updated ({})".format(activity["activity_name"]))
+            return redirect(url_for('view_activity', activity_id=ObjectId(activity_id)))
 
 
 @app.route("/delete_activity/<activity_id>")
