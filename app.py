@@ -40,8 +40,28 @@ s3 = boto3.client(
     aws_secret_access_key=S3_SECRET
 )
 
+# FUNCTIONS
 
+# Pagination
+
+def paginated(activities):
+    page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
+    per_page = 9
+    offset = page * per_page - per_page
+
+    return activities[offset: offset + per_page]
+
+
+def pagination_args(activities):
+    page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
+    total = len(activities)
+
+    return Pagination(page=page, per_page=9, total=total)
+
+
+# Image upload
 def allowed_file(filename):
+
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -55,6 +75,7 @@ def upload_file():
     If it's not there, return blank output (for handling default images where necessary)
     """
     if "image_file" not in request.files:
+
         return output
 
     # If the key is in the object, save it in file variable
@@ -65,6 +86,7 @@ def upload_file():
     If empty, it means the user sumbmitted an empty form, so return a blank output
     """
     if file.filename == "":
+
         return output
 
     # Check that there is a file and that it has an allowed filetype
@@ -122,6 +144,8 @@ def upload_file_to_s3(file):
     return "{}{}".format(S3_LOCATION, file.filename)
 
 
+# ROUTING
+
 @app.route("/")
 @app.route("/home")
 def home():
@@ -133,6 +157,7 @@ def home():
 
 @app.route("/activities")
 def get_activities():
+
     activities = list(mongo.db.activities.find().sort("_id", -1))
     categories = list(mongo.db.categories.find())
     activities_paginated = paginated(activities)
@@ -146,35 +171,23 @@ def get_activities():
                            )
 
 
-def paginated(activities):
-    page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
-    per_page = 9
-    offset = page * per_page - per_page
-
-    # Gets all the values
-    return activities[offset: offset + per_page]
-
-
-def pagination_args(activities):
-    page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
-    total = len(activities)
-    return Pagination(page=page, per_page=9, total=total)
-
-
 @app.route("/search", methods=["GET", "POST"])
 def search():
+
     query = request.form.get("query")
     categories = list(mongo.db.categories.find())
     activities = list(mongo.db.activities.find({"$text": {"$search": query}}).sort("_id", -1))
     activities_paginated = paginated(activities)
     pagination = pagination_args(activities)
+
     return render_template("activities.html", categories=categories,
                            activities=activities_paginated, pagination=pagination,
-                           page_heading=f"Results for '{query}'")
+                           page_heading="Results for '{}'".format(query))
 
 
 @app.route("/filter/category/<category_id>")
 def filter_category(category_id):
+
     categories = list(mongo.db.categories.find())
     category = mongo.db.categories.find_one({"_id": ObjectId(category_id)})
     activities = list(mongo.db.activities.find(
@@ -184,11 +197,12 @@ def filter_category(category_id):
 
     return render_template("activities.html", category=category,
                            activities=activities_paginated, categories=categories, pagination=pagination,
-                           page_heading=f"{category['category_name']} Activities")
+                           page_heading=category['category_name'])
 
 
 @app.route("/filter/age/<target_age>")
 def filter_age(target_age):
+
     categories = list(mongo.db.categories.find())
     activities = list(mongo.db.activities.find(
         {"target_age": target_age}).sort("_id", -1))
@@ -197,11 +211,12 @@ def filter_age(target_age):
 
     return render_template("activities.html",
                            activities=activities_paginated, categories=categories, pagination=pagination,
-                           page_heading=f"If they're {target_age}")
+                           page_heading=target_age)
 
 
 @app.route("/filter/user/<username>")
 def filter_user(username):
+
     categories = list(mongo.db.categories.find())
     activities = list(mongo.db.activities.find(
         {"created_by": username}).sort("_id", -1))
@@ -210,18 +225,23 @@ def filter_user(username):
 
     return render_template("activities.html",
                            activities=activities_paginated, categories=categories, pagination=pagination,
-                           page_heading=f"Activities from {username}")
+                           page_heading="Activities from {}".format(username))
 
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    if request.method == "POST":
+
+    if request.method != "POST":
+        return render_template("register.html")
+
+    else:
         # check if username already exists in database
         existing_user = mongo.db.users.find_one(
             {"username": request.form.get("username").lower()})
 
         if existing_user:
             flash("Username '{}' aleady exists".format(request.form.get("username")))
+
             return redirect(url_for("register"))
 
         register = {
@@ -233,41 +253,44 @@ def register():
         # put the new user into 'session' cookie
         session["user"] = request.form.get("username").lower()
         flash("Registration Successful!")
+
         return redirect(url_for("profile", username=session["user"]))
-    return render_template("register.html")
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    if request.method == "POST":
+
+    if request.method != "POST":
+        return render_template("login.html")
+
+    else:
         # check if username exists in database
         existing_user = mongo.db.users.find_one(
             {"username": request.form.get("username").lower()})
 
-        if existing_user:
-            # ensure hashed password matches user input
-            if check_password_hash(
-                    existing_user["password"], request.form.get("password")):
-                session["user"] = request.form.get("username").lower()
-                flash("Logged in as {}".format(request.form.get("username")))
-                return redirect(url_for(
-                    "profile", username=session["user"]))
-
-            else:
-                # invalid password match
-                flash("Incorrect Username and/or Password")
-                return redirect(url_for("login"))
-        else:
-            # username does not exist
+        if not existing_user:
             flash("Incorrect Username and/or Password")
+
             return redirect(url_for("login"))
 
-    return render_template("login.html")
+        # ensure hashed password matches user input
+        elif check_password_hash(
+                existing_user["password"], request.form.get("password")):
+            session["user"] = request.form.get("username").lower()
+            flash("Logged in as {}".format(request.form.get("username")))
+
+            return redirect(url_for(
+                "profile", username=session["user"]))
+
+        else:
+            flash("Incorrect Username and/or Password")
+
+            return redirect(url_for("login"))
 
 
 @app.route("/profile/<username>", methods=["GET", "POST"])
 def profile(username):
-    # get session user's username from database
+
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
     activities = list(mongo.db.activities.find(
@@ -287,19 +310,24 @@ def logout():
     # remove user from session cookies
     flash("You have been logged out")
     session.pop("user")
+
     return redirect(url_for("login"))
 
 
 @app.route("/add_activity", methods=["GET", "POST"])
 def add_activity():
+
     categories = list(mongo.db.categories.find().sort("category_name", 1))
 
     if "user" not in session:
         return redirect(url_for("login"))
+
     elif request.method != "POST":
         return render_template(
             "add_activity.html", categories=categories, ages=AGES)
+
     else:
+        # get new activity details
         activity = {
             "activity_name": request.form.get("activity_name"),
             "category_name": request.form.get("category_name"),
@@ -312,27 +340,34 @@ def add_activity():
             "date_added": date.today().strftime("%d %b %Y")
         }
 
+        # find activites in database with the same name input by user
         existing_activities = mongo.db.activities.find({"activity_name": activity["activity_name"]})
 
+        # if any match, send back
         if any(d["activity_name"] == activity["activity_name"] for d in existing_activities):
             flash("'{}' already exists, please choose another name".format(activity["activity_name"]))
+
             return redirect(url_for("add_activity"))
 
+        # otherwise add activity to the database and store activity id in category's activity_list
         else:
             new_activity = mongo.db.activities.insert_one(activity).inserted_id
             mongo.db.categories.update_one(
                 {"category_name": activity["category_name"]}, {"$push": {"activity_list": ObjectId(new_activity)}})
             flash("Activity added: {}".format(activity["activity_name"]))
+
             return redirect(url_for("get_activities"))
 
 
 @app.route("/edit_activity/<activity_id>", methods=["GET", "POST"])
 def edit_activity(activity_id):
+
     activity = mongo.db.activities.find_one({"_id": ObjectId(activity_id)})
     activity_owner = activity["created_by"]
     categories = list(mongo.db.categories.find().sort("category_name", 1))
     current_category = mongo.db.categories.find_one({"category_name": activity["category_name"]})
 
+    # must be activity owner or admin
     if "user" not in session or (session["user"] != activity_owner or session["user"] != "admin"):
         return render_template("view_activity.html", activity=activity,
                                categories=categories, user=activity_owner)
@@ -343,12 +378,17 @@ def edit_activity(activity_id):
             activity=activity,
             categories=categories,
             ages=AGES)
+
     else:
+        # if no new image chosen, keep existing image
         if request.files["image_file"].filename == "":
             edit_image_path = activity["image_file"]
+
+        # otherwise prepare for uploading new image
         else:
             edit_image_path = upload_file()
 
+        # get edit details
         edit = {"$set": {
             "activity_name": request.form.get("activity_name"),
             "category_name": request.form.get("category_name"),
@@ -358,23 +398,34 @@ def edit_activity(activity_id):
             "activity_equipment": request.form.get("activity_equipment"),
             "image_file": edit_image_path,
         }}
+
+        # check whether activity name already exists
         existing_activities = mongo.db.activities.find({"activity_name": request.form.get("activity_name")})
 
+        # if any match, send back
         if request.form.get("activity_name") != activity["activity_name"] and any(
             d["activity_name"] == request.form.get(
                 "activity_name") for d in existing_activities):
             flash("'{}' already exists, please choose another name".format(request.form.get("activity_name")))
+
             return render_template(
                 "edit_activity.html",
                 activity=activity,
                 categories=categories,
                 ages=AGES)
+
         else:
+            # save activity edit details to database
             mongo.db.activities.update_many(activity, edit)
+
+            # find the category chosen on form
             new_category = mongo.db.categories.find_one(
                 {"category_name": request.form.get("category_name")})
 
+            # if chosen category name is different from existing category name
             if request.form.get("category_name") != current_category["category_name"]:
+
+                # move activity id from old activity_list to new one
                 mongo.db.categories.update_one(
                     new_category,
                     {"$push": {"activity_list": activity["_id"]}})
@@ -383,28 +434,32 @@ def edit_activity(activity_id):
                     {"$pull": {"activity_list": activity["_id"]}})
 
             flash("Activity updated ({})".format(activity["activity_name"]))
+
             return redirect(url_for('view_activity', activity_id=ObjectId(activity_id)))
 
 
 @app.route("/delete_activity/<activity_id>")
 def delete_activity(activity_id):
+
     activity = mongo.db.activities.find_one({"_id": ObjectId(activity_id)})
     activity_owner = activity["created_by"]
     categories = list(mongo.db.categories.find().sort("category_name", 1))
-    if "user" in session:
-        if (session["user"] == activity_owner or session["user"] == "admin"):
-            current_category = mongo.db.categories.find_one({"category_name": activity["category_name"]})
-            mongo.db.categories.update_one(
-                current_category,
-                {"$pull": {"activity_list": activity["_id"]}})
 
-            mongo.db.activities.remove({"_id": ObjectId(activity_id)})
+    if "user" not in session:
+        return render_template("view_activity.html", activity=activity,
+                               categories=categories, user=activity_owner)
 
-            flash("Activity deleted ({})".format(activity["activity_name"]))
-            return redirect(url_for('profile', username=session['user']))
-        else:
-            return render_template("view_activity.html", activity=activity,
-                                   categories=categories, user=activity_owner)
+    elif (session["user"] == activity_owner or session["user"] == "admin"):
+        mongo.db.categories.find_one_and_update(
+            {"category_name": activity["category_name"]},
+            {"$pull": {"activity_list": activity["_id"]}})
+
+        mongo.db.activities.remove({"_id": ObjectId(activity_id)})
+
+        flash("Activity deleted ({})".format(activity["activity_name"]))
+
+        return redirect(url_for('profile', username=session['user']))
+
     else:
         return render_template("view_activity.html", activity=activity,
                                categories=categories, user=activity_owner)
@@ -412,15 +467,18 @@ def delete_activity(activity_id):
 
 @app.route("/view_activity/<activity_id>")
 def view_activity(activity_id):
+
     activity = mongo.db.activities.find_one({"_id": ObjectId(activity_id)})
     user = mongo.db.users.find_one({"username": activity["created_by"]})
     categories = list(mongo.db.categories.find())
+
     return render_template("view_activity.html", activity=activity,
                            categories=categories, user=user)
 
 
 @app.route("/categories")
 def get_categories():
+
     activities = list(mongo.db.activities.find())
     categories = list(mongo.db.categories.find().sort("category_name", 1))
 
@@ -429,96 +487,92 @@ def get_categories():
 
 @app.route("/add_category", methods=["GET", "POST"])
 def add_category():
-    if "user" in session and session["user"].lower() == "admin":
-        if request.method == "POST":
-            category = {
-                "category_name": request.form.get("category_name"),
-                "category_summary": request.form.get("category_summary"),
-                "image_file": upload_file(),
-                "activity_list": []
-            }
 
-            mongo.db.categories.insert_one(category)
-            flash("Category added ({})".format(category["category_name"]))
-            return redirect(url_for("get_categories"))
+    if "user" not in session and session["user"].lower() != "admin":
+        return redirect(url_for("login"))
 
-        return render_template(
-            "add_category.html")
+    elif request.method != "POST":
+        return render_template("add_category.html")
 
     else:
-        return redirect(url_for("login"))
+        category = {
+            "category_name": request.form.get("category_name"),
+            "category_summary": request.form.get("category_summary"),
+            "image_file": upload_file(),
+            "activity_list": []
+        }
+
+        mongo.db.categories.insert_one(category)
+        flash("Category added ({})".format(category["category_name"]))
+
+        return redirect(url_for("get_categories"))
 
 
 @app.route("/edit_category/<category_id>", methods=["GET", "POST"])
 def edit_category(category_id):
-    category = mongo.db.categories.find_one({"_id": ObjectId(category_id)})
-    if "user" in session and session["user"].lower() == "admin":
-        if request.method == "POST":
-            if request.files["image_file"].filename == "":
-                edit_image_path = category["image_file"]
-            else:
-                edit_image_path = upload_file()
-            submit = {"$set": {
-                "category_summary": request.form.get("category_summary"),
-                "image_file": edit_image_path,
-            }}
-            mongo.db.categories.update_many(category, submit)
-            flash("Category updated ({})".format(category["category_name"]))
-            return redirect(url_for("get_categories"))
 
-        return render_template(
-            "edit_category.html", category=category)
+    category = mongo.db.categories.find_one({"_id": ObjectId(category_id)})
+
+    if "user" not in session and session["user"].lower() != "admin":
+        return redirect(url_for("login"))
+
+    elif request.method != "POST":
+        return render_template("edit_category.html", category=category)
 
     else:
-        return redirect(url_for("login"))
+        if request.files["image_file"].filename == "":
+            edit_image_path = category["image_file"]
+
+        else:
+            edit_image_path = upload_file()
+
+        submit = {"$set": {
+            "category_summary": request.form.get("category_summary"),
+            "image_file": edit_image_path,
+        }}
+
+        mongo.db.categories.update_many(category, submit)
+        flash("Category updated ({})".format(category["category_name"]))
+
+        return redirect(url_for("get_categories"))
 
 
 @app.route("/delete_category/<category_id>")
 def delete_category(category_id):
-    if "user" in session and session["user"].lower() == "admin":
-        # find the category
-        category = mongo.db.categories.find_one({"_id": ObjectId(category_id)})
-        # get all activities with that category name
-        dependent_activities = list(mongo.db.activities.find(
-            {"category_name": category["category_name"]}))
-        # find the category of "Unassigned"
-        unassigned_category = mongo.db.categories.find_one(
-            {"category_name": "Unassigned"})
-        # prepare an empty list
-        activities = []
+
+    category = mongo.db.categories.find_one({"_id": ObjectId(category_id)})
+    dependent_activities = list(mongo.db.activities.find(
+        {"category_name": category["category_name"]}))
+    unassigned_category = mongo.db.categories.find_one(
+        {"category_name": "Unassigned"})
+    activities = []
+
+    if "user" not in session and session["user"].lower() != "admin":
+        return redirect(url_for("login"))
+
+    else:
         for activity in dependent_activities:
-            # update the "category_name" to "Unassigned"
             mongo.db.activities.find_one_and_update(
                 activity, {"$set": {"category_name": "Unassigned"}})
-            # append this ObjectID to the activities list
             activities.append(activity["_id"])
-        # push each activity into the "Unassigned" category's activity_list key
+
         mongo.db.categories.find_one_and_update(
             unassigned_category, {"$addToSet": {"activity_list": {"$each": activities}}})
 
-        # remove the category from MongoDB
         mongo.db.categories.remove(category)
 
         flash("Category deleted ({})".format(category["category_name"]))
-        return redirect(url_for('get_categories'))
 
-    else:
-        return redirect(url_for("login"))
+        return redirect(url_for('get_categories'))
 
 
 @app.errorhandler(404)
 def not_found(error):
-    '''
-    Handles any 404 error
-    '''
     return render_template('404.html', error=error), 404
 
 
 @app.errorhandler(500)
 def internal_error(error):
-    '''
-    Handles any 500 error
-    '''
     return render_template('500.html', error=error), 500
 
 
