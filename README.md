@@ -16,6 +16,7 @@
   - <a href="#ux-stories">User stories</a>
   - <a href="#ux-wireframes">Wireframes</a>
   - <a href="#ux-design">Design</a>
+- <a href="#database-model">Database model</a>
 - <a href="#features">Features</a>
   - <a href="#features-current">Current</a>
   - <a href="#features-future">Future</a>
@@ -61,7 +62,14 @@ own activity ideas and share the collective burden of raising this misfortunate 
 
 ### User stories
 
-#### As a first-time visitor I want:
+#### Overarching user expectations
+
+- Visually appealing
+- Easy to navigate
+- Intuitive icon/button functionality
+- Secured passwords
+
+#### As a first-time visitor I want
 
 - To immediately understand what the purpose of the site is and what it can provide
 - To see all content without having to register
@@ -69,11 +77,12 @@ own activity ideas and share the collective burden of raising this misfortunate 
 - To be able to filter activities by category
 - To be able to register easily without needing to input lots of information
 
-#### As a returning user I want:
+#### As a returning user I want
 
 - To log in and out easily
 - To be able to add new activities easily
 - To be able to edit or delete activities I have added
+- To upload my own images rather than inputting a URL
 - To be able to see all the activities I have added in one place
 - To be able to 'favourite' activities created by other users
 
@@ -91,21 +100,20 @@ Wireframes for **mobile** and **desktop** can be accessed [here](wireframes/).
 There were some noteworthy deviations from the plan. These were:
 
 1. Search bar given greater prominance within Activities page rather than being housed in navbar
-2. Prep time not included
+2. Prep time not included as a MongoDB key
 3. Ages hardcoded instead of residing in separate MongoDB collection
-4. Likes not included, and therefore 'Popular activities' became 'Recent activities'
+4. Likes not included, meaning 'Popular activities' was replaced by 'Recent activities' on the home page
 5. Categories dropdown moved to separate Categories page
 6. Ages dropdown removed, but users can still filter by age by clicking on existing activity's target age
-7. Users complexity reduced to just username and password
+7. Users' collection keys simplified to just username and password
 8. Activities card content revised based on testing
 9. Activity page layout revised due to awkward styling presentation, but functionality mostly unchanged
-
 
 <span id="ux-design"></span>
 
 ### Design choices
 
-The decision to use Materialize means customisation is somewhat limited, but this is an acceptible compromise given the site's purpose of displaying user content clearly. Judicious use of the framework's cards gives the site a solid and consistent feel which does a good job of highlighting the content displayed. 
+The decision to use Materialize means customisation is somewhat limited, but this is an acceptible compromise given the site's purpose of displaying user content clearly. Judicious use of the framework's cards gives the site a solid and consistent feel which promotes the user content. 
 
 #### Colours
 
@@ -127,6 +135,53 @@ TBC
 [Montserrat](https://fonts.google.com/specimen/Montserrat#about)
 
 TBC
+
+<div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
+
+
+<span id="database-model"></span>
+
+### Database model
+
+MongoDB's non-relational/document-based database structure makes sense for this type of site as there are only a few relationships between the various collections. Nevertheless, the ability to relate certain collections to one another was used to preserve key relationships which could have been lost due to users making changes to their content.
+
+#### Activities collection
+
+**Key**|**Type**|**Notes**
+:-----:|:-----:|:-----:
+_id|ObjectId|
+activity_name|string|The user's chosen title of the activity.
+category_name|string|To avoid potential muddling of activity categories the decision was made to prevent category names being changed by the admin, which meant using a string rather than ObjectID was preferable.
+target_age|string|Options such as 'Under 2' and '6+' meant using int was not appropriate here.
+activity_summary|string|Brief summary used to flesh out cards on Activities page.
+activity_details|string|The main content of the View Activity page.
+image_file|string|This is a link to a user image uploaded to Amazon AWS. If left blank the relevant category.image_file will be used, but this field will be left unaltered.
+created_by|string|Set on activity creation. As users cannot change username, simpler to store as a string.
+date_added|string|Set on activity creation. Activities are sorted by _id therefore simplest to store as a string.
+activity_equipment|string|Rather than storing as an array, it was simpler to request users enter each item on new line and manipulate in Python.
+
+#### Categories collection
+
+**Key**|**Type**|**Notes**
+:-----:|:-----:|:-----:
+_id|ObjectId|
+category_name|string|The admin's chosen title of the category. Cannot be changed.
+category_summary|string|Brief summary to add some meat to the Categories cards.
+image_file|string|This is a link to an image uploaded to Amazon AWS by the admin.
+activity_list|Array|Given the possibility of users changing the name of their activity, the decision was made to store activity ObjectIDs in array.
+
+
+#### Users collection
+
+**Key**|**Type**
+:-----:|:-----:
+_id|ObjectId|
+username|string|Chosen by user on account creation. Cannot be changed.
+password|string|Chosen by user on account creation and hashed using Werkzeug Security.
+
+#### Ages collection
+
+Initially it was anticipated that the admin might need the ability to change the target age ranges, but as the site progressed this no longer seemed necessary and this collection was abandoned and replaced by a hardcoded selection.
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 
@@ -399,15 +454,15 @@ Real world testing on:
 - Solution: create a list of dependent activities and use `$addToSet` and `$each` options to add to the `unassigned_category` rather than `$push` inside a `for` loop:
 `mongo.db.categories.find_one_and_update(unassigned_category, {"$addToSet": {"activity_list": {"$each": activities}}})`
 
-
+**Paginate linting error**
+`Possible unbalanced tuple unpacking with sequence defined at line 233 of flask_paginate: left side has 3 label(s), right side has 2 value(s)pylint(unbalanced-tuple-unpacking)`
+- Resolution: running `app.py` through Flake8 does not reveal this to be an error
 
 <span id="testing-unresolved"></span>
 
 #### Unresolved
 
-**Paginate linting error**
-`Possible unbalanced tuple unpacking with sequence defined at line 233 of flask_paginate: left side has 3 label(s), right side has 2 value(s)pylint(unbalanced-tuple-unpacking)`
-- Solution: 
+?
 
 
 ## Deployment

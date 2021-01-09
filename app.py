@@ -42,8 +42,8 @@ s3 = boto3.client(
 
 # FUNCTIONS
 
-# Pagination
 
+# Pagination
 def paginated(activities):
     page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
     per_page = 9
