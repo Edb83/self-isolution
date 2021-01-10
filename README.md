@@ -8,7 +8,7 @@
 
 <span id="top"></span>
 
-## README Index
+## Index
 
 - <a href="#context">Context</a>
 - <a href="#ux">UX</a>
@@ -59,10 +59,12 @@ own activity ideas and share the collective burden of raising this misfortunate 
 
 #### Overarching user expectations
 
-- Visually appealing
+- Consistent
 - Easy to navigate
-- Intuitive icon/button functionality
-- Secured passwords
+- Intuitive
+- Responsive
+- Secure
+- Visually appealing
 
 #### As a first-time visitor I want
 
@@ -356,6 +358,7 @@ Full details of testing can be found [here](TESTING.md).
 - [Code Institute Task Manager Project](#)
 - [Boto S3](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html#id224)
 - [Pillow](https://pillow.readthedocs.io/en/stable/index.html)
+- [Flask Paginate](https://gist.github.com/mozillazg/69fb40067ae6d80386e10e105e6803c9)
 
 
 #### Code used/modified from other sources
