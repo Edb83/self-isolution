@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  "use strict";
   $(".dropdown-trigger").dropdown({ constrainWidth: false, coverTrigger: false}); 
   $(".sidenav").sidenav({ edge: "right" });
   $("select").formSelect();
@@ -77,6 +78,7 @@ $(document).ready(function () {
 });
 
 $(document).click(function () {
+  "use strict";
   // Fixes bug with Materialize select elements not working with iOS
   // https://stackoverflow.com/a/52851046
   $('li[id^="select-options"]').on('touchend', function (e) {
