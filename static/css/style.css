@@ -19,6 +19,7 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
+/* Combined with min-height on body, this sets footer to bottom of screen without any content */
 main {
   -webkit-box-flex: 1;
       -ms-flex: 1 0 auto;
@@ -29,28 +30,32 @@ main {
     padding: 2rem 0;
 }
 
-#footer-menu li {
-  display:inline-block;
-  padding: 0 1rem;
-  border-right: thin solid;
+
+/* TEXT */
+
+.text-shadow {
+    text-shadow: 1px 1px 2px #000;
 }
 
-#footer-menu li:last-child {
-  border-right: none;
-  padding: 0.5rem 0 0 1rem;
+
+/* HEADINGS */
+
+.section-heading, .card-heading {
+    font-family: 'Bubblegum Sans', cursive;
+    color: #1a237e;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+       text-overflow: ellipsis;
 }
 
-#footer-links li {
-  display:inline-block;
-  padding: 0 1rem;
+.activity-heading {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
 }
 
-#footer-menu a,
-#footer-links a {
-    color: #fff;
-}
 
-/* Pagination */
+/* PAGINATION */
 
 .pagination {
     text-align: center;
@@ -60,37 +65,8 @@ main {
     background-color: #26a69a;
 }
 
-/* Home page */
 
-#welcome-img-container {
-    margin-top: 2rem;
-}
-
-#welcome-img {
-    width: 90%;
-}
-
-#welcome-intro {
-    padding-bottom: 1rem !important;
-}
-
-.welcome-block {
-    padding: 0 0 2rem;
-}
-
-
-/* Remove iOS display of carets on select forms */
-select {
-    -webkit-appearance: none; 
-}
-
-
-/* Text */
-.text-shadow {
-    text-shadow: 1px 1px 2px #000;
-} */
-
-/* Navbar */
+/* NAVBAR */
 
 .collapsible-header {
     display: block;
@@ -118,29 +94,71 @@ nav ul a:hover {
     background-color: #e8eaf6;
 }
 
-/* Headings */
-.section-heading, .card-heading {
-    font-family: 'Bubblegum Sans', cursive;
-    color: #1a237e;
-    overflow: hidden;
-    text-overflow: ellipsis;
+
+/* FOOTER */
+
+.footer-menu li {
+  display:inline-block;
+  padding: 0 1rem;
+  border-right: thin solid;
 }
 
-.activity-heading {
-    display: -webkit-inline-box;
-    display: -ms-inline-flexbox;
-    display: inline-flex;
+.footer-menu li:last-child {
+  border-right: none;
+  padding: 0.5rem 0 0 1rem;
 }
 
-/* Forms */
+.footer-links li {
+  display:inline-block;
+  padding: 0 1rem;
+}
+
+.footer-menu a,
+.footer-links a {
+    color: #fff;
+}
+
+
+/* HOME PAGE */
+
+.welcome-img-container {
+    margin-top: 2rem;
+}
+
+.welcome-img {
+    width: 90%;
+}
+
+.welcome-intro {
+    padding-bottom: 1rem !important;
+}
+
+.welcome-block {
+    padding: 0 0 2rem;
+}
+
+
+/* FORMS */
+
+/* Fixes icon intentation for file input field */
 .file-field .file-path-wrapper {
     padding-left: 3rem;
 }
 
-/* Buttons */
+/* Remove iOS display of carets on select forms */
+select {
+    -webkit-appearance: none; 
+}
+
+.input-field>label {
+    color: #1a237e;
+}
+
+
+/* BUTTONS */
 
 .add-item-button-container {
-    place-content: center;
+    justify-content: center;
 }
 
 .btn-floating.halfway-fab {
@@ -161,14 +179,14 @@ nav ul a:hover {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    place-content: center;
+    justify-content: center;
 }
 
 .form-button {
     padding: 0.5em;
 }
 
-#search-button-container {
+.search-button-container {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -181,18 +199,17 @@ nav ul a:hover {
     padding: 0 0.5rem;
 }
 
-.input-field>label {
-    color: #1a237e;
-}
 
-/* Toasts */
+/* TOASTS */
+
 .custom-toast {
     background-color: #ffa726;
     color: #1a237e;
 }
 
 
-/* Cards */
+/* CARDS */
+
 .card {
     border-radius: 5%;
     overflow: hidden;
@@ -242,7 +259,6 @@ nav ul a:hover {
     border-bottom: thin solid #3949ab;
 }
 
-
 .profile-card-name-container {
     min-height: 66%;
 }
@@ -256,7 +272,8 @@ nav ul a:hover {
     padding: 1rem;
 }
 
-/* Categories */
+
+/* CATEGORIES */
 
 .category-card-action,
 .category-card-content {
@@ -272,7 +289,7 @@ nav ul a:hover {
     padding: 1rem !important;
 }
 
-/* View Activity */
+/* VIEW ACTIVITY */
 
 .view-activity-image-container {
     margin-top: 2rem;
@@ -298,7 +315,6 @@ nav ul a:hover {
 
 .activity-info {
     padding: 0.5rem 0.9rem !important;
-
 }
 
 .activity-info a:hover {
@@ -316,7 +332,7 @@ nav ul a:hover {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    place-content: center;
+    justify-content: center;
     -ms-flex-flow: wrap;
         flex-flow: wrap;
     padding: 1rem 2rem 4rem 2rem;
@@ -349,7 +365,8 @@ nav ul a:hover {
     font-size: 1.1em;
 }
 
-/* 403 and 500 errors */
+
+/* ERROR PAGES */
 
 .error-container {
     display: -webkit-box;
@@ -366,10 +383,10 @@ nav ul a:hover {
 }
 
 
-/* Media queries */
+/* MEDIA QUERIES */
 
 @media only screen and (min-width: 601px) {
-    #back-button {
+    .back-button-container {
         margin: 0 4rem;
     }
     
