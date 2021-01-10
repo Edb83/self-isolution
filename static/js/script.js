@@ -4,7 +4,6 @@ $(document).ready(function () {
   $("select").formSelect();
   $('input#activity_name, textarea#activity_summary, textarea#activity_details, textarea#activity_equipment, input#category_name, textarea#category_summary').characterCounter();
   $('.modal').modal();
-  $('.chips').chips();
 
   // Adds validation to Materialize select fields
   // Code Institute
