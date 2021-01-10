@@ -25,6 +25,8 @@ S3_LOCATION = os.environ.get("S3_LOCATION")
 
 AGES = ["Under 2", "2-4", "4-6", "6+"]
 
+PER_PAGE = 12
+
 app = Flask(__name__)
 
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
@@ -46,17 +48,16 @@ s3 = boto3.client(
 # Pagination
 def paginated(activities):
     page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
-    per_page = 9
-    offset = page * per_page - per_page
+    offset = page * PER_PAGE - PER_PAGE
 
-    return activities[offset: offset + per_page]
+    return activities[offset: offset + PER_PAGE]
 
 
 def pagination_args(activities):
     page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
     total = len(activities)
 
-    return Pagination(page=page, per_page=9, total=total)
+    return Pagination(page=page, per_page=PER_PAGE, total=total)
 
 
 # Image upload
