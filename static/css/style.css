@@ -119,23 +119,6 @@ nav ul a:hover {
 }
 
 
-/* HOME PAGE */
-
-.welcome-img-container {
-    margin-top: 2rem;
-}
-
-.welcome-img {
-    width: 90%;
-}
-
-.welcome-intro {
-    padding-bottom: 1rem !important;
-}
-
-.welcome-block {
-    padding: 0 0 2rem;
-}
 
 
 /* FORMS */
@@ -165,11 +148,6 @@ select {
     border: solid 1px;
 }
 
-.category-icon {
-    padding: 0 !important;
-    margin: .75rem !important;
-}
-
 .pulse::before {
     -webkit-animation: pulse-animation 2.5s cubic-bezier(0.24, 0, 0.38, 1) infinite;
             animation: pulse-animation 2.5s cubic-bezier(0.24, 0, 0.38, 1) infinite;
@@ -184,6 +162,32 @@ select {
 
 .form-button {
     padding: 0.5em;
+}
+
+
+/* HOME PAGE */
+
+.welcome-img-container {
+    margin-top: 2rem;
+}
+
+.welcome-img {
+    width: 90%;
+}
+
+.welcome-intro {
+    padding-bottom: 1rem !important;
+}
+
+.welcome-block {
+    padding: 0 0 2rem;
+}
+
+
+/* SEARCH BAR */
+
+.search-bar {
+    margin-bottom: 2rem;
 }
 
 .search-button-container {
