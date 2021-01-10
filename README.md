@@ -148,11 +148,11 @@ MongoDB's non-relational/document-based database structure makes sense for this 
 #### Activities collection
 
 |**Key**|**Type**|**Notes**|
-|:-----:|:-----:|:-----|
+|:-----|:-----|:-----|
 |_id|ObjectId||
 |activity_name|string|The user's chosen title of the activity.|
 |category_name|string|To avoid potential muddling of activity categories the decision was made to prevent category names being changed by the admin, which meant using a string rather than ObjectID was preferable.|
-target_age|string|Options such as 'Under 2' and '6+' meant using int was not appropriate here.|
+|target_age|string|Options such as 'Under 2' and '6+' meant using int was not appropriate here.|
 |activity_summary|string|Brief summary used to flesh out cards on Activities page.|
 |activity_details|string|The main content of the View Activity page.|
 |image_file|string|This is a link to a user image uploaded to Amazon AWS. If left blank the relevant category.image_file will be used, but this field will be left unaltered.|
@@ -163,7 +163,7 @@ target_age|string|Options such as 'Under 2' and '6+' meant using int was not app
 #### Categories collection
 
 |**Key**|**Type**|**Notes**|
-|:-----:|:-----:|:-----|
+|:-----|:-----|:-----|
 |_id|ObjectId||
 |category_name|string|The admin's chosen title of the category. Cannot be changed.|
 |category_summary|string|Brief summary to add some meat to the Categories cards.|
@@ -174,7 +174,7 @@ target_age|string|Options such as 'Under 2' and '6+' meant using int was not app
 #### Users collection
 
 |**Key**|**Type**|**Notes**|
-|:-----:|:-----:|:-----|
+|:-----|:-----|:-----|
 |_id|ObjectId||
 |username|string|Chosen by user on account creation. Cannot be changed.|
 |password|string|Chosen by user on account creation and hashed using Werkzeug Security.|
@@ -196,73 +196,85 @@ Initially it was anticipated that the admin might need the ability to change the
 **?. Material design**
 
 MaterializeCSS features:
-- Cards
-- Chips
-- Forms
-- Input character counter
-- Menu dropdown
-- Modals
-- Side navigation bar
-- Toasts
+- [Cards](https://materializecss.com/cards.html)
+- [Forms](https://materializecss.com/text-inputs.html)
+- [Menu dropdown](https://materializecss.com/dropdown.html)
+- [Modals](https://materializecss.com/modals.html)
+- [Sidenav](https://materializecss.com/sidenav.html)
+- [Toasts](https://materializecss.com/toasts.html)
 
-**?. Online database**
+**?. Secure passwords**
 
-MongoDB
-
-**?. Secure user login**
-
-Werkzeug hashed passwords
-
-**?. User profile**
-
-A user can view all activities they have created in one place and easily edit or delete them
+When registering for the site, the user's password is hashed so that it is not revealed to the database owner.
 
 **?. CRUD functionality**
 
-All visitors can
-- view all activities
-- view all categories
+Visitors can:
+- View all activities
+- View all categories
 
-User can
-- add own activities
-- edit own activities 
-- delete own activities
+Users can:
+- Add their own activities
+- Edit their own activities 
+- Delete their own activities
 
-Admin can
-- add own activities
-- edit any activity
-- delete any activity
-- add category
-- edit category
-- delete category
-
-**?. Search**
-
-**?. Filter**
-
-All visitors can filter activities by
-- category
-- target age
-- author
+The admin can:
+- Add their own activities
+- Edit any users' activities
+- Delete any users' activities
+- Add a category
+- Edit a category
+- Delete a category
 
 **?. Image uploads**
 
-Amazon AWS using S3 Bucket
+Rather than having to find a URL for an image, users can upload their own files. This encourages them to provide their own content, but if they skip this step then a default image is displayed from the relevant category.
 
 **?. Image resizing**
 
-Pillow
+Prior to uploading an image, a user's file is resized so that it does not adversely affect site load times, and also gives some control over its dimensions.
+
+**?. User profile**
+
+Users can view all activities they have created in one place and easily edit or delete them.
 
 **?. Admin rights**
 
-The admin 
+The admin has the additional ability to:
+- Edit or delete any activity on the site from its View Activity page, including changing an activity's category to 'Unassigned'
+- Add categories
+- Edit a category summary or image, but they cannot edit the name of a category to preserve relationship integrity
+- Delete categories from the Categories page, reassigning activities to the 'Unassigned' category
 
-**?. Defensive programming**
-- user session check for accessing restricted content (add, edit, delete activity; add, edit, delete category, PROFILE?)
-- moving activities to "Unassigned" category if associated category deleted by admin
-- delete confirmation for activities and categories
-- 404 and 500 error handling
-- utilising `ObjectId` wherever sensible, to prevent reference to a key which a user could change (e.g. `category.activity_list`)
+**?. Confirm delete**
+
+When the user or admin clicks to delete an activity or category, a modal pops up to confirm they wish to do so to prevent accidental deletion.
+
+**?. Category reassignment on deletion**
+
+When the admin chooses to delete a category which has associated activities, these activities are moved to the 'Unassigined' category and are still visible on the site. 
+
+**?. Search**
+
+All users can search for keywords appearing in:
+- Activity title
+- Activity summary
+- Activity description
+- Activity required equipment
+
+Activities can be filtered by category from the Categories page and also by target age or activity author by clicking on the associated tag from the Activities, View Activity or Profile pages.
+
+**?. Pagination**
+
+The Activities page (and any search or filters applied) will limit the number of activities visible to 12 in order to reduce the number of images loaded and keep the focus on the content. As individual users are unlikely to be adding much more than 12 activities it makes sense not to paginate the Profile page to avoid spilling onto a second page in this rare instance.
+
+**?. Access protection**
+
+Routes to restricted functions such as add, edit and delete (for both session user and admin) are protected so that they cannot be accessed by brute force via the URL.
+
+**?. 404 and 500 error handling**
+
+Pages for 404 and 500 errors keep the user on the site when something goes wrong, allowing them to return to the content with minimal disruption.
 
 
 <span id="features-future"></span>
