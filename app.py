@@ -25,7 +25,7 @@ S3_LOCATION = os.environ.get("S3_LOCATION")
 
 AGES = ["Under 2", "2-4", "4-6", "6+"]
 
-PER_PAGE = 12
+PER_PAGE = 9
 
 app = Flask(__name__)
 
@@ -172,10 +172,10 @@ def get_activities():
                            )
 
 
-@app.route("/search", methods=["GET", "POST"])
+@app.route("/search")
 def search():
 
-    query = request.form.get("query")
+    query = request.args.get("query")
     categories = list(mongo.db.categories.find())
     activities = list(mongo.db.activities.find({"$text": {"$search": query}}).sort("_id", -1))
     activities_paginated = paginated(activities)
