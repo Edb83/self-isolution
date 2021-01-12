@@ -369,7 +369,7 @@ def edit_activity(activity_id):
     current_category = mongo.db.categories.find_one({"category_name": activity["category_name"]})
 
     # must be activity owner or admin
-    if "user" not in session or (session["user"] != activity_owner or session["user"] != "admin"):
+    if "user" not in session and (session["user"] != activity_owner or session["user"] != "admin"):
         return render_template("view_activity.html", activity=activity,
                                categories=categories, user=activity_owner)
 
