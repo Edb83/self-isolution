@@ -133,10 +133,21 @@ select {
     -webkit-appearance: none; 
 }
 
+.select-wrapper input.select-dropdown {
+    color: #1a237e;
+}
+
+.dropdown-content li>a, .dropdown-content li>span {
+    color: #00897b;
+}
+
 .input-field>label {
     color: #1a237e;
 }
 
+.file-field input.file-path::placeholder {
+    color: #1a237e;
+}
 
 /* BUTTONS */
 
