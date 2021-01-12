@@ -215,29 +215,52 @@ On screen widths greater than 991px:
   - The number of visible activities is limited to 9 per page.
   - Only if pagination is necessary (over 9 activities), will links appear beneath the activities with corresponding page numbers.
 
-
-**View Activity page**
-
-- The 'Back to Activities' button at the top of the page redirects to the Activities page.
-- The correct full-size image is displayed above the activity title, the dimensions of which are revealed in Chrome Dev Tools (see Image Resizing under Add Activity page below).
-- If the user is the creator of the activity or the admin, icons to delete or edit the activity are visible either side of the activity title, otherwise the row contains nothing but the title.
-- The edit button takes the user to the relevant Edit Activity page
-- The delete button brings up a confirmation modal:
-  - Clicking/tapping the modal cancel button closes the modal, while the 'Delete' button removes the activity from the collection and redirects the user to their Profile page along with a Toast confirming deletion (including the activity name).
-- The corrrect target age, category and activity author are displayed, and when tapped/clicked will filter activities as elsewhere.
-- The activity equipment are displayed in separate chips (providing they have been entered on separate lines).
-- If no activity_equipment has been entered, a message is visible reporting "You won't need any specialized tools for this one!"
-
 **Add Activity page**
-
+- The 'Choose category' and 'Choose age' input fields are populated with the documents from the Categories collection on MongoDB and the ages from the AGES list in app.py, respectively. Changes to these lists are reflected in the dropdowns.
+- Input field validation and character counters function as expected, indicating issues with input and correctly displaying chars remaining.
 - Image upload
   - On tapping/clicking the 'Upload Image' input field, the user is given the option to choose an image to upload.
   - On submitting the Add Activity form, the image is uploaded to the Amazon S3 Bucket and a unique URL is generated.
   - If the user choses not to upload an image, the image_file key has an empty string value (the relevant category image will be used instead).
-
 - Image resizing
   - Before the image is upload to the S3 Bucket, it is resized so that its longest side is a maximum of 500px, as evident when viewing the image from other pages through Chrome Dev Tools.
   - The image is also orientated using its EXIF metadata so that it does not rotate when saved. When uploading portrait images without using the `resize_image` function, they will usually be flipped horizontally.
+- The 'Cancel' button takes user back to the Activities page.
+- The 'Submit' button:
+  - Adds the activity to the Activities collection.
+  - Adds the activity_id to the category's activity_list key.
+  - Redirects to the user to the Activities page, showing the new activity at the top of the activities grid.
+  - Displays a Toast confirming activity has been successfully added.
+
+**Edit Activity page**
+The same tests as for Add Activity were carried out, with the following additional tests:
+- The input fields are prepopulated with the activity's existing values where available.
+- If an activity is in the "Unassigned" category (due to the category being deleted by the admin), this option is only available to the admin in the dropdown.
+- If no new image is uploaded, the previously uploaded image URL is preserved.
+- The 'Update' button:
+  - Changes the activity's values in the Activities collection.
+  - If a new category is chosen, adds the activity_id to the new category's activity_list key and removes it from the old one.
+  - Redirects to the user to the View Activity page.
+  - Displays a Toast confirming activity has been successfully added.
+
+**View Activity page**
+
+- The 'Back to Activities' button at the top of the page redirects to the Activities page.
+- The correct full-size image is displayed above the activity title, the dimensions of which are revealed in Chrome Dev Tools (see Image Resizing under Add Activity page above).
+- If the user is the creator of the activity or the admin, icons to delete or edit the activity are visible either side of the activity title, otherwise the row contains nothing but the title.
+- The edit button takes the user to the relevant Edit Activity page
+- The delete button brings up a confirmation modal:
+  - Clicking/tapping the modal's 'Cancel' button closes the modal.
+  - Clicking/tapping the 'Delete' button removes the activity from the collection and redirects the user to their Profile page along with a Toast confirming deletion (including the activity name).
+- The corrrect target age, category and activity author are displayed, and when tapped/clicked will filter activities as expected.
+- The activity's equipment items are displayed in separate chips (providing they have been entered on separate lines).
+- If no activity_equipment has been entered, a message is visible reporting "You won't need any specialized tools for this one!"
+
+**Delete Activity function**
+
+-
+
+
 
 **Categories page**
 
@@ -282,7 +305,7 @@ On screen widths greater than 991px:
 - Disallow !important
   - Used only where necessary to override Materialize styling
 - Disallow IDs in selectors
-  - Selecting via IDs has only been used for styles which will not be reused
+  - Selecting via IDs has only been used for styles which will not be reused and the specificity was needed
 - Disallow overqualified elements
   - In these instances the qualifications are necessary to both override Materialize and piggyback on the output of Flask Paginate
 
