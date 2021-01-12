@@ -144,7 +144,7 @@ The likely options a user might need at a given moment have been carefully consi
 
 ## Manual testing
 
-The following tests have been successfully carried out:
+The following tests have been carried out without issue:
 
 **Navigation bar**
 
@@ -161,38 +161,95 @@ Mobile:
 
 On screen widths greater than 991px:
 - The hambuger icon is replaced by available menu options .
-- Restricted user options (View, Add Activity, Add Category) are moved to a dropdown menu under Profile.
+- Restricted user options (View, Add Activity, Add Category) are moved to a dropdown menu under Profile. The dropdown menu links all work as expected.
 - Hover effects appear when moused-over.
 
 **Footer**
 
 - The footer appears at the bottom of the screen, even when all content is removed.
 - The menu options all open the correct page, or log the user out.
-- Each social media link opens the relevant page in a new window.
-
-**Cards**
-
-Activities page:
-
-- X
-
-Categories page:
-
-- X
-
-Profile page:
-
-- X
+- Each social media link opens the relevant external page in a new window.
 
 **Home page**
 
-- Links to Activities and Register go to the correct pages.
-- FAB to Add Activity only appears if user is logged in.
+- Links to Activities and Register direct to the correct pages.
+- FAB for Add Activity only appears if user is logged in.
 - Latest Activities shows the three most recently added activities.
 - Cards function as expected (see Cards, above)
 
+**Register page**
+
+- The 'Log In' link takes the user to the Log In page.
+- Entering a username or password not matching the form validation highlights the issue to the user, and indicates "Looks good!" if validated.
+- Submitting a username (upper or lowercase) which has already been registered reloads the page and displays a Toast indicating username already taken.
+- When the 'Register' button is tapped/clicked with valid details, the user is redirected to their Profile page and a Toast indicates they have successfully registered.
+- On registering, the new user's username and password are added to the Users collection on the database.
+
+**Log In page**
+
+- The 'Register' link takes the user to the Register page.
+- Entering a username or password not matching the form validation highlights the issue to the user.
+- Entering either an incorrect username or password displays a Toast indicating "Incorrect Username and/or Password".
+- When the 'Log In' button is tapped/clicked with valid details, the user is redirected to their Profile page and a Toast including their username indicates they have successfully logged in.
+
+
 **Activities page**
 
+- Search functionality:
+  - After entering a term in the search field and either clicking/tapping the search icon or pressing Enter, the correct results are displayed from the indexed fields (activity_name, activity_summary, activity_details and activity_equipment).
+  - Tapping/clicking the cancel icon reloads the page with no query applied.
+  - The section heading updates to reflect the search term used.
+  - Pagination works when a search has been applied.
+  - If no results are found, a message to the effect appears. If logged in, a working link to Add Activity is displayed, otherwise working links to Register or Log In are displayed.
+
+- Cards:
+  - All activities in the collection are displayed, each with the correct title, image, summary, category and target age.
+  - If the user is logged in and the author of an activity, the Edit Activity FAB is displayed within the card, which takes the user to the correct Edit Activity page.
+  - For activities where the user has not uploaded an image, the correct image is displayed from the associated category.
+  - Tapping/clicking on an activity's image takes the user to the correct View Activity page.
+  - Tapping/clicking on an activity's category or target age correctly filters the activities displayed, updating the section heading to indicate the filter applied.
+  - Summaries which are longer than the card's width are truncated and do not cause the card to spill into the following row.
+  - The hover effect is applied when a card is moused over.
+
+- Pagination:
+  - The number of visible activities is limited to 9 per page.
+  - Only if pagination is necessary (over 9 activities), will links appear beneath the activities with corresponding page numbers.
+
+
+**View Activity page**
+
+- The 'Back to Activities' button at the top of the page redirects to the Activities page.
+- The correct full-size image is displayed above the activity title, the dimensions of which are revealed in Chrome Dev Tools (see Image Resizing under Add Activity page below).
+- If the user is the creator of the activity or the admin, icons to delete or edit the activity are visible either side of the activity title, otherwise the row contains nothing but the title.
+- The edit button takes the user to the relevant Edit Activity page
+- The delete button brings up a confirmation modal:
+  - Clicking/tapping the modal cancel button closes the modal, while the 'Delete' button removes the activity from the collection and redirects the user to their Profile page along with a Toast confirming deletion (including the activity name).
+- The corrrect target age, category and activity author are displayed, and when tapped/clicked will filter activities as elsewhere.
+- The activity equipment are displayed in separate chips (providing they have been entered on separate lines).
+- If no activity_equipment has been entered, a message is visible reporting "You won't need any specialized tools for this one!"
+
+**Add Activity page**
+
+- Image upload
+  - On tapping/clicking the 'Upload Image' input field, the user is given the option to choose an image to upload.
+  - On submitting the Add Activity form, the image is uploaded to the Amazon S3 Bucket and a unique URL is generated.
+  - If the user choses not to upload an image, the image_file key has an empty string value (the relevant category image will be used instead).
+
+- Image resizing
+  - Before the image is upload to the S3 Bucket, it is resized so that its longest side is a maximum of 500px, as evident when viewing the image from other pages through Chrome Dev Tools.
+  - The image is also orientated using its EXIF metadata so that it does not rotate when saved. When uploading portrait images without using the `resize_image` function, they will usually be flipped horizontally.
+
+**Categories page**
+
+- X
+
+**Add Category page**
+
+- X
+
+**Profile page**
+
+-X
 
 
 
@@ -211,20 +268,23 @@ Profile page:
 
 [W3C - HTML](https://validator.w3.org/) - ? errors, ? warnings - **PASS**
 
-[W3C - CSS](https://jigsaw.w3.org/css-validator/) - ? errors, ? warnings - **PASS**
+[W3C - CSS](https://jigsaw.w3.org/css-validator/) - 0 errors, 35 warnings - **PASS**
 
-Details TBC
-
-- Use of...
+- Use of unknown vendor extensions
 
 [CSS Lint](http://csslint.net/) - 0 errors, 46 warnings - **PASS**
 
 - Disallow @import
-- Requires compatible vendor prefixes (these were added by css auto-prefixer)
-- Unknown properties (again relating to styling added by css auto-prefixer)
-- Disallow !important (which is necessary to override Materialize styling)
-- Disallow IDs in selectors (these relate to elements and styles which are not going to be reused)
-- Disallow overqualified elements (in these instances the qualifications are necessary to override both Materialize and piggyback on the output of Flask Paginate)
+- Requires compatible vendor prefixes
+  - These were added by css auto-prefixer
+- Unknown properties
+  - Relating to styling added by css auto-prefixer
+- Disallow !important
+  - Used only where necessary to override Materialize styling
+- Disallow IDs in selectors
+  - Selecting via IDs has only been used for styles which will not be reused
+- Disallow overqualified elements
+  - In these instances the qualifications are necessary to both override Materialize and piggyback on the output of Flask Paginate
 
 
 [Unicorn revealer - overflow](https://chrome.google.com/webstore/detail/unicorn-revealer/lmlkphhdlngaicolpmaakfmhplagoaln/related) - no evidence of overflow - **PASS**
@@ -295,44 +355,82 @@ Real world testing on:
 ### Resolved
 
 **Materialize select dropdown does not function correctly on iOS. Either dropdown does not appear or selects the wrong item when clicked**
+
+
 - Solution: Stopping propagation on `touchend` event (https://stackoverflow.com/a/52851046)
 
 **iOS select caret visible when using the Materialize fix above**
+
+
 - Solution: adding `-webkit-appeance: none` to select elements (https://stackoverflow.com/questions/7638677/how-can-i-remove-the-gloss-on-a-select-element-in-safari-on-mac)
 
 **Portrait images rotating on resize**
+
+
 - Solution: caused by PIL not reading image EXIF metadata. Fixed by importing ImageOps and using `ImageOps.exif_transpose(image)` (https://www.mmbyte.com/article/46440.html)
 
 **Images uploaded to AWS not updating on edit**
+
+
 - Solution: missing `enctype="multipart/form-data"`
 
 **Images not uploading on deployed site**
+
+
 - Solution: add AWS secret keys to cvars on heroku
 
 **Unable to use PIL.ImageOps on image files once opened**
+
+
 - Solution: save format of `raw_image` to pass into `new_image` so that it can be accessed by ImageOps. [Source]((https://stackoverflow.com/questions/29374072/why-does-resizing-image-in-pillow-python-remove-image-format))
 
 **pymongo.errors.InvalidOperation: cannot set options after executing query**
+
+
 - Solution: to various issues(!) - using `list()`
 
 **Session-only pages and functions are accessible even if not logged in 'brute-forcing' url**
+
+
 - Affects: `add_activity`, `edit_activity`, `delete_activity`, `add_category`, `edit_category`, `delete_category`
 - Solution: add conditional `if "user" in session` around functions with redirect to appropriate page if not found
 
 **On category deletion and subsequent reallocation of child activities to "Unassigned" category, only first item reallocated in MongoDB**
+
+
+
 - Solution: create a list of dependent activities and use `$addToSet` and `$each` options to add to the `unassigned_category` rather than `$push` inside a `for` loop:
 `mongo.db.categories.find_one_and_update(unassigned_category, {"$addToSet": {"activity_list": {"$each": activities}}})`
 
+**Pagination link not finding type of $search when search applied**
+
+This error would occur when a search was applied showing a number of results in excess of the `PER_PAGE` pagination limit. The search form's "query" was not being passed through after the first page and had a type of `None`, which could be tested by forcing `query` to be a string and revealing empty subsequent pagination pages.
+- Solution: removing `methods=["GET", "POST"]` from the search route, switching `query = request.form.get("query")` to `query = request.args.get("query")` in the search function, and changing `method="POST"` to `method="GET"` in the search form.
+
+
 **Paginate linting error**
+
+Raised by Gitpod:
 `Possible unbalanced tuple unpacking with sequence defined at line 233 of flask_paginate: left side has 3 label(s), right side has 2 value(s)pylint(unbalanced-tuple-unpacking)`
+
 - Resolution: running `app.py` through Flake8 does not reveal this to be an error
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 
 <span id="testing-unresolved"></span>
 
+**Lack of autocomplete attribute**
+- Warning reported by Chrome console:
+`[DOM] Input elements should have autocomplete attributes`
+- Resolution: added `autocomplete=""` to Register and Log In inputs.
+
+
 ### Unresolved
 
-?
+**Warnings reported by Chrome console**
+
+`materialize.min.js:formatted:3756 [Violation] Added non-passive event listener to a scroll-blocking 'touchmove' event. Consider marking event handler as 'passive' to make the page more responsive. See https://www.chromestatus.com/feature/5745543795965952`
+
+`[Violation] Forced reflow while executing JavaScript took XXms`
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>

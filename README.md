@@ -263,7 +263,7 @@ Activities can be filtered by category from the Categories page and also by targ
 
 **?. Pagination**
 
-The Activities page (and any search or filters applied) will limit the number of activities visible to 12 in order to reduce the number of images loaded and keep the focus on the content. As individual users are unlikely to be adding much more than 12 activities it makes sense not to paginate the Profile page to avoid spilling onto a second page in this rare instance.
+The Activities page (and any search or filters applied) will limit the number of activities visible to 9 in order to reduce the number of images loaded and keep the focus on the content. As individual users are unlikely to be adding much more than 9 activities, it makes sense not to paginate the Profile page to avoid spilling onto a second page in this rare instance.
 
 **?. Access protection**
 
