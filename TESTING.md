@@ -35,28 +35,31 @@ The likely options a user might need at a given moment have been carefully consi
 - Headings are descriptive of the content displayed even when a search or filter is applied.
 - When a search finds no results, the user is encouraged to add their own content with a link to Add Activty.
 - The title of each page updates in the browser window to indicate where the user is.
-- Any view or action can be reached within four clicks, e.g. from the Home page to confirming deletion of an activity: Profile > View > Delete > Confirm.
+- Any view or action can be reached within four taps/clicks, e.g. from the Home page to confirming deletion of an activity: Profile > View > Delete > Confirm.
 - The Footer contains top-level menu options, excluding Add Activity
 
 **Intuitive design**
 
 - In the Navbar the Self Isolution logo takes users to the focal part of the site, the Activities page.
-- Familiar icons have been used across the site for commonly expected actions e.g. add, edit, delete, search, back
-- Toasts pop-ups discretely alert the user when they make a meaningful action i.e. logins and content changes
+- Familiar icons have been used across the site for commonly expected actions e.g. add, edit, delete, search, back.
+- Toasts pop-ups discretely alert the user when they perform meaningful actions i.e. logins and content changes.
 - Activity and Category cards offer different functionality and are therefore styled and structured slightly differently to indicate this difference. Activity cards are blue with the image linking to the View Activity page whereas Category cards are green with the image expanding the card to reveal some more information about the category.
 - As a user might expect, modals appear to confirm content deletion.
 
 **Responsiveness**
 
 - Pages adapt to a variety of screen sizes thanks to the Materialize grid template and extensive testing in Chrome Dev Tools.
+- Where readability is compromised, page structure is modified to give more space to the elements (e.g. giving username its own row on the View Activity page).
+- As large number of images are used, features such as image resizing, pagination and the `loading="lazy"` attribute keep the data footprint in check.
 
 **Security**
 
-- Passwords are hashed using Werkzeug Security.
+Passwords are hashed using Werkzeug Security.
 
 **Appealing visuals**
 
-- The card-based design allows for focus on the images uploaded by users
+- The card-based design allows for focus on the images uploaded by users.
+- Simple, bold colours and use of consistent spacing bring clarity to the content.
 
 
 ### As a first-time visitor I want...
@@ -76,12 +79,12 @@ The likely options a user might need at a given moment have been carefully consi
 
 **To be able to search for keywords**
 
-- The Activities page has a clear Search area, which uses an index to check across activity name, summary, details and equipment required.
+The Activities page has a clear Search area, which uses an index to check across activity name, summary, details and equipment required.
 
 **To be able to filter activities by category**
 
-- The Categories page has a prominant 'VIEW' button within each category's card, which when clicked will filter activities by that category.
-- Activities can be filtered by target age or the activity author by clicking on the associated links either from the Activities page (except for author) or View Activity page.
+- The Categories page has a prominant 'VIEW' button within each category's card, which when tapped/clicked will filter activities by that category.
+- Activities can be filtered by target age or the activity author by tapping/clicking on the associated links either from the Activities page (except for author) or View Activity page.
 
 **To be able to register easily without needing to input lots of information**
 
@@ -104,10 +107,10 @@ The likely options a user might need at a given moment have been carefully consi
 
 **To be able to edit or delete activities I have added**
 
-- Users can access the Edit Activity page for activites they have created by clicking on the floating action button within the activity's card on the Activities page, and also using the edit button in the View Activity or Profile pages.
-- Users can delete their activites by clicking the delete button on the View Activity or Profile pages.
-- As deleting an activity is a less common action (and to prevent accidental clicks), this option is not present on the Activities page.
-- On clicking to delete an activity, a modal pops up to confirm they wish to delete.
+- Users can access the Edit Activity page for activites they have created by tapping/clicking on the floating action button within the activity's card on the Activities page, and also using the edit button in the View Activity or Profile pages.
+- Users can delete their activites by tapping/clicking the delete button on the View Activity or Profile pages.
+- As deleting an activity is a less common action (and to prevent accidental taps/clicks), this option is not present on the Activities page.
+- On tapping/clicking to delete an activity, a modal pops up to confirm they wish to delete.
 
 **To upload my own images rather than inputting a URL**
 
@@ -126,12 +129,12 @@ The likely options a user might need at a given moment have been carefully consi
 
 **To be able to edit or remove content created by users**
 
-- The admin (user with username of "admin") has the same view of the site as other users so as to more easily determine which activities they have added personally. However, from the View Activity page they have the same options as the activity's owner to click a button to edit or delete the activity.
+- The admin (user with username of "admin") has the same view of the site as other users so as to more easily determine which activities they have added personally. However, from the View Activity page they have the same options as the activity's owner to tap/click a button to edit or delete the activity.
 
 **To be able to add, edit or remove categories**
 
-- The admin has the ability to add a new category either by clicking the pulsing "+" button on the Categories page, or via the additional Navbar or Footer option.
-- The admin can edit or delete a category in much the same was as a user would edit an activity, by clicking on the respective button within the category's card on the Categories page.
+- The admin has the ability to add a new category either by tapping/clicking the pulsing "+" button on the Categories page, or via the additional Navbar or Footer option.
+- The admin can edit or delete a category in much the same was as a user would edit an activity, by tapping/clicking on the respective button within the category's card on the Categories page.
 - The Add and Edit Category pages are consistent with the Add and Edit Activity pages.
 - From the Edit Category page the admin can change the summary and image of the category, but not it's name so as to prevent awkward impacts on the associated activities.
 - On choosing to delete a category, a modal pops up to confirm the action.
@@ -150,14 +153,14 @@ The following tests have been carried out without issue:
 
 Mobile:
 - Navbar is fixed to the top of the viewport when scrolling down.
-- Clicking/tapping the Self Isolution logo takes users to the Activities page.
-- All available menu options appear in the Sidenav when the hamburger icon is clicked/tapped.
+- Tapping/clicking the Self Isolution logo takes users to the Activities page.
+- All available menu options appear in the Sidenav when the hamburger icon is tapped/clicked.
 - The correct menu options appear depending on the user's session status:
   - **Not logged in**: Home, Activities, Categories, Register, Log In
   - **Logged in**: Home, Activities, Categories, Profile, Add Activity, Log Out
   - **Logged in as "admin"**: as above plus Add Category
 - The active page is indicated.
-- Clicking/tapping each link takes the user to the relevant page, or logs the user out.
+- Tapping/clicking each link takes the user to the relevant page, or logs the user out.
 
 On screen widths greater than 991px:
 - The hambuger icon is replaced by available menu options .
@@ -195,27 +198,32 @@ On screen widths greater than 991px:
 
 **Activities page**
 
-- Search functionality:
-  - After entering a term in the search field and either clicking/tapping the search icon or pressing Enter, the correct results are displayed from the indexed fields (activity_name, activity_summary, activity_details and activity_equipment).
-  - Tapping/clicking the cancel icon reloads the page with no query applied.
-  - The section heading updates to reflect the search term used.
-  - Pagination works when a search has been applied.
-  - If no results are found, a message to the effect appears. If logged in, a working link to Add Activity is displayed, otherwise working links to Register or Log In are displayed.
+Search functionality:
 
-- Cards:
-  - All activities in the collection are displayed, each with the correct title, image, summary, category and target age.
-  - If the user is logged in and the author of an activity, the Edit Activity FAB is displayed within the card, which takes the user to the correct Edit Activity page.
-  - For activities where the user has not uploaded an image, the correct image is displayed from the associated category.
-  - Tapping/clicking on an activity's image takes the user to the correct View Activity page.
-  - Tapping/clicking on an activity's category or target age correctly filters the activities displayed, updating the section heading to indicate the filter applied.
-  - Summaries which are longer than the card's width are truncated and do not cause the card to spill into the following row.
-  - The hover effect is applied when a card is moused over.
+- After entering a term in the search field and either tapping/clicking the search icon or pressing Enter, the correct results are displayed from the indexed fields (activity_name, activity_summary, activity_details and activity_equipment).
+- Tapping/clicking the cancel icon reloads the page with no query applied.
+- The section heading updates to reflect the search term used.
+- Pagination works when a search has been applied.
+- If no results are found, a message to the effect appears. If logged in, a working link to Add Activity is displayed, otherwise working links to Register or Log In are displayed.
 
-- Pagination:
-  - The number of visible activities is limited to 9 per page.
-  - Only if pagination is necessary (over 9 activities), will links appear beneath the activities with corresponding page numbers.
+Cards:
+
+- All activities in the collection are displayed, each with the correct title, image, summary, category and target age.
+- Activities are displayed with the most recent at the top (by sorting the activity_id).
+- If the user is logged in and the author of an activity, the Edit Activity FAB is displayed within the card, which takes the user to the correct Edit Activity page.
+- For activities where the user has not uploaded an image, the correct image is displayed from the associated category.
+- Tapping/clicking on an activity's image takes the user to the correct View Activity page.
+- Tapping/clicking on an activity's category or target age correctly filters the activities displayed, updating the section heading to indicate the filter applied.
+- Summaries which are longer than the card's width are truncated and do not cause the card to spill into the following row.
+- The hover effect is applied when a card is moused over.
+
+Pagination:
+
+- The number of visible activities is limited to 9 per page.
+- Only if pagination is necessary (over 9 activities), will links appear beneath the activities with corresponding page numbers.
 
 **Add Activity page**
+
 - The 'Choose category' and 'Choose age' input fields are populated with the documents from the Categories collection on MongoDB and the ages from the AGES list in app.py, respectively. Changes to these lists are reflected in the dropdowns.
 - Input field validation and character counters function as expected, indicating issues with input and correctly displaying chars remaining.
 - Image upload
@@ -233,6 +241,7 @@ On screen widths greater than 991px:
   - Displays a Toast confirming activity has been successfully added.
 
 **Edit Activity page**
+
 The same tests as for Add Activity were carried out, with the following additional tests:
 - The input fields are prepopulated with the activity's existing values where available.
 - If an activity is in the "Unassigned" category (due to the category being deleted by the admin), this option is only available to the admin in the dropdown.
@@ -250,15 +259,23 @@ The same tests as for Add Activity were carried out, with the following addition
 - If the user is the creator of the activity or the admin, icons to delete or edit the activity are visible either side of the activity title, otherwise the row contains nothing but the title.
 - The edit button takes the user to the relevant Edit Activity page
 - The delete button brings up a confirmation modal:
-  - Clicking/tapping the modal's 'Cancel' button closes the modal.
-  - Clicking/tapping the 'Delete' button removes the activity from the collection and redirects the user to their Profile page along with a Toast confirming deletion (including the activity name).
+  - Tapping/clicking the modal's 'Cancel' button closes the modal.
+  - Tapping/clicking the 'Delete' button removes the activity from the collection and redirects the user to their Profile page along with a Toast confirming deletion (including the activity name).
 - The corrrect target age, category and activity author are displayed, and when tapped/clicked will filter activities as expected.
 - The activity's equipment items are displayed in separate chips (providing they have been entered on separate lines).
 - If no activity_equipment has been entered, a message is visible reporting "You won't need any specialized tools for this one!"
 
-**Delete Activity function**
+**Delete function / modal button**
 
--
+Activities:
+- Targets the correct activity.
+- Removes the activity from the activities collection.
+- Removes the activity's ObjectId from the associated category's activity_list.
+
+Categories:
+- Targets the correct category.
+- Changes the category_name value to "Unassigned" in any associated activities.
+- Removes the category from the categories collection.
 
 
 
@@ -377,7 +394,7 @@ Real world testing on:
 
 ### Resolved
 
-**Materialize select dropdown does not function correctly on iOS. Either dropdown does not appear or selects the wrong item when clicked**
+**Materialize select dropdown does not function correctly on iOS. Either dropdown does not appear or selects the wrong item when tapped/clicked**
 
 
 - Solution: Stopping propagation on `touchend` event (https://stackoverflow.com/a/52851046)
@@ -454,6 +471,6 @@ Raised by Gitpod:
 
 `materialize.min.js:formatted:3756 [Violation] Added non-passive event listener to a scroll-blocking 'touchmove' event. Consider marking event handler as 'passive' to make the page more responsive. See https://www.chromestatus.com/feature/5745543795965952`
 
-`[Violation] Forced reflow while executing JavaScript took XXms`
+`[Violation] Forced reflow while executing JavaScript took [x]ms`
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
