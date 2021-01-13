@@ -414,65 +414,79 @@ Real world testing on:
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 
-## Issues and resolutions
+## Issues and bugs
 
 <span id="testing-resolved"></span>
 
 ### Resolved
 
-**Materialize select dropdown does not function correctly on iOS. Either dropdown does not appear or selects the wrong item when tapped/clicked**
+**Materialize select dropdown does not function correctly on iOS**
 
+A known bug with Materialize meaning either the dropdown does not appear or selects the wrong item when tapped/clicked.
 
 - Solution: Stopping propagation on `touchend` event (https://stackoverflow.com/a/52851046)
 
 **iOS select caret visible when using the Materialize fix above**
 
+A subsequent issue resulting from the propogation fix above made for an untidy look.
 
 - Solution: adding `-webkit-appeance: none` to select elements (https://stackoverflow.com/questions/7638677/how-can-i-remove-the-gloss-on-a-select-element-in-safari-on-mac)
 
 **Portrait images rotating on resize**
 
+This issue is caused by PIL not reading image EXIF metadata resulting in images being rotated when resized.
 
-- Solution: caused by PIL not reading image EXIF metadata. Fixed by importing ImageOps and using `ImageOps.exif_transpose(image)` (https://www.mmbyte.com/article/46440.html)
+- Solution: importing ImageOps and using `ImageOps.exif_transpose(image)` (https://www.mmbyte.com/article/46440.html)
 
 **Images uploaded to AWS not updating on edit**
 
+After updating `add_activity` and form in add_activity.html, this change was missed in the edit_activity.html form.
 
-- Solution: missing `enctype="multipart/form-data"`
+- Solution: add missing `enctype="multipart/form-data"` attribute in form.
 
 **Images not uploading on deployed site**
 
+Images could be uploaded in the local app but not on the deployed site. 
 
-- Solution: add AWS secret keys to cvars on heroku
+- Solution: add AWS secret keys to cvars on Heroku, to match those in env.py.
 
 **Unable to use PIL.ImageOps on image files once opened**
 
+Pillow not able to process uploaded images due to a TypeError.
 
 - Solution: save format of `raw_image` to pass into `new_image` so that it can be accessed by ImageOps. [Source]((https://stackoverflow.com/questions/29374072/why-does-resizing-image-in-pillow-python-remove-image-format))
 
-**pymongo.errors.InvalidOperation: cannot set options after executing query**
+**Values from collection fields not always appearing in templates**
 
+Throughout development there were sudden instances where Jinja would only sometimes show data from the MongoDB collection. This happens due to the Cursor instance being expended so a copy is required to access more than once. 
 
-- Solution: to various issues(!) - using `list()`
+- Solution: rather than using the Cursor object, convert to a list with `list(mongo.db.collection.find(...))`
 
-**Session-only pages and functions are accessible even if not logged in 'brute-forcing' url**
+**Users being able to brute-force access to restricted pages or functions via the URL**
 
+Even if not logged in, anyone could go to "/add_activity" or "/add_category" and even edit or delete by using "/delete_category/category_id". Just because a link is not presented does not mean the routes cannot be accessed (especially risky when the code is available).
 
-- Affects: `add_activity`, `edit_activity`, `delete_activity`, `add_category`, `edit_category`, `delete_category`
-- Solution: add conditional `if "user" in session` around functions with redirect to appropriate page if not found
+- Solution: add layered conditions to functions (`add_activity`, `edit_activity`, `delete_activity`, `add_category`, `edit_category`, `delete_category`) to get the correct path, e.g. `if "user" not in session` or `elif session["user"] != activity_owner and session["user"] != "admin"`. Then redirect to an appropriate page with flash/Toast message.
+- This also presented a good opportunity to reduce the levels of nesting by using `if not` rather than `if` statements, to improve code readability.
 
 **On category deletion and subsequent reallocation of child activities to "Unassigned" category, only first item reallocated in MongoDB**
 
+Using `$push` inside a `for` loop only pushes the first instance of a list, which meant only one activity from a category which was deleted could be appended to the activity_list key in the "Unassigned" category.
 
-
-- Solution: create a list of dependent activities and use `$addToSet` and `$each` options to add to the `unassigned_category` rather than `$push` inside a `for` loop:
+- Solution: create a list of dependent activities and use `$addToSet` and `$each` options to add to `unassigned_category` rather than `$push` inside a `for` loop:
 `mongo.db.categories.find_one_and_update(unassigned_category, {"$addToSet": {"activity_list": {"$each": activities}}})`
+
+**Checking for existing activity or category names only applies to exact matches**
+
+Unlike the check for `existing_user` which can apply `lower()` to the form request, it was not immediately obvious how to apply this to a Cursor object retreived from MongoDB and so `if any(d["activity_name"] == activity["activity_name"] for d in existing_activities)` was used to find any exact matches. As many many activities with the same name were added during testing, it was apparent that this would not find examples where the case alone was different.
+
+- Solution: create a list of lowercase existing item names from the database and compare with the chosen activity/category name.
 
 **Pagination link not finding type of $search when search applied**
 
 This error would occur when a search was applied showing a number of results in excess of the `PER_PAGE` pagination limit. The search form's "query" was not being passed through after the first page and had a type of `None`, which could be tested by forcing `query` to be a string and revealing empty subsequent pagination pages.
-- Solution: removing `methods=["GET", "POST"]` from the search route, switching `query = request.form.get("query")` to `query = request.args.get("query")` in the search function, and changing `method="POST"` to `method="GET"` in the search form.
 
+- Solution: removing `methods=["GET", "POST"]` from the search route, switching `query = request.form.get("query")` to `query = request.args.get("query")` in the search function, and changing `method="POST"` to `method="GET"` in the search form.
 
 **Paginate linting error**
 
