@@ -353,11 +353,15 @@ def add_activity():
             "date_added": date.today().strftime("%d %b %Y")
         }
 
-        # find activites in database with the same name input by user
-        existing_activities = mongo.db.activities.find({"activity_name": activity["activity_name"]})
+        # create a list of activity names
+        activities = list(mongo.db.activities.find())
+        lowercase_name = activity["activity_name"].lower()
+        lowercase_list = []
+        for x in activities:
+            lowercase_list.append(x["activity_name"].lower())
 
-        # if any match, send back
-        if any(d["activity_name"] == activity["activity_name"] for d in existing_activities):
+        # check whether name already taken
+        if lowercase_name in lowercase_list:
             flash("'{}' already exists, please choose another name".format(activity["activity_name"]))
 
             return redirect(url_for("add_activity"))
@@ -418,13 +422,15 @@ def edit_activity(activity_id):
             "image_file": edit_image_path,
         }}
 
-        # check whether activity name already exists
-        existing_activities = mongo.db.activities.find({"activity_name": request.form.get("activity_name")})
+        # create a list of activity names
+        activities = list(mongo.db.activities.find())
+        lowercase_name = request.form.get("activity_name").lower()
+        lowercase_list = []
+        for x in activities:
+            lowercase_list.append(x["activity_name"].lower())
 
-        # if any match, send back
-        if request.form.get("activity_name") != activity["activity_name"] and any(
-            d["activity_name"] == request.form.get(
-                "activity_name") for d in existing_activities):
+        # check whether name already taken
+        if lowercase_name in lowercase_list:
             flash("'{}' already exists, please choose another name".format(request.form.get("activity_name")))
 
             return redirect(url_for('edit_activity', activity_id=ObjectId(activity_id)))
@@ -524,6 +530,19 @@ def add_category():
             "image_file": upload_file(),
             "activity_list": []
         }
+
+        # create a list of category names
+        categories = list(mongo.db.categories.find())
+        lowercase_name = category["category_name"].lower()
+        lowercase_list = []
+        for x in categories:
+            lowercase_list.append(x["category_name"].lower())
+
+        # check whether name already taken
+        if lowercase_name in lowercase_list:
+            flash("'{}' already exists, please choose another name".format(category["category_name"]))
+
+            return redirect(url_for('add_category'))
 
         mongo.db.categories.insert_one(category)
         flash("Category added ({})".format(category["category_name"]))
