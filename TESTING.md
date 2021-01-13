@@ -224,6 +224,7 @@ Pagination:
 
 **Add Activity page**
 
+- If user has been logged out and tries to add an activity (or tries to open url with brute force using /add_activity) they are redirected to Log In page with Toast alert.
 - The 'Choose category' and 'Choose age' input fields are populated with the documents from the Categories collection on MongoDB and the ages from the AGES list in app.py, respectively. Changes to these lists are reflected in the dropdowns.
 - Input field validation and character counters function as expected, indicating issues with input and correctly displaying chars remaining.
 - Image upload
@@ -239,10 +240,16 @@ Pagination:
   - Adds the activity_id to the category's activity_list key.
   - Redirects to the user to the Activities page, showing the new activity at the top of the activities grid.
   - Displays a Toast confirming activity has been successfully added.
+- If activity name chosen already exists in database (upper or lowercase):
+  - Redirects to Add Activity page.
+  - Displays a Toast alerting that name already exists.
 
 **Edit Activity page**
 
 The same tests as for Add Activity were carried out, with the following additional tests:
+- If user has been logged out and tries to edit an activity (or tries to open url with brute force using /edit_activity/activity_id) they are redirected to Log In page with Toast alert.
+- If user is logged in and tries to edit another user's activity by brute force, they are redirected to View Activity page with Toast message alerting "This Activity belongs to someone else!"
+- The admin can edit any activity.
 - The input fields are prepopulated with the activity's existing values where available.
 - If an activity is in the "Unassigned" category (due to the category being deleted by the admin), this option is only available to the admin in the dropdown.
 - If no new image is uploaded, the previously uploaded image URL is preserved.
@@ -251,13 +258,16 @@ The same tests as for Add Activity were carried out, with the following addition
   - If a new category is chosen, adds the activity_id to the new category's activity_list key and removes it from the old one.
   - Redirects to the user to the View Activity page.
   - Displays a Toast confirming activity has been successfully added.
+- If activity name chosen already exists in database (upper or lowercase):
+  - Redirects to the relevant Edit Activity page.
+  - Displays a Toast alerting that name already exists.
 
 **View Activity page**
 
 - The 'Back to Activities' button at the top of the page redirects to the Activities page.
 - The correct full-size image is displayed above the activity title, the dimensions of which are revealed in Chrome Dev Tools (see Image Resizing under Add Activity page above).
 - If the user is the creator of the activity or the admin, icons to delete or edit the activity are visible either side of the activity title, otherwise the row contains nothing but the title.
-- The edit button takes the user to the relevant Edit Activity page
+- The edit button takes the user to the relevant Edit Activity page.
 - The delete button brings up a confirmation modal:
   - Tapping/clicking the modal's 'Cancel' button closes the modal.
   - Tapping/clicking the 'Delete' button removes the activity from the collection and redirects the user to their Profile page along with a Toast confirming deletion (including the activity name).
@@ -265,27 +275,43 @@ The same tests as for Add Activity were carried out, with the following addition
 - The activity's equipment items are displayed in separate chips (providing they have been entered on separate lines).
 - If no activity_equipment has been entered, a message is visible reporting "You won't need any specialized tools for this one!"
 
+
+**Categories page**
+
+- All categories from the categories collection are displayed in cards.
+- Tapping/clicking a category image expands the card to reveal the category summary and a maximum list of three associated activities.
+- If there are no associated activities, it displays the message "We are still waiting for this one to be filled up!"
+- The 'View' button displays the number of associated activities for each category and if tapped/clicked takes user to a view of activities filtered by that category.
+- If there are no associated activities, the 'View' button is greyed-out.
+- The Add Category FAB and edit/delete icons display only if logged in as admin, but tapping/clicking them takes the admin to the correct page or brings up the confirm delete modal.
+- The button for the admin to delete the "Unassigned" category is not available.
+
+**Add/Edit Category page**
+
+The same tests as for Add/Edit Activity were carried out, with the following additional tests:
+- The page is only accessible if logged in as admin
+- If the admin has been logged out and tries to add a category they are redirected to the Log In page with Toast alert.
+- If a user is logged in and tries to add a category by brute force, they are redirected to the Categories page with Toast message alerting "That's an Admin's job!"
+- The option to edit the category name is not available.
+- Form validation requires the admin to upload a category image (as this is used for activities without an uploaded image).
+
 **Delete function / modal button**
 
 Activities:
-- Targets the correct activity.
+- If user has been logged out and tries to delete an activity (or tries to open url with brute force using /delete_activity/activity_id) they are redirected to Log In page with Toast alert.
+- If user is logged in and tries to delete another user's activity by brute force, they are redirected to View Activity page with Toast message alerting "This Activity belongs to someone else!"
+- The admin can delete any activity.
+- Button targets the correct activity.
 - Removes the activity from the activities collection.
 - Removes the activity's ObjectId from the associated category's activity_list.
 
 Categories:
-- Targets the correct category.
+- If admin is logged out and tries to delete a category (or tries to open url with brute force using /delete_category/category_id) they are redirected to Log In page with Toast alert.
+- If user is logged in and tries to delete a category by brute force, they are redirected to the Categories page with Toast message alerting "That's an Admin's job!"
+- The admin can delete any category.
+- Button targets the correct category.
 - Changes the category_name value to "Unassigned" in any associated activities.
 - Removes the category from the categories collection.
-
-
-
-**Categories page**
-
-- X
-
-**Add Category page**
-
-- X
 
 **Profile page**
 
