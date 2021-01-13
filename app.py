@@ -384,7 +384,6 @@ def edit_activity(activity_id):
     categories = list(mongo.db.categories.find().sort("category_name", 1))
     current_category = mongo.db.categories.find_one({"category_name": activity["category_name"]})
 
-    # must be activity owner or admin
     if "user" not in session:
         flash("You need to Log In to do that!")
 
@@ -575,12 +574,12 @@ def edit_category(category_id):
         else:
             edit_image_path = upload_file()
 
-        submit = {"$set": {
+        edit = {"$set": {
             "category_summary": request.form.get("category_summary"),
             "image_file": edit_image_path,
         }}
 
-        mongo.db.categories.update_many(category, submit)
+        mongo.db.categories.update_many(category, edit)
         flash("Category updated ({})".format(category["category_name"]))
 
         return redirect(url_for("get_categories"))

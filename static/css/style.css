@@ -39,6 +39,10 @@ main {
     text-shadow: 1px 1px 2px #000;
 }
 
+.flow-text a {
+    font-weight: 600;
+}
+
 
 /* HEADINGS */
 
@@ -215,7 +219,6 @@ select {
 .welcome-block {
     padding: 0 0 2rem;
 }
-
 
 /* SEARCH BAR */
 

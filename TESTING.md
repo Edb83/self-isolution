@@ -54,13 +54,12 @@ The likely options a user might need at a given moment have been carefully consi
 
 **Security**
 
-Passwords are hashed using Werkzeug Security.
+- Passwords are hashed using Werkzeug Security.
 
 **Appealing visuals**
 
 - The card-based design allows for focus on the images uploaded by users.
 - Simple, bold colours and use of consistent spacing bring clarity to the content.
-
 
 ### As a first-time visitor I want...
 
@@ -79,7 +78,7 @@ Passwords are hashed using Werkzeug Security.
 
 **To be able to search for keywords**
 
-The Activities page has a clear Search area, which uses an index to check across activity name, summary, details and equipment required.
+- The Activities page has a clear Search area, which uses an index to check across activity name, summary, details and equipment required.
 
 **To be able to filter activities by category**
 
@@ -141,7 +140,6 @@ The Activities page has a clear Search area, which uses an index to check across
 - If deleting a category, associated activities are moved to the "Unassigned" category rather than being deleted.
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
-
 
 <span id="testing-manual"></span>
 
@@ -275,7 +273,6 @@ The same tests as for Add Activity were carried out, with the following addition
 - The activity's equipment items are displayed in separate chips (providing they have been entered on separate lines).
 - If no activity_equipment has been entered, a message is visible reporting "You won't need any specialized tools for this one!"
 
-
 **Categories page**
 
 - All categories from the categories collection are displayed in cards.
@@ -295,6 +292,15 @@ The same tests as for Add/Edit Activity were carried out, with the following add
 - The option to edit the category name is not available.
 - Form validation requires the admin to upload a category image (as this is used for activities without an uploaded image).
 
+**Profile page**
+
+- Add Activity FAB links to the Add Activity page.
+- All activities created by user display uniformly in cards.
+- Activity name, image and creation date all display correctly.
+- Tapping/clicking on card image takes user to correct View Activity page.
+- The edit button links to Edit Activity page.
+- The delete button brings up confirmation modal.
+
 **Delete function / modal button**
 
 Activities:
@@ -313,12 +319,6 @@ Categories:
 - Changes the category_name value to "Unassigned" in any associated activities.
 - Removes the category from the categories collection.
 
-**Profile page**
-
--X
-
-
-
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 
 <span id="testing-auto"></span>
@@ -327,10 +327,47 @@ Categories:
 
 [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools) - audit summary for both desktop and mobile:
 
-- Performance: **X - X%**
-- Accessibility: **X - X%**
-- Best Practices: **X - X%**
-- SEO: **X - X%**
+**Home page**
+
+- Performance: **88 - 95%**
+- Accessibility: **97%**
+- Best Practices: **100%**
+- SEO: **100%**
+
+**Activities page**
+
+- Performance: **79 - 97%**
+- Accessibility: **100%**
+- Best Practices: **100%**
+- SEO: **90%**
+
+**Add / Edit pages**
+
+- Performance: **90 - 99%**
+- Accessibility: **88%**
+- Best Practices: **100%**
+- SEO: **98 - 100%**
+
+**Categories page**
+
+- Performance: **82 - 99%**
+- Accessibility: **97%**
+- Best Practices: **100%**
+- SEO: **100%**
+
+**Register / Log In pages**
+
+- Performance: **91 - 99%**
+- Accessibility: **97%**
+- Best Practices: **100%**
+- SEO: **100%**
+
+**Profile page**
+
+- Performance: **73 - 98%**
+- Accessibility: **100%**
+- Best Practices: **100%**
+- SEO: **100%**
 
 [W3C - HTML](https://validator.w3.org/) - ? errors, ? warnings - **PASS**
 

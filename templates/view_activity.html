@@ -5,7 +5,7 @@
 
 {% block content %}
     <div class="back-button-container">
-        <a href="{{ url_for('get_activities') }}" class="btn teal darken-1">
+        <a href="{{ url_for('get_activities') }}" class="btn teal darken-1" aria-label="back to activities button">
             <i class="fas fa-undo-alt left"></i>Back to Activities
         </a>
     </div>
@@ -24,7 +24,7 @@
         {% if (session.user|lower == activity.created_by|lower) or (session.user|lower == "admin") %}
             <div class="col s2">
                 <h3 class="activity-heading">
-                    <button data-target="{{ activity._id }}" class="btn-floating modal-trigger hoverable white">
+                    <button data-target="{{ activity._id }}" class="btn-floating modal-trigger hoverable white" aria-label="delete activity button">
                         <i class="fas fa-trash-alt fa-activity-delete"></i>
                     </button>
                 </h3>
@@ -36,7 +36,7 @@
             </div>
             <div class="col s2">
                 <h3 class="activity-heading">
-                    <a href="{{ url_for('edit_activity', activity_id=activity._id) }}" class="btn-floating hoverable white">
+                    <a href="{{ url_for('edit_activity', activity_id=activity._id) }}" class="btn-floating hoverable white" aria-label="edit activity button">
                         <i class="fas fa-pencil-alt fa-activity-edit"></i>
                     </a>
                 </h3>
@@ -97,8 +97,10 @@
             <p>Are you sure you want to delete <span class="special-text">{{ activity.activity_name }}</span> ?</p>
         </div>
         <div class="modal-footer">
-            <a href="#!" class="btn modal-close indigo text-shadow">Cancel <i class="fas fa-undo-alt right"></i></a>
-            <a href="{{ url_for('delete_activity', activity_id=activity._id) }}" class="btn modal-close white-text red text-shadow">
+            <a href="#!" class="btn modal-close indigo text-shadow" aria-label="cancel delete button">
+                Cancel <i class="fas fa-undo-alt right"></i>
+            </a>
+            <a href="{{ url_for('delete_activity', activity_id=activity._id) }}" class="btn modal-close white-text red text-shadow" aria-label="confirm delete button">
                 Delete <i class="far fa-trash-alt right"></i>
             </a>
         </div>

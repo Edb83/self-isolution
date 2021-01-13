@@ -64,7 +64,7 @@
              {% if session.user|lower == "admin"|lower %}
                 <h4 class="add-item-button-container valign-wrapper">
                     <a href="{{ url_for('add_activity') }}"
-                    class="btn-floating orange accent-4 pulse">
+                    class="btn-floating orange accent-4 pulse" aria-label="add activity button">
                     <i class="fas fa-plus"></i>
                     </a>
                 </h4>
@@ -91,6 +91,7 @@
                                     <a
                                         href="{{ url_for('edit_activity', activity_id=activity._id) }}"
                                         class="btn-floating halfway-fab teal darken-1"
+                                        aria-label="edit activity button"
                                         ><i class="fas fa-pencil-alt"></i
                                     ></a>
                                 {% endif %}

@@ -12,7 +12,7 @@
              {% if session.user %}
                 <h3 class="add-item-button-container valign-wrapper">
                     <a href="{{ url_for('add_activity') }}"
-                    class="btn-floating orange accent-4 pulse">
+                    class="btn-floating orange accent-4 pulse" aria-label="add activity button">
                     <i class="fas fa-plus"></i>
                     </a>
                 </h3>
@@ -30,7 +30,7 @@
                 </div>
                 <div class="col s12 search-button-container">
                     <div class="search-button">
-                        <a href="{{ url_for('get_activities') }}" class="btn red text-shadow">
+                        <a href="{{ url_for('get_activities') }}" class="btn red text-shadow" aria-label="reload page button">
                             <i class="fas fa-redo center-align"></i>
                         </a>
                     </div>
@@ -64,6 +64,7 @@
                                 <a
                                     href="{{ url_for('edit_activity', activity_id=activity._id) }}"
                                     class="btn-floating halfway-fab teal darken-1"
+                                    aria-label="edit activity button"
                                     ><i class="fas fa-pencil-alt"></i
                                 ></a>
                             {% endif %}
