@@ -261,7 +261,11 @@ def register():
 @app.route("/login", methods=["GET", "POST"])
 def login():
 
-    if request.method != "POST":
+    if "user" in session:
+        return redirect(url_for(
+                "profile", username=session["user"]))
+
+    elif request.method != "POST":
         return render_template("login.html")
 
     else:
@@ -308,11 +312,17 @@ def profile(username):
 
 @app.route("/logout")
 def logout():
-    # remove user from session cookies
-    flash("You have been logged out")
-    session.pop("user")
 
-    return redirect(url_for("login"))
+    if "user" not in session:
+        flash("You are already logged out!")
+
+        return redirect(url_for("home"))
+    else:
+        # remove user from session cookies
+        flash("You have been logged out")
+        session.pop("user")
+
+        return redirect(url_for("login"))
 
 
 @app.route("/add_activity", methods=["GET", "POST"])
@@ -321,6 +331,8 @@ def add_activity():
     categories = list(mongo.db.categories.find().sort("category_name", 1))
 
     if "user" not in session:
+        flash("You need to Log In to do that!")
+
         return redirect(url_for("login"))
 
     elif request.method != "POST":
@@ -369,9 +381,15 @@ def edit_activity(activity_id):
     current_category = mongo.db.categories.find_one({"category_name": activity["category_name"]})
 
     # must be activity owner or admin
-    if "user" not in session and (session["user"] != activity_owner or session["user"] != "admin"):
-        return render_template("view_activity.html", activity=activity,
-                               categories=categories, user=activity_owner)
+    if "user" not in session:
+        flash("You need to Log In to do that!")
+
+        return redirect(url_for("login"))
+
+    elif session["user"] != activity_owner and session["user"] != "admin":
+        flash("This Activity belongs to someone else!")
+
+        return redirect(url_for('view_activity', activity_id=ObjectId(activity_id)))
 
     elif request.method != "POST":
         return render_template(
@@ -409,11 +427,7 @@ def edit_activity(activity_id):
                 "activity_name") for d in existing_activities):
             flash("'{}' already exists, please choose another name".format(request.form.get("activity_name")))
 
-            return render_template(
-                "edit_activity.html",
-                activity=activity,
-                categories=categories,
-                ages=AGES)
+            return redirect(url_for('edit_activity', activity_id=ObjectId(activity_id)))
 
         else:
             # save activity edit details to database
@@ -444,13 +458,18 @@ def delete_activity(activity_id):
 
     activity = mongo.db.activities.find_one({"_id": ObjectId(activity_id)})
     activity_owner = activity["created_by"]
-    categories = list(mongo.db.categories.find().sort("category_name", 1))
 
     if "user" not in session:
-        return render_template("view_activity.html", activity=activity,
-                               categories=categories, user=activity_owner)
+        flash("You need to Log In to do that!")
 
-    elif (session["user"] == activity_owner or session["user"] == "admin"):
+        return redirect(url_for("login"))
+
+    elif session["user"] != activity_owner and session["user"] != "admin":
+        flash("This Activity belongs to someone else!")
+
+        return redirect(url_for('view_activity', activity_id=ObjectId(activity_id)))
+
+    else:
         mongo.db.categories.find_one_and_update(
             {"category_name": activity["category_name"]},
             {"$pull": {"activity_list": activity["_id"]}})
@@ -460,10 +479,6 @@ def delete_activity(activity_id):
         flash("Activity deleted ({})".format(activity["activity_name"]))
 
         return redirect(url_for('profile', username=session['user']))
-
-    else:
-        return render_template("view_activity.html", activity=activity,
-                               categories=categories, user=activity_owner)
 
 
 @app.route("/view_activity/<activity_id>")
@@ -489,8 +504,15 @@ def get_categories():
 @app.route("/add_category", methods=["GET", "POST"])
 def add_category():
 
-    if "user" not in session and session["user"].lower() != "admin":
+    if "user" not in session:
+        flash("You need to Log In to do that!")
+
         return redirect(url_for("login"))
+
+    elif session["user"].lower() != "admin":
+        flash("That's an Admin's job!")
+
+        return redirect(url_for("get_categories"))
 
     elif request.method != "POST":
         return render_template("add_category.html")
@@ -514,8 +536,15 @@ def edit_category(category_id):
 
     category = mongo.db.categories.find_one({"_id": ObjectId(category_id)})
 
-    if "user" not in session and session["user"].lower() != "admin":
+    if "user" not in session:
+        flash("You need to Log In to do that!")
+
         return redirect(url_for("login"))
+
+    elif session["user"].lower() != "admin":
+        flash("That's an Admin's job!")
+
+        return redirect(url_for("get_categories"))
 
     elif request.method != "POST":
         return render_template("edit_category.html", category=category)
@@ -548,8 +577,15 @@ def delete_category(category_id):
         {"category_name": "Unassigned"})
     activities = []
 
-    if "user" not in session and session["user"].lower() != "admin":
+    if "user" not in session:
+        flash("You need to Log In to do that!")
+
         return redirect(url_for("login"))
+
+    elif session["user"].lower() != "admin":
+        flash("That's an Admin's job!")
+
+        return redirect(url_for("get_categories"))
 
     else:
         for activity in dependent_activities:
