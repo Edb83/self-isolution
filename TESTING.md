@@ -334,19 +334,19 @@ Categories:
 - Best Practices: **100%**
 - SEO: **100%**
 
+**Register / Log In pages**
+
+- Performance: **91 - 99%**
+- Accessibility: **97%**
+- Best Practices: **100%**
+- SEO: **100%**
+
 **Activities page**
 
 - Performance: **79 - 97%**
 - Accessibility: **100%**
 - Best Practices: **100%**
 - SEO: **90%**
-
-**Add / Edit pages**
-
-- Performance: **90 - 99%**
-- Accessibility: **88%**
-- Best Practices: **100%**
-- SEO: **98 - 100%**
 
 **Categories page**
 
@@ -355,12 +355,12 @@ Categories:
 - Best Practices: **100%**
 - SEO: **100%**
 
-**Register / Log In pages**
+**Add / Edit pages**
 
-- Performance: **91 - 99%**
-- Accessibility: **97%**
+- Performance: **90 - 99%**
+- Accessibility: **88%**
 - Best Practices: **100%**
-- SEO: **100%**
+- SEO: **98 - 100%**
 
 **Profile page**
 
