@@ -47,14 +47,16 @@ s3 = boto3.client(
 
 # Pagination
 def paginated(activities):
-    page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
+    page, per_page, offset = get_page_args(
+        page_parameter='page', per_page_parameter='per_page')
     offset = page * PER_PAGE - PER_PAGE
 
     return activities[offset: offset + PER_PAGE]
 
 
 def pagination_args(activities):
-    page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
+    page, per_page, offset = get_page_args(
+        page_parameter='page', per_page_parameter='per_page')
     total = len(activities)
 
     return Pagination(page=page, per_page=PER_PAGE, total=total)
@@ -72,8 +74,10 @@ def upload_file():
 
     """
     Check the request.files object for an image_file key.
-    (image_file is the name of the file input in add_activity, edit_activity, add_category and edit_category)
-    If it's not there, return blank output (for handling default images where necessary)
+    (image_file is the name of the file input in add_activity,
+    edit_activity, add_category and edit_category)
+    If it's not there, return blank output
+    for handling default images where necessary
     """
     if "image_file" not in request.files:
 
@@ -84,7 +88,8 @@ def upload_file():
 
     """
     Check the filename attribute on the object
-    If empty, it means the user sumbmitted an empty form, so return a blank output
+    If empty, it means the user sumbmitted an empty form,
+    so return a blank output
     """
     if file.filename == "":
 
@@ -153,7 +158,9 @@ def home():
     activities = list(mongo.db.activities.find().sort("_id", -1))
     categories = list(mongo.db.categories.find())
 
-    return render_template("home.html", activities=activities, categories=categories)
+    return render_template("home.html",
+                           activities=activities,
+                           categories=categories)
 
 
 @app.route("/activities")
@@ -177,12 +184,15 @@ def search():
 
     query = request.args.get("query")
     categories = list(mongo.db.categories.find())
-    activities = list(mongo.db.activities.find({"$text": {"$search": query}}).sort("_id", -1))
+    activities = list(mongo.db.activities.find(
+        {"$text": {"$search": query}}).sort("_id", -1))
     activities_paginated = paginated(activities)
     pagination = pagination_args(activities)
 
-    return render_template("activities.html", categories=categories,
-                           activities=activities_paginated, pagination=pagination,
+    return render_template("activities.html",
+                           categories=categories,
+                           activities=activities_paginated,
+                           pagination=pagination,
                            page_heading="Results for '{}'".format(query))
 
 
@@ -196,8 +206,11 @@ def filter_category(category_id):
     activities_paginated = paginated(activities)
     pagination = pagination_args(activities)
 
-    return render_template("activities.html", category=category,
-                           activities=activities_paginated, categories=categories, pagination=pagination,
+    return render_template("activities.html",
+                           category=category,
+                           activities=activities_paginated,
+                           categories=categories,
+                           pagination=pagination,
                            page_heading=category['category_name'])
 
 
@@ -211,7 +224,9 @@ def filter_age(target_age):
     pagination = pagination_args(activities)
 
     return render_template("activities.html",
-                           activities=activities_paginated, categories=categories, pagination=pagination,
+                           activities=activities_paginated,
+                           categories=categories,
+                           pagination=pagination,
                            page_heading=target_age)
 
 
@@ -225,7 +240,9 @@ def filter_user(username):
     pagination = pagination_args(activities)
 
     return render_template("activities.html",
-                           activities=activities_paginated, categories=categories, pagination=pagination,
+                           activities=activities_paginated,
+                           categories=categories,
+                           pagination=pagination,
                            page_heading="Activities from {}".format(username))
 
 
@@ -241,7 +258,8 @@ def register():
             {"username": request.form.get("username").lower()})
 
         if existing_user:
-            flash("Username '{}' aleady exists".format(request.form.get("username")))
+            flash("Username '{}' aleady exists".format(
+                request.form.get("username")))
 
             return redirect(url_for("register"))
 
@@ -304,8 +322,10 @@ def profile(username):
 
     if session["user"]:
         return render_template(
-            "profile.html", username=username,
-            activities=activities, categories=categories)
+            "profile.html",
+            username=username,
+            activities=activities,
+            categories=categories)
 
     return redirect(url_for("login"))
 
@@ -337,7 +357,9 @@ def add_activity():
 
     elif request.method != "POST":
         return render_template(
-            "add_activity.html", categories=categories, ages=AGES)
+            "add_activity.html",
+            categories=categories,
+            ages=AGES)
 
     else:
         # get new activity details
@@ -362,15 +384,19 @@ def add_activity():
 
         # check whether name already taken
         if lowercase_name in lowercase_list:
-            flash("'{}' already exists, please choose another name".format(activity["activity_name"]))
+            flash("'{}' already exists, please choose another name".format(
+                activity["activity_name"]))
 
             return redirect(url_for("add_activity"))
 
-        # otherwise add activity to the database and store activity id in category's activity_list
         else:
+            # add activity to the database
             new_activity = mongo.db.activities.insert_one(activity).inserted_id
+
+            # store activity id in category's activity_list
             mongo.db.categories.update_one(
-                {"category_name": activity["category_name"]}, {"$push": {"activity_list": ObjectId(new_activity)}})
+                {"category_name": activity["category_name"]},
+                {"$push": {"activity_list": ObjectId(new_activity)}})
             flash("Activity added: {}".format(activity["activity_name"]))
 
             return redirect(url_for("get_activities"))
@@ -382,7 +408,8 @@ def edit_activity(activity_id):
     activity = mongo.db.activities.find_one({"_id": ObjectId(activity_id)})
     activity_owner = activity["created_by"]
     categories = list(mongo.db.categories.find().sort("category_name", 1))
-    current_category = mongo.db.categories.find_one({"category_name": activity["category_name"]})
+    current_category = mongo.db.categories.find_one(
+        {"category_name": activity["category_name"]})
 
     if "user" not in session:
         flash("You need to Log In to do that!")
@@ -392,7 +419,8 @@ def edit_activity(activity_id):
     elif session["user"] != activity_owner and session["user"] != "admin":
         flash("This Activity belongs to someone else!")
 
-        return redirect(url_for('view_activity', activity_id=ObjectId(activity_id)))
+        return redirect(url_for('view_activity',
+                        activity_id=ObjectId(activity_id)))
 
     elif request.method != "POST":
         return render_template(
@@ -430,9 +458,11 @@ def edit_activity(activity_id):
 
         # check whether name already taken
         if lowercase_name in lowercase_list:
-            flash("'{}' already exists, please choose another name".format(request.form.get("activity_name")))
+            flash("'{}' already exists, please choose another name".format(
+                request.form.get("activity_name")))
 
-            return redirect(url_for('edit_activity', activity_id=ObjectId(activity_id)))
+            return redirect(url_for('edit_activity',
+                                    activity_id=ObjectId(activity_id)))
 
         else:
             # save activity edit details to database
@@ -443,7 +473,8 @@ def edit_activity(activity_id):
                 {"category_name": request.form.get("category_name")})
 
             # if chosen category name is different from existing category name
-            if request.form.get("category_name") != current_category["category_name"]:
+            if request.form.get(
+                    "category_name") != current_category["category_name"]:
 
                 # move activity id from old activity_list to new one
                 mongo.db.categories.update_one(
@@ -455,7 +486,8 @@ def edit_activity(activity_id):
 
             flash("Activity updated ({})".format(activity["activity_name"]))
 
-            return redirect(url_for('view_activity', activity_id=ObjectId(activity_id)))
+            return redirect(url_for('view_activity',
+                            activity_id=ObjectId(activity_id)))
 
 
 @app.route("/delete_activity/<activity_id>")
@@ -472,7 +504,8 @@ def delete_activity(activity_id):
     elif session["user"] != activity_owner and session["user"] != "admin":
         flash("This Activity belongs to someone else!")
 
-        return redirect(url_for('view_activity', activity_id=ObjectId(activity_id)))
+        return redirect(url_for('view_activity',
+                                activity_id=ObjectId(activity_id)))
 
     else:
         mongo.db.categories.find_one_and_update(
@@ -503,7 +536,8 @@ def get_categories():
     activities = list(mongo.db.activities.find())
     categories = list(mongo.db.categories.find().sort("category_name", 1))
 
-    return render_template("categories.html", categories=categories, activities=activities)
+    return render_template("categories.html",
+                           categories=categories, activities=activities)
 
 
 @app.route("/add_category", methods=["GET", "POST"])
@@ -539,7 +573,8 @@ def add_category():
 
         # check whether name already taken
         if lowercase_name in lowercase_list:
-            flash("'{}' already exists, please choose another name".format(category["category_name"]))
+            flash("'{}' already exists, please choose another name".format(
+                category["category_name"]))
 
             return redirect(url_for('add_category'))
 
@@ -612,7 +647,8 @@ def delete_category(category_id):
             activities.append(activity["_id"])
 
         mongo.db.categories.find_one_and_update(
-            unassigned_category, {"$addToSet": {"activity_list": {"$each": activities}}})
+            unassigned_category,
+            {"$addToSet": {"activity_list": {"$each": activities}}})
 
         mongo.db.categories.remove(category)
 

@@ -369,13 +369,13 @@ Categories:
 - Best Practices: **100%**
 - SEO: **100%**
 
-[W3C - HTML](https://validator.w3.org/) - ? errors, ? warnings - **PASS**
+[W3C - HTML](https://validator.w3.org/) - 0 errors, 0 warnings - **PASS**
 
-[W3C - CSS](https://jigsaw.w3.org/css-validator/) - 0 errors, 35 warnings - **PASS**
+[W3C - CSS](https://jigsaw.w3.org/css-validator/) - 0 errors, 45 warnings - **PASS**
 
 - Use of unknown vendor extensions
 
-[CSS Lint](http://csslint.net/) - 0 errors, 46 warnings - **PASS**
+[CSS Lint](http://csslint.net/) - 0 errors, 51 warnings - **PASS**
 
 - Disallow @import
 - Requires compatible vendor prefixes
@@ -388,7 +388,6 @@ Categories:
   - Selecting via IDs has only been used for styles which will not be reused and the specificity was needed
 - Disallow overqualified elements
   - In these instances the qualifications are necessary to both override Materialize and piggyback on the output of Flask Paginate
-
 
 [Unicorn revealer - overflow](https://chrome.google.com/webstore/detail/unicorn-revealer/lmlkphhdlngaicolpmaakfmhplagoaln/related) - no evidence of overflow - **PASS**
 
