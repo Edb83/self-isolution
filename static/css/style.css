@@ -459,6 +459,7 @@ select {
 }
 
 @media only screen and (max-width: 600px) {
+    .modal .modal-content,
     .modal .modal-footer {
     text-align: center !important;
     }
