@@ -1,6 +1,6 @@
 <span id="top"></span>
 
-[README](README.md)
+Back to [README](README.md)
 
 ## Index
 
@@ -300,6 +300,7 @@ The same tests as for Add/Edit Activity were carried out, with the following add
 - Tapping/clicking on card image takes user to correct View Activity page.
 - The edit button links to Edit Activity page.
 - The delete button brings up confirmation modal.
+- If no activities have been added by the user, a message is displayed calling them to add some.
 
 **Delete function / modal button**
 
@@ -395,14 +396,27 @@ Categories:
 
 - Adding 'function form' of `use strict` removed all warnings.
 
+[PyCodeStyle](https://github.com/PyCQA/pycodestyle) - 0 warnings - **PASS**
+
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 
+<span id="testing-responsive"></span>
 
 ## Responsiveness
 
-TBC
+The site has been designed with a mobile-first philosophy and, supported by [Materialize](https://materializecss.com/), has been thoroughly tested at all stages of development using [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools).
 
-<span id="testing-responsive"></span>
+In addition to Materialize's breakpoints, various media queries have been used to maximise the legibility of text and provide sufficient spacing for all content. These queries include optimised `margin`, `padding`, `text-align` and adjustments of `display` to accommodate changes in HTML structure. Particular attention has been paid to the appearance of cards and buttons on different devices.
+
+Examples:
+
+- on the View Activity page the 'Back to Activities' button has been aligned with the activity details below in keeping with Materialize's breakpoints.
+- on the View Activity page, column width of the items in the `activity-info-container` has been considered to prevent spilling/bunching of items e.g. username taking the full width on smaller devices as this could be longer than expected depending on the user.
+- on the View Activity page the structure of the row containing heading and edit/delete buttons changes when a user is not logged in to prevent unnecessary cramping of the heading on smaller screens.
+- on the Categories page, the cards' appearance at the breakpoints from 2 to 3 columns was studied to make sure that even in a worst case scenario their content would not be put out of place. Revisions saw the card choice and position of each element tested, including when logged in as admin and the edit and delete buttons are visible.
+- the Footer content was separated out on larger screen sizes to make better use of the space.
+- the `flow-text` Materialize class has been used for any large text areas to ensure they are as legible as possible depending on device viewed with.
+
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 
