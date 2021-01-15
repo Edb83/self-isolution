@@ -31,7 +31,7 @@
 
 ## Context
 
-The COVID-19 pandemic has had a dramatic effect on everyone's lives, not least those of working parents who can no longer rely on childcare due to the restrictions put in place.
+The COVID-19 pandemic has had a dramatic effect on everyone's lives, not least those of working parents who can no longer rely on childcare or school due to the restrictions put in place.
 When a case occurs in your child's bubble and they are forced to self-isolate at home, you can expect to spend your days fitting work in around your children's homeschooling
 and other needs. Without the option of leaving the house you'll be climbing the walls in no time, feeling guilty that you've left them to watch Peppa Pig for 4 hours straight, again.
 You need to break the cycle and find some inspiration without having to create elaborate plans which will likely be greeted with a slow clap and roll of the eyes, leaving you
@@ -96,21 +96,21 @@ Wireframes created at the start of the project for **mobile**, **tablet** and **
 
 There were some noteworthy deviations from the plan. These were:
 
-1. Search bar given greater prominance within Activities page rather than being housed in navbar
-2. Prep time not included as a MongoDB key
-3. Ages hardcoded instead of residing in separate MongoDB collection and having its own 'section'
-4. Likes not included, meaning 'Popular activities' was replaced by 'Recent activities' on the home page
-5. Categories dropdown moved to separate Categories page
-6. Ages dropdown removed, but users can still filter by age by clicking on existing activity's target age
-7. Users' collection keys simplified to just username and password
-8. Activities card content revised based on testing
-9. View Activity page layout revised due to awkward styling presentation, but functionality mostly unchanged
+1. The Search bar was given greater prominance within Activities page rather than being housed in the Navbar.
+2. Prep time was not included as a MongoDB key in the Activities collection to simplify the volume of user input required.
+3. Ages were hardcoded instead of residing in a separate MongoDB collection and having their own area on the site.
+4. Likes were not included due to time constraints, meaning 'Popular activities' was replaced by 'Recent activities' on the Home page.
+5. The Categories dropdown was moved to a separate Categories page to declutter the Navbar.
+6. The Ages dropdown was removed, but users can still filter by age by clicking on an existing activity's target age.
+7. The Users' collection keys were simplified to just username and password as they would provide no functionality.
+8. The Activities card content was revised following testing.
+9. The View Activity page layout was revised due to awkward styling presentation, but functionality was mostly unchanged.
 
 <span id="ux-design"></span>
 
 ### Design choices
 
-The decision to use Materialize meant customisation was somewhat limited, but this was an acceptible compromise given the site's purpose of displaying user content clearly. Judicious use of the framework's cards gives the site a solid and consistent feel which promotes the user content. 
+The decision to use Materialize meant customisation was somewhat limited, but this was an acceptable compromise given the site's purpose of displaying user content clearly. Judicious use of the framework's cards gives the site a solid and consistent feel which promotes the user content. 
 
 #### Colours
 
@@ -135,7 +135,7 @@ To give the activity and category cards some weight, lighter shades of indigo an
 
 It was important for the buttons to have have consistent colours with intuitive suggestions about their functions. A slightly lighter shade of indigo was used for buttons which could be classed as part of the outer 'shell' of the site, responsible for navigating the site and matching the Navbar and Footer's colour. These are  Search, 'Back to Activities', active pagination page, 'View' (category's activities) and 'Cancel' (a deletion). One exception was made for the hover effect of activity filters (i.e. target age, category and activity author), to provide some variety.
 
-A 'green means go' approach was taken for button buttons which suggest the user making changes to their content (i.e. Edit and 'Submit'). Negative user actions are all red: Delete, confirm delete and 'Cancel' search.
+A 'green means go' approach was taken for buttons which suggest the user will be making changes to their content (i.e. Edit and 'Submit'). Negative user actions (i.e Delete and Cancel search) are naturally red.
 
 Orange was used as an accent colour for the pulsing FAB 'Add Activity' and 'Add Category' and also for Toast alert messages.
 
@@ -169,7 +169,7 @@ Monserrat is the ever steady foil to more playful fonts like Bubblegum Sans, use
 
 ### Database model
 
-MongoDB's non-relational/document-based database structure makes sense for this type of site as there are only a few relationships between the various collections. Nevertheless, the ability to relate certain collections to one another was used to preserve key relationships which could have been lost due to users making changes to their content.
+MongoDB's non-relational database structure makes sense for this type of site as there are only a few relationships between the various collections. Nevertheless, the ability to relate certain collections to one another was used to preserve key relationships which could have been lost due to users making changes to their content (e.g. activity_name).
 
 #### Activities collection
 
@@ -219,7 +219,7 @@ Initially it was anticipated that the admin might need the ability to change the
 
 ### Current
 
-**?. Material design**
+**1. Material design**
 
 MaterializeCSS features:
 - [Cards](https://materializecss.com/cards.html)
@@ -229,20 +229,20 @@ MaterializeCSS features:
 - [Sidenav](https://materializecss.com/sidenav.html)
 - [Toasts](https://materializecss.com/toasts.html)
 
-**?. Secure passwords**
+**2. Secure passwords**
 
 When registering for the site, the user's password is hashed so that it is not revealed to the database owner.
 
-**?. CRUD functionality**
+**3. CRUD functionality**
 
 Visitors can:
 - View all activities
-- View all categories
+- View all categories.
 
 Users can:
 - Add their own activities
 - Edit their own activities 
-- Delete their own activities
+- Delete their own activities.
 
 The admin can:
 - Add their own activities
@@ -250,37 +250,37 @@ The admin can:
 - Delete any users' activities
 - Add a category
 - Edit a category
-- Delete a category
+- Delete a category.
 
-**?. Image uploads**
+**4. Image uploads**
 
 Rather than having to find a URL for an image, users can upload their own files. This encourages them to provide their own content, but if they skip this step then a default image is displayed from the relevant category.
 
-**?. Image resizing**
+**5. Image resizing**
 
 Prior to uploading an image, a user's file is resized so that it does not adversely affect site load times, and also gives some control over its dimensions.
 
-**?. User profile**
+**6. User profile**
 
 Users can view all activities they have created in one place and easily edit or delete them.
 
-**?. Admin rights**
+**7. Admin rights**
 
 The admin has the additional ability to:
-- Edit or delete any activity on the site from its View Activity page, including changing an activity's category to 'Unassigned'
+- Edit or delete any activity on the site from its View Activity page
 - Add categories
-- Edit a category summary or image, but they cannot edit the name of a category to preserve relationship integrity
-- Delete categories from the Categories page, reassigning activities to the 'Unassigned' category
+- Edit a category summary or image (but they cannot edit the name of a category to preserve relationship integrity)
+- Delete categories from the Categories page, with measures for preserving relational integrity for activities no longer associated with a category.
 
-**?. Confirm delete**
+**8. Confirm delete**
 
 When the user or admin clicks to delete an activity or category, a modal pops up to confirm they wish to do so to prevent accidental deletion.
 
-**?. Category reassignment on deletion**
+**9. Category reassignment on deletion**
 
 When the admin chooses to delete a category which has associated activities, these activities are moved to the 'Unassigined' category and are still visible on the site. 
 
-**?. Search**
+**10. Search**
 
 All users can search for keywords appearing in:
 - Activity title
@@ -290,15 +290,15 @@ All users can search for keywords appearing in:
 
 Activities can be filtered by category from the Categories page and also by target age or activity author by clicking on the associated tag from the Activities, View Activity or Profile pages.
 
-**?. Pagination**
+**11. Pagination**
 
 The Activities page (and any search or filters applied) will limit the number of activities visible to 9 in order to reduce the number of images loaded and keep the focus on the content. As individual users are unlikely to be adding much more than 9 activities, it makes sense not to paginate the Profile page to avoid spilling onto a second page in this rare instance.
 
-**?. Access protection**
+**12. Access protection**
 
 Routes to restricted functions such as add, edit and delete (for both session user and admin) are protected so that they cannot be accessed by brute force via the URL.
 
-**?. 404 and 500 error handling**
+**13. 404 and 500 error handling**
 
 Pages for 404 and 500 errors keep the user on the site when something goes wrong, allowing them to return to the content with minimal disruption.
 
@@ -357,13 +357,13 @@ Pages for 404 and 500 errors keep the user on the site when something goes wrong
 
 ### Tools
 
+- [Am I Responsive?](http://ami.responsivedesign.is/)
 - [Autoprefixer](https://autoprefixer.github.io/)
+- [Coolers.co](https://coolors.co/1a237e-79b791-ee6055-214e34-f1edee)
 - [Favicon.io](https://favicon.io//)
+- [Font Awesome](https://fontawesome.com/)
 - [Google Fonts](https://fonts.google.com/)
 
-### Online resources
-
-- [Am I Responsive?](http://ami.responsivedesign.is/)
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 
@@ -488,22 +488,25 @@ Full details of testing can be found [here](TESTING.md).
 
 ## Credits
 
-#### Tutorials and inspiration
+#### Tutorials
 
-- Code Institute Task Manager Project
+- Code Institute Task Manager Project ([Tim Nelson](https://github.com/TravelTimN))
 - [Boto S3](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html#id224)
-- [Pillow](https://pillow.readthedocs.io/en/stable/index.html)
-- [Flask Paginate](https://gist.github.com/mozillazg/69fb40067ae6d80386e10e105e6803c9)
-
-
-#### Code used/modified from other sources
-
 - [Handling file uploads with Flask](https://blog.miguelgrinberg.com/post/handling-file-uploads-with-flask)
+- [Flask Paginate](https://gist.github.com/mozillazg/69fb40067ae6d80386e10e105e6803c9)
+- [Pillow](https://pillow.readthedocs.io/en/stable/index.html)
 - [Uploading to AWS S3 using boto](https://www.zabana.me/notes/flask-tutorial-upload-files-amazon-s3)
+
+### Student projects
+
+- [SWAP your clothes](https://github.com/LigaMoon/swap-clothes-app)
+- [Wean Cuisine](https://github.com/Lucyjpjones/wean-cuisine)
+
+#### Code modified from other sources
+
 - [Resizing images prior to S3 upload](https://stackoverflow.com/a/56241877)
 - [Image processing with Pillow](https://dzone.com/articles/image-processing-in-python-with-pillow)
 - [Checking duplicate key value pairs](https://stackoverflow.com/a/3897516)
-
 
 ### Content
 
@@ -514,7 +517,7 @@ Full details of testing can be found [here](TESTING.md).
 ### Acknowledgements
 
 - Jonathan Munz (Code Institute Mentor) - for his reassurance, support and invaluable suggestions
-- Tim (Code Institute Tutor) - for his patience in helping me to solve an issue with updating a MongoDB array
+- Tim Nelson (Code Institute Tutor) - for his patience in helping me to solve an issue with updating a MongoDB array
 - All of the Code Institute tutors who helped me to solve some of the snagging issues towards the end of the project
 
 ### Disclaimer
