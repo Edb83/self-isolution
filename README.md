@@ -331,15 +331,108 @@ Pages for 404 and 500 errors keep the user on the site when something goes wrong
 
 ## Deployment
 
-There is just one branch of this project (master) and the deployed version of this site is the most current version in the repository.
+The master branch of this repository is the most current version and has been used for the deployed version of the site.
 
-### How to deploy
+### Prerequisites
 
-TBC
+[Python 3](https://www.python.org/downloads/) - core code
 
-### How to run locally
+[PIP](https://pypi.org/project/pip/) - package installation
 
-TBC
+[Git](https://git-scm.com/) - version control
+
+[MongoDB](https://www.mongodb.com/)
+
+- MongoDB is the database used by the app to store content uploaded by its users.
+- The following collections should be created:
+  - activities
+  - categories
+  - users
+- A document in categories should be created with the following fields:
+
+|**Key**|**Value**|**Type**|
+|:-----|:-----|:-----|
+|category_name|Unassigned|String|
+|category_summary||String|
+|image_file||String|
+|activity_list||Array|
+
+[Amazon AWS S3 Bucket](https://aws.amazon.com/)
+
+- An Amazon S3 Bucket is used to host the images uploaded to the app by its users.
+
+***Values for the env.py environment variables and Heroku Cvars used in the sections below will be unique to each MongoDB and S3 Bucket created. Please refer to their respective documentation for further details.***
+
+
+### How to clone Self Isolution
+
+To clone this project from its [GitHub repository](https://github.com/Edb83/self-isolution):
+
+1. From the repository, click **Code**
+2. In the **Clone >> HTTPS** section, copy the clone URL for the repository
+3. In your local IDE open Git Bash
+4. Change the current working directory to the location where you want the cloned directory to be made
+5. Type `git clone`, and then paste the URL you copied in Step 2
+
+```console
+git clone https://github.com/Edb83/self-isolution.git
+```
+
+6. Press Enter. Your local clone will be created
+7. Create a file called env.py to hold your app's environment variables, which should contain the following:
+
+```
+import os
+
+os.environ.setdefault("IP", "0.0.0.0")
+os.environ.setdefault("PORT", "5000")
+os.environ.setdefault("SECRET_KEY", "<app secret key>")
+os.environ.setdefault("MONGO_URI", "mongodb+srv://<username>:<password>@<cluster_name>-ofgqg.mongodb.net/<database_name>?retryWrites=true&w=majority")
+os.environ.setdefault("MONGO_DBNAME", "<database name>")
+
+os.environ.setdefault("S3_BUCKET", "<S3 bucket name>")
+os.environ.setdefault("S3_KEY", "<S3 key>")
+os.environ.setdefault("S3_SECRET_ACCESS_KEY", "<S3 secret key>")
+os.environ.setdefault("S3_LOCATION", "https://<S3 bucket name>.s3.<S3 bucket region>.amazonaws.com/")
+```
+8. **Make sure that env.py is listed in your .gitignore file to prevent your environment variables being pushed publicly**
+
+
+### How to deploy to Heroku
+
+To deploy the app to Heroku from its [GitHub repository](https://github.com/Edb83/self-isolution), the following steps were taken:
+
+1. From the GitPod terminal, create **requirements.txt** and **Procfile** using these commands:
+
+```console
+pip3 freeze --local > requirements.txt
+echo web: python app.py > Procfile
+```
+
+2. **Push** these files to GitHub
+3. **Log In** to [Heroku](https://id.heroku.com/login)
+4. Select **Create new app** from the dropdown in the Heroku dashboard
+5. Choose a unique name ('self-isolution') for the app and the location nearest to you
+6. Go to the **Deploy** tab and under **Deployment method** choose GitHub
+7. In **Connect to GitHub** enter your GitHub repository details and once found, click **Connect**
+8. Go to the **Settings** tab and under **Config Vars** choose **Reveal Config Vars**
+9. Enter the following keys and values, which must match those in the env.py file created earlier:
+
+|**Key**|**Value**|
+|:-----|:-----|
+|IP|`0.0.0.0`|
+|PORT|`5000`|
+|SECRET_KEY|`<app secret key>`|
+|MONGO_URI|`mongodb+srv://<username>:<password>@<cluster_name>-ofgqg.mongodb.net/<database_name>?retryWrites=true&w=majority`|
+|MONGO_DBNAME|`<database name>`|
+|S3_BUCKET|`<S3 bucket name>`|
+|S3_KEY|`<S3 key>`|
+|S3_SECRET_ACCESS_KEY|`<S3 secret key>`|
+|S3_LOCATION|`https://<S3 bucket name>.s3.<S3 bucket region>.amazonaws.com/`|
+
+10. Go back to the **Deploy** tab and under **Automatic deploys** choose **Enable Automatic Deploys**
+11. Under **Manual deploy**, select **master** and click **Deploy Branch**
+12. Once the app has finished building, click **Open app** from the header row of the dashboard
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 
@@ -349,13 +442,15 @@ TBC
 
 Full details of testing can be found [here](TESTING.md).
 
+<div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
+
 <span id="credits"></span>
 
 ## Credits
 
 #### Tutorials and inspiration
 
-- [Code Institute Task Manager Project](#)
+- Code Institute Task Manager Project
 - [Boto S3](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html#id224)
 - [Pillow](https://pillow.readthedocs.io/en/stable/index.html)
 - [Flask Paginate](https://gist.github.com/mozillazg/69fb40067ae6d80386e10e105e6803c9)
@@ -374,13 +469,13 @@ Full details of testing can be found [here](TESTING.md).
 
 - All text outside of user-generated content is original
 - [Favicon](https://favicon.io/emoji-favicons/house)
+- Images from [Pixabay](https://pixabay.com/)
 
 ### Acknowledgements
 
 - Jonathan Munz (Code Institute Mentor) - for his reassurance, support and invaluable suggestions
-- Tim (Code Institute Tutor) - for his patience and help solving pushing a list to a MongoDB array
-- Michael (Code Institute Tutor) - for walking through a merge conflict resolution
-- ? (Code Institute Tutor) - for help spotting a key missing `enctype="multipart/form-data"` on a template
+- Tim (Code Institute Tutor) - for his patience in helping me to solve an issue with updating a MongoDB array
+- All of the Code Institute tutors who helped me to solve some of the snagging issues towards the end of the project
 
 ### Disclaimer
 
