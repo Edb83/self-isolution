@@ -4,10 +4,24 @@
 {% block nav_activities_mob %}active{% endblock %}
 
 {% block content %}
-    <div class="back-button-container">
-        <a href="{{ url_for('get_activities') }}" class="btn indigo" aria-label="back to activities button">
-            <i class="fas fa-undo-alt left"></i>Back to Activities
-        </a>
+    <div class="row">
+        <div class="back-button-container col s6 m8 l10">
+            <a href="{{ url_for('get_activities') }}" class="btn indigo" aria-label="back to activities button">
+                <i class="fas fa-undo-alt left"></i> Back
+            </a>
+        </div>
+        {% if (session.user|lower == activity.created_by|lower) or (session.user|lower == "admin") %}
+            <div class="col s3 m2 l1 center-align">
+                <button data-target="{{ activity._id }}" class="btn-floating modal-trigger center-align hoverable white" aria-label="delete activity button">
+                    <i class="fas fa-trash-alt fa-activity-delete"></i>
+                </button>
+            </div>
+            <div class="col s3 m2 l1 center-align">
+                <a href="{{ url_for('edit_activity', activity_id=activity._id) }}" class="btn-floating center-align hoverable white" aria-label="edit activity button">
+                    <i class="fas fa-pencil-alt fa-activity-edit"></i>
+                </a>
+            </div>
+        {% endif %}
     </div>
 
     <div class="view-activity-image-container center-align">
@@ -21,46 +35,25 @@
     </div>
 
     <div class="row view-activity-heading-row center">
-        {% if (session.user|lower == activity.created_by|lower) or (session.user|lower == "admin") %}
-            <div class="col s2">
-                <h3 class="activity-heading">
-                    <button data-target="{{ activity._id }}" class="btn-floating modal-trigger hoverable white" aria-label="delete activity button">
-                        <i class="fas fa-trash-alt fa-activity-delete"></i>
-                    </button>
-                </h3>
-            </div>
-            <div class="col s8">
-                <h3 class="section-heading">
-                    {{ activity.activity_name }}
-                </h3>
-            </div>
-            <div class="col s2">
-                <h3 class="activity-heading">
-                    <a href="{{ url_for('edit_activity', activity_id=activity._id) }}" class="btn-floating hoverable white" aria-label="edit activity button">
-                        <i class="fas fa-pencil-alt fa-activity-edit"></i>
-                    </a>
-                </h3>
-            </div>
-        {% else %}
-            <div class="col s12">
-                <h3 class="section-heading">
-                    {{ activity.activity_name }}
-                </h3>
-            </div>
-        {% endif %}
+        <div class="col s12">
+            <h3 class="section-heading">
+                {{ activity.activity_name }}
+            </h3>
+        </div>
     </div>
 
-    <div class="row activity-info-container center-align">
-        <div class="col s6 m4 activity-info">
-            <a href="{{ url_for('filter_age', target_age=activity.target_age) }}" class="grey-text text-darken-3">
-                    <i class="fas fa-child"></i> {{ activity.target_age }}
-            </a>
-        </div>
-
+    <div class="row activity-info-container left-align">
+        
         {% for category in categories if category.category_name == activity.category_name %}
-            <div class="col s6 m4 activity-info">
+            <div class="col s12 m4 activity-info">
                 <a href="{{ url_for('filter_category', category_id=category._id) }}" class="grey-text text-darken-3" >
                         <i class="fas fa-folder-open"></i> {{ activity.category_name }}
+                </a>
+            </div>
+
+            <div class="col s12 m4 activity-info">
+                <a href="{{ url_for('filter_age', target_age=activity.target_age) }}" class="grey-text text-darken-3">
+                        <i class="fas fa-child"></i> {{ activity.target_age }}
                 </a>
             </div>
         {% endfor %}
@@ -78,7 +71,7 @@
         {% endfor %}
     </div>
 
-    <div class="equipment-needed-text center"><i class="fas fa-box-open"></i> Things you'll need:</div>
+    <div class="equipment-needed-text activity-info center"><i class="fas fa-box-open"></i> Things you'll need:</div>
     <div class="col s12 activity-equipment-container">
         {% if activity.activity_equipment.splitlines()|length > 0 %}
             {% for item in activity.activity_equipment.splitlines()|unique %}

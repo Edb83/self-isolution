@@ -362,7 +362,7 @@ select {
 }
 
 .activity-details-container {
-    margin: 3rem 0;
+    margin: 2rem 0;
     padding: 1rem 0;
     border-bottom: thin solid #3949ab;
     border-top: thin solid #3949ab;
@@ -428,17 +428,9 @@ select {
 /* MEDIA QUERIES */
 
 @media only screen and (min-width: 601px) {
-    .back-button-container {
-        margin: 0 4rem;
-    }
-    
-    .activity-details-container {
-        margin: 3rem;
-        padding: 1rem 0;
-    }
 
-    .activity-info {
-        display: block;
+    .activity-info-container {
+        text-align: center !important;
     }
 
     .activity-info-container .activity-info:first-child {
