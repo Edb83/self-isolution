@@ -153,19 +153,17 @@ To provide a touch of variety, the chips containing required equipment on the Vi
 
 - ![#0077ff](https://via.placeholder.com/15/0077ff/000000?text=+) #0077ff ("Dodger Blue")
 
-
 #### Fonts
 
 [Bubblegum Sans](https://fonts.google.com/specimen/Bubblegum+Sans#about)
 
-TBC
+A cursive font which gives a sense of childlike playfulness, in keeping with the site's theme of creativity and fun. This font is used sparingly for the Self Isolution logo, sub-headings and hard titles. 
 
 [Montserrat](https://fonts.google.com/specimen/Montserrat#about)
 
-TBC
+Monserrat is the ever steady foil to more playful fonts like Bubblegum Sans, used here for all other content to provide a soft clarity.
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
-
 
 <span id="database-model"></span>
 
@@ -309,20 +307,17 @@ Pages for 404 and 500 errors keep the user on the site when something goes wrong
 
 ### Future
 
-**TBC**
-
-- Edit user
-- Delete user
-- Favourite activities
-- Superuser rather than single admin
-- Admin area (page to view all site content in one place and edit as required inc delete user)
-- Contact admin
-- Pagination
-- Deeper profile (number of kids, interests)
+- Ability to favourite activities
+- Ability to add comments to activities to encourage user interaction
+- Contact the admin option
+- A deeper profile (number of kids, interests etc.)
+- Edit profile option
+- Delete account option
 - Ability to view other profiles
-- Add comments to activities
-- Image delete from S3 Bucket
-- Speedier hosting of S3 Bucket images
+- Superuser implementation, rather than a single admin
+- Admin area (page to view all site content in one place and edit as required including deleting users)
+- Option to delete images from S3 Bucket through the site
+- Speedier hosting of S3 Bucket images to improve performance
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 
@@ -332,29 +327,43 @@ Pages for 404 and 500 errors keep the user on the site when something goes wrong
 
 ### Languages
 
-- HTML
-- CSS
-- Javascript
-  - [jQuery](https://jquery.com/)
-- Python
-  - [Flask Paginate](https://pythonhosted.org/Flask-paginate/)
+- [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
+- [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)
+- [Javascript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+- [Python](https://www.python.org/)
+  - [Jinja](https://jinja.palletsprojects.com/en/2.11.x/)
+
+### Frameworks
+
+- [Flask](https://palletsprojects.com/p/flask/)
+- [jQuery](https://jquery.com/)
+- [Materialize](https://materializecss.com/)
+
+### Extensions and kits
+
+- [Boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html)
+- [Flask Paginate](https://pythonhosted.org/Flask-paginate/)
+- [Pillow](https://pillow.readthedocs.io/en/stable/)
+- [Werkzeug](https://palletsprojects.com/p/werkzeug/)
 
 ### Project management
 
-- [Balsamiq](https://balsamiq.com/wireframes/) - Wireframe creation tool
-- [GitHub](https://github.com/) - Version control and deployment
-- [GitPod](https://gitpod.io/) - IDE used to code the game
+- [Amazon AWS](https://aws.amazon.com/) (S3)
+- [Balsamiq](https://balsamiq.com/wireframes/)
+- [GitHub](https://github.com/)
+- [GitPod](https://gitpod.io/)
+- [Heroku](https://www.heroku.com/about)
+- [MongoDB](https://www.mongodb.com/)
 
-### Style and theme
+### Tools
 
-- [Autoprefixer](https://autoprefixer.github.io/) - a PostCSS plugin which parses CSS and adds vendor prefixes
-- [Favicon.io](https://favicon.io//) - to generate the app's favicons for a variety of devices
-- [Google Fonts](https://fonts.google.com/) - TBC
-- [Materialize](https://materializecss.com/) - TBC
+- [Autoprefixer](https://autoprefixer.github.io/)
+- [Favicon.io](https://favicon.io//)
+- [Google Fonts](https://fonts.google.com/)
 
 ### Online resources
 
-- [Am I Responsive?](http://ami.responsivedesign.is/) - to produce the README showcase image
+- [Am I Responsive?](http://ami.responsivedesign.is/)
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 
@@ -454,12 +463,12 @@ echo web: python app.py > Procfile
 |IP|`0.0.0.0`|
 |PORT|`5000`|
 |SECRET_KEY|`<app secret key>`|
-|MONGO_URI|`mongodb+srv://<username>:<password>@<cluster_name>-ofgqg.mongodb.net/<database_name>?retryWrites=true&w=majority`|
+|MONGO_URI|mongodb+srv://`<username>`:<password>@`<cluster_name>`-ofgqg.mongodb.net/`<database_name>`?retryWrites=true&w=majority|
 |MONGO_DBNAME|`<database name>`|
 |S3_BUCKET|`<S3 bucket name>`|
 |S3_KEY|`<S3 key>`|
 |S3_SECRET_ACCESS_KEY|`<S3 secret key>`|
-|S3_LOCATION|`https://<S3 bucket name>.s3.<S3 bucket region>.amazonaws.com/`|
+|S3_LOCATION|https://`<S3 bucket name>`.s3.`<S3 bucket region>`.amazonaws.com/|
 
 10. Go back to the **Deploy** tab and under **Automatic deploys** choose **Enable Automatic Deploys**
 11. Under **Manual deploy**, select **master** and click **Deploy Branch**
