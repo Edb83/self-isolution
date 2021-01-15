@@ -16,10 +16,6 @@
         type="text/css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
 
-    <!-- Ad hoc page styles -->
-    {% block styles %}
-    {% endblock %}
-
     <!-- Dynamic page titles -->
     <title>{% block title %}{% endblock %}</title>
 </head>
@@ -209,9 +205,6 @@
         {% endwith %}
     </script>
 
-    <!-- Ad hoc page scripts -->
-    {% block scripts %}
-    {% endblock %}
 </body>
 
 </html>
