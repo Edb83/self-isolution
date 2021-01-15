@@ -36,7 +36,7 @@ The likely options a user might need at a given moment have been carefully consi
 - When a search finds no results, the user is encouraged to add their own content with a link to Add Activty.
 - The title of each page updates in the browser window to indicate where the user is.
 - Any view or action can be reached within four taps/clicks, e.g. from the Home page to confirming deletion of an activity: Profile > View > Delete > Confirm.
-- The Footer contains top-level menu options, excluding Add Activity
+- The Footer contains top-level menu options, excluding Add Activity.
 
 **Intuitive design**
 
@@ -88,7 +88,7 @@ The likely options a user might need at a given moment have been carefully consi
 **To be able to register easily without needing to input lots of information**
 
 - The Register page asks only for username and password, nothing else.
-- There is a visual indication that the username and password are of an acceptible length, along with clear requirements for the expected input.
+- There is a visual indication that the username and password are of an acceptable length, along with clear requirements for the expected input.
 
 ### As a returning user I want...
 
@@ -176,7 +176,7 @@ On screen widths greater than 991px:
 - Links to Activities and Register direct to the correct pages.
 - FAB for Add Activity only appears if user is logged in.
 - Latest Activities shows the three most recently added activities.
-- Cards function as expected (see Cards, above)
+- Cards function as expected (see Cards, above).
 
 **Register page**
 
@@ -308,7 +308,7 @@ Activities:
 - If user has been logged out and tries to delete an activity (or tries to open url with brute force using /delete_activity/activity_id) they are redirected to Log In page with Toast alert.
 - If user is logged in and tries to delete another user's activity by brute force, they are redirected to View Activity page with Toast message alerting "This Activity belongs to someone else!"
 - The admin can delete any activity.
-- Button targets the correct activity.
+- The button targets the correct activity for deletion, and the activity name appears in the modal.
 - Removes the activity from the activities collection.
 - Removes the activity's ObjectId from the associated category's activity_list.
 
@@ -316,7 +316,7 @@ Categories:
 - If admin is logged out and tries to delete a category (or tries to open url with brute force using /delete_category/category_id) they are redirected to Log In page with Toast alert.
 - If user is logged in and tries to delete a category by brute force, they are redirected to the Categories page with Toast message alerting "That's an Admin's job!"
 - The admin can delete any category.
-- Button targets the correct category.
+- The button targets the correct category for deletion, and the category name appears in the modal along with the activities which will be left without an associated category.
 - Changes the category_name value to "Unassigned" in any associated activities.
 - Removes the category from the categories collection.
 
@@ -474,19 +474,19 @@ Real world testing on:
 
 A known bug with Materialize meaning either the dropdown does not appear or selects the wrong item when tapped/clicked.
 
-- Solution: Stopping propagation on `touchend` event (https://stackoverflow.com/a/52851046)
+- Solution: Stopping propagation on `touchend` event ([Source](https://stackoverflow.com/a/52851046))
 
 **iOS select caret visible when using the Materialize fix above**
 
 A subsequent issue resulting from the propogation fix above made for an untidy look.
 
-- Solution: adding `-webkit-appeance: none` to select elements (https://stackoverflow.com/questions/7638677/how-can-i-remove-the-gloss-on-a-select-element-in-safari-on-mac)
+- Solution: adding `-webkit-appeance: none` to select elements ([Source](https://stackoverflow.com/questions/7638677/how-can-i-remove-the-gloss-on-a-select-element-in-safari-on-mac))
 
 **Portrait images rotating on resize**
 
 This issue is caused by PIL not reading image EXIF metadata resulting in images being rotated when resized.
 
-- Solution: importing ImageOps and using `ImageOps.exif_transpose(image)` [Source](https://www.mmbyte.com/article/46440.html)
+- Solution: importing ImageOps and using `ImageOps.exif_transpose(image)` ([Source](https://www.mmbyte.com/article/46440.html))
 
 **Images uploaded to AWS not updating on edit**
 
@@ -504,7 +504,7 @@ Images could be uploaded in the local app but not on the deployed site.
 
 Pillow not able to process uploaded images due to a TypeError.
 
-- Solution: save format of `raw_image` to pass into `new_image` so that it can be accessed by ImageOps. [Source]((https://stackoverflow.com/questions/29374072/why-does-resizing-image-in-pillow-python-remove-image-format))
+- Solution: save format of `raw_image` to pass into `new_image` so that it can be accessed by ImageOps. ([Source]((https://stackoverflow.com/questions/29374072/why-does-resizing-image-in-pillow-python-remove-image-format)))
 
 **Values from collection fields not always appearing in templates**
 
@@ -565,7 +565,7 @@ Warning reported by Chrome console:
 ```
 [DOM] Input elements should have autocomplete attributes
 ```
-- Resolution: added `autocomplete=""` to Register and Log In inputs.
+- Resolution: added `autocomplete` to Register and Log In inputs.
 
 
 ### Unresolved
