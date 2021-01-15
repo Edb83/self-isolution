@@ -92,19 +92,19 @@ own activity ideas and share the collective burden of raising this misfortunate 
 
 ### Wireframes
 
-Wireframes for **mobile** and **desktop** can be accessed [here](wireframes/).
+Wireframes for **mobile**, **tablet** and **desktop** can be accessed [here](wireframes/).
 
 There were some noteworthy deviations from the plan. These were:
 
 1. Search bar given greater prominance within Activities page rather than being housed in navbar
 2. Prep time not included as a MongoDB key
-3. Ages hardcoded instead of residing in separate MongoDB collection
+3. Ages hardcoded instead of residing in separate MongoDB collection and having its own 'section'
 4. Likes not included, meaning 'Popular activities' was replaced by 'Recent activities' on the home page
 5. Categories dropdown moved to separate Categories page
 6. Ages dropdown removed, but users can still filter by age by clicking on existing activity's target age
 7. Users' collection keys simplified to just username and password
 8. Activities card content revised based on testing
-9. Activity page layout revised due to awkward styling presentation, but functionality mostly unchanged
+9. View Activity page layout revised due to awkward styling presentation, but functionality mostly unchanged
 
 <span id="ux-design"></span>
 
@@ -381,7 +381,7 @@ git clone https://github.com/Edb83/self-isolution.git
 6. Press Enter. Your local clone will be created
 7. Create a file called env.py to hold your app's environment variables, which should contain the following:
 
-```
+```console
 import os
 
 os.environ.setdefault("IP", "0.0.0.0")
