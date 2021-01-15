@@ -1,6 +1,6 @@
 # Self Isolution
 
-![alt text](# "Responsive sample")
+![alt text](amiresponsive.png "Responsive sample")
 
 **[Live demo](https://self-isolution.herokuapp.com/)**
 
