@@ -486,7 +486,7 @@ A subsequent issue resulting from the propogation fix above made for an untidy l
 
 This issue is caused by PIL not reading image EXIF metadata resulting in images being rotated when resized.
 
-- Solution: importing ImageOps and using `ImageOps.exif_transpose(image)` (https://www.mmbyte.com/article/46440.html)
+- Solution: importing ImageOps and using `ImageOps.exif_transpose(image)` [Source](https://www.mmbyte.com/article/46440.html)
 
 **Images uploaded to AWS not updating on edit**
 
@@ -524,13 +524,21 @@ Even if not logged in, anyone could go to "/add_activity" or "/add_category" and
 Using `$push` inside a `for` loop only pushes the first instance of a list, which meant only one activity from a category which was deleted could be appended to the activity_list key in the "Unassigned" category.
 
 - Solution: create a list of dependent activities and use `$addToSet` and `$each` options to add to `unassigned_category` rather than `$push` inside a `for` loop:
-`mongo.db.categories.find_one_and_update(unassigned_category, {"$addToSet": {"activity_list": {"$each": activities}}})`
+```
+mongo.db.categories.find_one_and_update(unassigned_category, {"$addToSet": {"activity_list": {"$each": activities}}})
+```
 
 **Checking for existing activity or category names only applies to exact matches**
 
 Unlike the check for `existing_user` which can apply `lower()` to the form request, it was not immediately obvious how to apply this to a Cursor object retreived from MongoDB and so `if any(d["activity_name"] == activity["activity_name"] for d in existing_activities)` was used to find any exact matches. As many many activities with the same name were added during testing, it was apparent that this would not find examples where the case alone was different.
 
 - Solution: create a list of lowercase existing item names from the database and compare with the chosen activity/category name.
+
+**When editing an activity without changing its name, alert that activity name already exists**
+
+Following the fix above, this occured due to not completing the logical step of checking whether the activity name was being changed, always finding that the name already existed in the databse.
+
+- Solution: add `if lowercase_name != activity["activity_name"].lower()` to the check.
 
 **Pagination link not finding type of $search when search applied**
 
@@ -541,7 +549,9 @@ This error would occur when a search was applied showing a number of results in 
 **Paginate linting error**
 
 Raised by Gitpod:
-`Possible unbalanced tuple unpacking with sequence defined at line 233 of flask_paginate: left side has 3 label(s), right side has 2 value(s)pylint(unbalanced-tuple-unpacking)`
+```console
+Possible unbalanced tuple unpacking with sequence defined at line 233 of flask_paginate: left side has 3 label(s), right side has 2 value(s)pylint(unbalanced-tuple-unpacking)
+```
 
 - Resolution: running `app.py` through Flake8 does not reveal this to be an error
 
@@ -550,8 +560,11 @@ Raised by Gitpod:
 <span id="testing-unresolved"></span>
 
 **Lack of autocomplete attribute**
-- Warning reported by Chrome console:
-`[DOM] Input elements should have autocomplete attributes`
+
+Warning reported by Chrome console:
+```
+[DOM] Input elements should have autocomplete attributes
+```
 - Resolution: added `autocomplete=""` to Register and Log In inputs.
 
 
@@ -559,8 +572,12 @@ Raised by Gitpod:
 
 **Warnings reported by Chrome console**
 
-`materialize.min.js:formatted:3756 [Violation] Added non-passive event listener to a scroll-blocking 'touchmove' event. Consider marking event handler as 'passive' to make the page more responsive. See https://www.chromestatus.com/feature/5745543795965952`
+```console
+materialize.min.js:formatted:3756 [Violation] Added non-passive event listener to a scroll-blocking 'touchmove' event. Consider marking event handler as 'passive' to make the page more responsive. See https://www.chromestatus.com/feature/5745543795965952
+```
 
-`[Violation] Forced reflow while executing JavaScript took [x]ms`
+```console
+[Violation] Forced reflow while executing JavaScript took [x]ms
+```
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
