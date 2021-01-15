@@ -92,7 +92,7 @@ own activity ideas and share the collective burden of raising this misfortunate 
 
 ### Wireframes
 
-Wireframes for **mobile**, **tablet** and **desktop** can be accessed [here](wireframes/).
+Wireframes created at the start of the project for **mobile**, **tablet** and **desktop** can be accessed [here](wireframes/), as well as the planned **site map** and **data schema**.
 
 There were some noteworthy deviations from the plan. These were:
 
@@ -110,17 +110,48 @@ There were some noteworthy deviations from the plan. These were:
 
 ### Design choices
 
-The decision to use Materialize means customisation is somewhat limited, but this is an acceptible compromise given the site's purpose of displaying user content clearly. Judicious use of the framework's cards gives the site a solid and consistent feel which promotes the user content. 
+The decision to use Materialize meant customisation was somewhat limited, but this was an acceptible compromise given the site's purpose of displaying user content clearly. Judicious use of the framework's cards gives the site a solid and consistent feel which promotes the user content. 
 
 #### Colours
 
-TBC
+[Coolers](https://coolors.co/) was used to find an appropriate colour scheme for the site, however the decision was made to default to Materialize's stock colours wherever possible, and to simply use the hex values of the framework's named colours in any required custom CSS styling.
 
-##### Core
+**Core**
 
-TBC
+Two bold shades of Materialize's indigo were used for the core elements of the site, namely the Navbar, Footer and section headings. The aim was to have a neutral colour, not overly warm, to maintain a contrast with the white text and background.
 
-- ![#ffffff](https://via.placeholder.com/15/ffffff/000000?text=+) #ffffff (White)
+- ![#3949ab](https://via.placeholder.com/15/3949ab/000000?text=+) #3949ab (indigo darken-1)
+- ![#1a237e](https://via.placeholder.com/15/1a237e/000000?text=+) #1a237e (indigo darken-4)
+
+**Cards**
+
+To give the activity and category cards some weight, lighter shades of indigo and green were used. The aim was to distinguish the two types of cards so that users can tell at a glance which page they are on and what the cards are representing. 
+
+- ![#e8eaf6](https://via.placeholder.com/15/e8eaf6/000000?text=+) #e8eaf6 (indigo lighten-5)
+
+- ![#f1f8e9](https://via.placeholder.com/15/f1f8e9/000000?text=+) #e8eaf6 (light-green lighten-5)
+
+**Buttons**
+
+It was important for the buttons to have have consistent colours with intuitive suggestions about their functions. A slightly lighter shade of indigo was used for buttons which could be classed as part of the outer 'shell' of the site, responsible for navigating the site and matching the Navbar and Footer's colour. These are  Search, 'Back to Activities', active pagination page, 'View' (category's activities) and 'Cancel' (a deletion). One exception was made for the hover effect of activity filters (i.e. target age, category and activity author), to provide some variety.
+
+A 'green means go' approach was taken for button buttons which suggest the user making changes to their content (i.e. Edit and 'Submit'). Negative user actions are all red: Delete, confirm delete and 'Cancel' search.
+
+Orange was used as an accent colour for the pulsing FAB 'Add Activity' and 'Add Category' and also for Toast alert messages.
+
+- ![#26a69a](https://via.placeholder.com/15/26a69a/000000?text=+) #26a69a (teal lighten-1)
+
+- ![#3f51b5](https://via.placeholder.com/15/3f51b5/000000?text=+) #3f51b5 (indigo)
+
+- ![#f44336](https://via.placeholder.com/15/f44336/000000?text=+) #f44336 (red)
+
+- ![#ff6d00](https://via.placeholder.com/15/ff6d00/000000?text=+) #f44336 (orange accent-4)
+
+**Other**
+
+To provide a touch of variety, the chips containing required equipment on the View Activity page have a lighter shade of blue.
+
+- ![#0077ff](https://via.placeholder.com/15/0077ff/000000?text=+) #0077ff ("Dodger Blue")
 
 
 #### Fonts

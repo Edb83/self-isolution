@@ -44,7 +44,7 @@
                         <div class="col s6 category-card-button">
                             {% if category.activity_list|length > 0 %}
                                 <a href="{{ url_for('filter_category', category_id=category._id) }}"
-                                class="waves-effect waves-light btn indigo darken-1" aria-label="view all {{category}} activities button">
+                                class="btn indigo" aria-label="view all {{category}} activities button">
                                     View ({{ category.activity_list|count }})
                                 </a>
                             {% else %}
