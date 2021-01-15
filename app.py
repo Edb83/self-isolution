@@ -456,8 +456,9 @@ def edit_activity(activity_id):
         for x in activities:
             lowercase_list.append(x["activity_name"].lower())
 
-        # check whether name already taken
-        if lowercase_name in lowercase_list:
+        # check if new activity name used and already exists in database
+        if lowercase_name != activity["activity_name"].lower() and \
+                lowercase_name in lowercase_list:
             flash("'{}' already exists, please choose another name".format(
                 request.form.get("activity_name")))
 
