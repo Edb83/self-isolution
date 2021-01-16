@@ -177,7 +177,7 @@ MongoDB's non-relational database structure makes sense for this type of site as
 |:-----|:-----|:-----|
 |_id|ObjectId||
 |activity_name|string|The user's chosen title of the activity.|
-|category_name|string|To avoid potential muddling of activity categories the decision was made to prevent category names being changed by the admin, which meant using a string rather than ObjectID was preferable.|
+|category_name|string|In hindsight this should really have been the category ObjectId to make things easier. The admin is prevented from changing category names to mitigate against this oversight, but also to prevent activities ending up under an inappropriately named category.|
 |target_age|string|Options such as 'Under 2' and '6+' meant using int was not appropriate here.|
 |activity_summary|string|Brief summary used to flesh out cards on Activities page.|
 |activity_details|string|The main content of the View Activity page.|
@@ -488,11 +488,12 @@ Full details of testing can be found [here](TESTING.md).
 
 ## Credits
 
-### Tutorials
+### Tutorials / Resources
 
 - Code Institute Task Manager Project ([Tim Nelson](https://github.com/TravelTimN))
 - [Boto S3](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html#id224)
 - [Handling file uploads with Flask](https://blog.miguelgrinberg.com/post/handling-file-uploads-with-flask)
+- [Flask Documentation](https://flask.palletsprojects.com/en/1.1.x/)
 - [Flask Paginate](https://gist.github.com/mozillazg/69fb40067ae6d80386e10e105e6803c9)
 - [Pillow](https://pillow.readthedocs.io/en/stable/index.html)
 - [Uploading to AWS S3 using boto](https://www.zabana.me/notes/flask-tutorial-upload-files-amazon-s3)

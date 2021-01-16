@@ -326,7 +326,7 @@ Categories:
 
 ## Automated testing
 
-[Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools) - audit summary for both desktop and mobile:
+[Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools) - Lighthouse audit summary for both desktop and mobile:
 
 **Home page**
 
@@ -398,6 +398,8 @@ Categories:
 
 [PyCodeStyle](https://github.com/PyCQA/pycodestyle) - 0 warnings - **PASS**
 
+- NB a simple tox.ini was created during the site's development to increase `max-line-length` to 120, but all code is now PEP8 compliant. 
+
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 
 <span id="testing-responsive"></span>
@@ -410,9 +412,7 @@ In addition to Materialize's breakpoints, various media queries have been used t
 
 Examples:
 
-- on the View Activity page the 'Back to Activities' button has been aligned with the activity details below in keeping with Materialize's breakpoints.
-- on the View Activity page, column width of the items in the `activity-info-container` has been considered to prevent spilling/bunching of items e.g. username taking the full width on smaller devices as this could be longer than expected depending on the user.
-- on the View Activity page the structure of the row containing heading and edit/delete buttons changes when a user is not logged in to prevent unnecessary cramping of the heading on smaller screens.
+- on the View Activity page the 'Back' button has been aligned with the activity details below in keeping with Materialize's breakpoints.
 - on the Categories page, the cards' appearance at the breakpoints from 2 to 3 columns was studied to make sure that even in a worst case scenario their content would not be put out of place. Revisions saw the card choice and position of each element tested, including when logged in as admin and the edit and delete buttons are visible.
 - the Footer content was separated out on larger screen sizes to make better use of the space.
 - the `flow-text` Materialize class has been used for any large text areas to ensure they are as legible as possible depending on device viewed with.
@@ -575,9 +575,24 @@ Warning reported by Chrome console:
 ```console
 materialize.min.js:formatted:3756 [Violation] Added non-passive event listener to a scroll-blocking 'touchmove' event. Consider marking event handler as 'passive' to make the page more responsive. See https://www.chromestatus.com/feature/5745543795965952
 ```
+- Despite efforts to mark the eventlisteners `{passive: true}`, this warning could not be resolved. 
+
 
 ```console
 [Violation] Forced reflow while executing JavaScript took [x]ms
 ```
+- Understanding how to resolve this issue was beyond the scope of this project.
+
+**Problems reported by GitPod**
+
+```console
+Special characters must be escaped : [ > ].
+```
+- Despite attempts to escape the `>` character [as suggested by the Jinja documentation](https://jinja.palletsprojects.com/en/2.11.x/templates/#escaping), this warning persists in the console.
+
+```console
+Doctype must be declared first.
+```
+- This was understood to relate to GitPod failing to recognise the `!DOCTYPE html` in base.html being passed through to the other HTML templates.
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>

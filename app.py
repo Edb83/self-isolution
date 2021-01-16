@@ -15,18 +15,28 @@ from PIL import Image, ImageOps
 if os.path.exists("env.py"):
     import env  # noqa: F401
 
-# Amazon S3 Bucket
+# Pagination activity limit
+PER_PAGE = 9
+
+# Target age choices
+AGES = ["Under 2", "2-4", "4-6", "6+"]
+
+# Image upload restrictions
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
 
+# Amazon S3 Bucket
 S3_BUCKET = os.environ.get("S3_BUCKET")
 S3_KEY = os.environ.get("S3_KEY")
 S3_SECRET = os.environ.get("S3_SECRET_ACCESS_KEY")
 S3_LOCATION = os.environ.get("S3_LOCATION")
 
-AGES = ["Under 2", "2-4", "4-6", "6+"]
+s3 = boto3.client(
+    "s3",
+    aws_access_key_id=S3_KEY,
+    aws_secret_access_key=S3_SECRET
+)
 
-PER_PAGE = 9
-
+# Flask app setup
 app = Flask(__name__)
 
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
@@ -36,16 +46,12 @@ app.config['MAX_CONTENT_LENGTH'] = 8 * 1024 * 1024
 
 mongo = PyMongo(app)
 
-s3 = boto3.client(
-    "s3",
-    aws_access_key_id=S3_KEY,
-    aws_secret_access_key=S3_SECRET
-)
 
 # FUNCTIONS
 
 
 # Pagination
+# https://gist.github.com/mozillazg/69fb40067ae6d80386e10e105e6803c9
 def paginated(activities):
     page, per_page, offset = get_page_args(
         page_parameter='page', per_page_parameter='per_page')
@@ -63,6 +69,7 @@ def pagination_args(activities):
 
 
 # Image upload
+# https://www.zabana.me/notes/flask-tutorial-upload-files-amazon-s3
 def allowed_file(filename):
 
     return '.' in filename and \
@@ -70,15 +77,9 @@ def allowed_file(filename):
 
 
 def upload_file():
+    # Output will be blank if image_file key not found on submission
     output = ""
 
-    """
-    Check the request.files object for an image_file key.
-    (image_file is the name of the file input in add_activity,
-    edit_activity, add_category and edit_category)
-    If it's not there, return blank output
-    for handling default images where necessary
-    """
     if "image_file" not in request.files:
 
         return output
@@ -86,11 +87,7 @@ def upload_file():
     # If the key is in the object, save it in file variable
     file = request.files["image_file"]
 
-    """
-    Check the filename attribute on the object
-    If empty, it means the user sumbmitted an empty form,
-    so return a blank output
-    """
+    # Check the filename, if it's blank, leave it blank
     if file.filename == "":
 
         return output
@@ -104,19 +101,19 @@ def upload_file():
 
 
 def resize_image(file):
-    # Load image
+    # Load the image received through the submitted form
     raw_image = Image.open(file)
 
-    # Save format (as not copied on creation of new image)
+    # Save its format (as not copied on creation of new image)
     saved_format = raw_image.format
 
     # Read EXIF data to handle portrait images being rotated
     new_image = ImageOps.exif_transpose(raw_image)
 
-    # Reapply raw_image format
+    # Reapply raw_image format so that it can be resized
     new_image.format = saved_format
 
-    # Resize image and set max-length in either axis
+    # Resize image and set max-length in either axis to 500px
     new_image.thumbnail((500, 500))
 
     # Save the image to an in-memory file
@@ -249,11 +246,12 @@ def filter_user(username):
 @app.route("/register", methods=["GET", "POST"])
 def register():
 
+    # If nothing submitted
     if request.method != "POST":
         return render_template("register.html")
 
     else:
-        # check if username already exists in database
+        # Check if username already exists in database
         existing_user = mongo.db.users.find_one(
             {"username": request.form.get("username").lower()})
 
@@ -263,13 +261,14 @@ def register():
 
             return redirect(url_for("register"))
 
+        # Get the submitted form inputs
         register = {
             "username": request.form.get("username").lower(),
             "password": generate_password_hash(request.form.get("password"))
         }
         mongo.db.users.insert_one(register)
 
-        # put the new user into 'session' cookie
+        # Put the new user into 'session' cookie
         session["user"] = request.form.get("username").lower()
         flash("Registration Successful!")
 
@@ -287,7 +286,7 @@ def login():
         return render_template("login.html")
 
     else:
-        # check if username exists in database
+        # Check if username exists in database
         existing_user = mongo.db.users.find_one(
             {"username": request.form.get("username").lower()})
 
@@ -296,7 +295,7 @@ def login():
 
             return redirect(url_for("login"))
 
-        # ensure hashed password matches user input
+        # Ensure hashed password matches user input
         elif check_password_hash(
                 existing_user["password"], request.form.get("password")):
             session["user"] = request.form.get("username").lower()
@@ -333,12 +332,13 @@ def profile(username):
 @app.route("/logout")
 def logout():
 
+    # If user is not logged in
     if "user" not in session:
         flash("You are already logged out!")
 
         return redirect(url_for("home"))
     else:
-        # remove user from session cookies
+        # Remove user from session cookies
         flash("You have been logged out")
         session.pop("user")
 
@@ -362,8 +362,8 @@ def add_activity():
             ages=AGES)
 
     else:
-        # get new activity details
-        activity = {
+        # Get new activity details, check for file upload
+        submit = {
             "activity_name": request.form.get("activity_name"),
             "category_name": request.form.get("category_name"),
             "target_age": request.form.get("target_age"),
@@ -375,29 +375,30 @@ def add_activity():
             "date_added": date.today().strftime("%d %b %Y")
         }
 
-        # create a list of activity names
-        activities = list(mongo.db.activities.find())
-        lowercase_name = activity["activity_name"].lower()
+        # Create a list of existing activity names in lowercase
+        existing_activities = list(mongo.db.activities.find())
+        lowercase_name = submit["activity_name"].lower()
         lowercase_list = []
-        for x in activities:
+
+        for x in existing_activities:
             lowercase_list.append(x["activity_name"].lower())
 
-        # check whether name already taken
+        # Check whether activity name already in database
         if lowercase_name in lowercase_list:
             flash("'{}' already exists, please choose another name".format(
-                activity["activity_name"]))
+                submit["activity_name"]))
 
             return redirect(url_for("add_activity"))
 
         else:
-            # add activity to the database
-            new_activity = mongo.db.activities.insert_one(activity).inserted_id
+            # Add new activity to the database
+            new_activity = mongo.db.activities.insert_one(submit).inserted_id
 
-            # store activity id in category's activity_list
+            # Store new activity id in category's activity_list
             mongo.db.categories.update_one(
-                {"category_name": activity["category_name"]},
+                {"category_name": submit["category_name"]},
                 {"$push": {"activity_list": ObjectId(new_activity)}})
-            flash("Activity added: {}".format(activity["activity_name"]))
+            flash("Activity added: {}".format(submit["activity_name"]))
 
             return redirect(url_for("get_activities"))
 
@@ -408,14 +409,13 @@ def edit_activity(activity_id):
     activity = mongo.db.activities.find_one({"_id": ObjectId(activity_id)})
     activity_owner = activity["created_by"]
     categories = list(mongo.db.categories.find().sort("category_name", 1))
-    current_category = mongo.db.categories.find_one(
-        {"category_name": activity["category_name"]})
 
     if "user" not in session:
         flash("You need to Log In to do that!")
 
         return redirect(url_for("login"))
 
+    # If not activity owner or admin
     elif session["user"] != activity_owner and session["user"] != "admin":
         flash("This Activity belongs to someone else!")
 
@@ -430,15 +430,15 @@ def edit_activity(activity_id):
             ages=AGES)
 
     else:
-        # if no new image chosen, keep existing image
+        # If no new image chosen, keep existing image
         if request.files["image_file"].filename == "":
             edit_image_path = activity["image_file"]
 
-        # otherwise prepare for uploading new image
+        # Otherwise prepare for uploading new image
         else:
             edit_image_path = upload_file()
 
-        # get edit details
+        # Get edit details
         edit = {"$set": {
             "activity_name": request.form.get("activity_name"),
             "category_name": request.form.get("category_name"),
@@ -449,14 +449,15 @@ def edit_activity(activity_id):
             "image_file": edit_image_path,
         }}
 
-        # create a list of activity names
-        activities = list(mongo.db.activities.find())
+        # Create a list of existing activity names in lowercase
+        existing_activities = list(mongo.db.activities.find())
         lowercase_name = request.form.get("activity_name").lower()
         lowercase_list = []
-        for x in activities:
+
+        for x in existing_activities:
             lowercase_list.append(x["activity_name"].lower())
 
-        # check if new activity name used and already exists in database
+        # Check if new name input and already exists in database
         if lowercase_name != activity["activity_name"].lower() and \
                 lowercase_name in lowercase_list:
             flash("'{}' already exists, please choose another name".format(
@@ -466,18 +467,20 @@ def edit_activity(activity_id):
                                     activity_id=ObjectId(activity_id)))
 
         else:
-            # save activity edit details to database
+            # Save activity edit details to database
             mongo.db.activities.update_many(activity, edit)
 
-            # find the category chosen on form
+            # Find old category and category selected on form
+            current_category = mongo.db.categories.find_one(
+                {"category_name": activity["category_name"]})
             new_category = mongo.db.categories.find_one(
                 {"category_name": request.form.get("category_name")})
 
-            # if chosen category name is different from existing category name
+            # If chosen category name is different from existing category name
             if request.form.get(
                     "category_name") != current_category["category_name"]:
 
-                # move activity id from old activity_list to new one
+                # Move activity id from old activity_list to new one
                 mongo.db.categories.update_one(
                     new_category,
                     {"$push": {"activity_list": activity["_id"]}})
@@ -502,17 +505,20 @@ def delete_activity(activity_id):
 
         return redirect(url_for("login"))
 
+    # If not activity owner or admin
     elif session["user"] != activity_owner and session["user"] != "admin":
         flash("This Activity belongs to someone else!")
 
         return redirect(url_for('view_activity',
                                 activity_id=ObjectId(activity_id)))
 
+    # Otherwise remove activity id from category's activity list
     else:
         mongo.db.categories.find_one_and_update(
             {"category_name": activity["category_name"]},
             {"$pull": {"activity_list": activity["_id"]}})
 
+        # And remove activity from the database
         mongo.db.activities.remove({"_id": ObjectId(activity_id)})
 
         flash("Activity deleted ({})".format(activity["activity_name"]))
@@ -549,6 +555,7 @@ def add_category():
 
         return redirect(url_for("login"))
 
+    # If not the admin
     elif session["user"].lower() != "admin":
         flash("That's an Admin's job!")
 
@@ -557,6 +564,7 @@ def add_category():
     elif request.method != "POST":
         return render_template("add_category.html")
 
+    # If admin submits form, get details
     else:
         category = {
             "category_name": request.form.get("category_name"),
@@ -565,20 +573,22 @@ def add_category():
             "activity_list": []
         }
 
-        # create a list of category names
-        categories = list(mongo.db.categories.find())
+        # Create a list of existing category names
+        existing_categories = list(mongo.db.categories.find())
         lowercase_name = category["category_name"].lower()
         lowercase_list = []
-        for x in categories:
+
+        for x in existing_categories:
             lowercase_list.append(x["category_name"].lower())
 
-        # check whether name already taken
+        # Check whether name already in database
         if lowercase_name in lowercase_list:
             flash("'{}' already exists, please choose another name".format(
                 category["category_name"]))
 
             return redirect(url_for('add_category'))
 
+        # If not, add new category to database
         mongo.db.categories.insert_one(category)
         flash("Category added ({})".format(category["category_name"]))
 
@@ -595,6 +605,7 @@ def edit_category(category_id):
 
         return redirect(url_for("login"))
 
+    # If not the admin
     elif session["user"].lower() != "admin":
         flash("That's an Admin's job!")
 
@@ -603,10 +614,12 @@ def edit_category(category_id):
     elif request.method != "POST":
         return render_template("edit_category.html", category=category)
 
+    # If admin submits form without chosing new image
     else:
         if request.files["image_file"].filename == "":
             edit_image_path = category["image_file"]
 
+        # Otherwise prepare to upload file and get edit details
         else:
             edit_image_path = upload_file()
 
@@ -615,6 +628,7 @@ def edit_category(category_id):
             "image_file": edit_image_path,
         }}
 
+        # Update category in the database
         mongo.db.categories.update_many(category, edit)
         flash("Category updated ({})".format(category["category_name"]))
 
@@ -625,10 +639,15 @@ def edit_category(category_id):
 def delete_category(category_id):
 
     category = mongo.db.categories.find_one({"_id": ObjectId(category_id)})
+
+    # Check for activities belonging to category
     dependent_activities = list(mongo.db.activities.find(
         {"category_name": category["category_name"]}))
+
+    # Find "Unassigned" category in database
     unassigned_category = mongo.db.categories.find_one(
         {"category_name": "Unassigned"})
+
     activities = []
 
     if "user" not in session:
@@ -636,21 +655,25 @@ def delete_category(category_id):
 
         return redirect(url_for("login"))
 
+    # If not the admin
     elif session["user"].lower() != "admin":
         flash("That's an Admin's job!")
 
         return redirect(url_for("get_categories"))
 
+    # Otherwise populate list of activities belonging to deleted category
     else:
         for activity in dependent_activities:
             mongo.db.activities.find_one_and_update(
                 activity, {"$set": {"category_name": "Unassigned"}})
             activities.append(activity["_id"])
 
+        # Add dependent activities to "Unassigned" category's activity_list key
         mongo.db.categories.find_one_and_update(
             unassigned_category,
             {"$addToSet": {"activity_list": {"$each": activities}}})
 
+        # And remove category from the database
         mongo.db.categories.remove(category)
 
         flash("Category deleted ({})".format(category["category_name"]))
