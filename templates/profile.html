@@ -10,6 +10,8 @@
         </p>
     </div>
 
+    <!-- Heading and FAB -->
+
     <div class="row section-heading center valign-wrapper">
         <div class="col s8 offset-s2">
             <h3>My Activities</h3>
@@ -24,11 +26,15 @@
         </div>
     </div>
 
+    <!-- Cards -->
+
     {% if activities|length > 0 %}
         <div class="row">
             {% for activity in activities if session.user|lower == activity.created_by|lower %}
                 <div class="col s12 m6 xl4 xxl3">
                     <div class="card horizontal hoverable indigo lighten-5">
+
+                        <!-- Card image -->
                         <div class="card-image">
                             <a href="{{ url_for('view_activity', activity_id=activity._id) }}">
                                 {% if activity.image_file == "" %}
@@ -41,6 +47,8 @@
                             </a>
                         </div>
                         <div class="card-stacked">
+
+                            <!-- Name and date -->
                             <div class="card-content">
                                 <div class="profile-card-name-container ">
                                     <span class="profile-card-name">{{ activity.activity_name }}</span>
@@ -49,6 +57,8 @@
                                     {{ activity.date_added }}
                                 </div>
                             </div>
+
+                            <!-- Delete and Edit buttons -->
                             <div class="card-action">
                                 <div>
                                     <button data-target="{{ activity._id }}" class="btn-floating modal-trigger red" aria-label="delete activity">
@@ -61,12 +71,16 @@
                                         <i class="fas fa-pencil-alt "></i>
                                     </a>
                                 </div>
-
                             </div>
+
                         </div>
                     </div>
                 </div>
+
+                <!-- Deletion modal -->
+
                 <div id="{{ activity._id }}" class="modal">
+
                     <div class="modal-content">
                         <h4>Confirm deletion</h4>
                         <p>Are you sure you want to delete <span class="special-text">{{ activity.activity_name }}</span> ?</p>
@@ -79,10 +93,12 @@
                             Delete <i class="far fa-trash-alt right"></i>
                         </a>
                     </div>
+
                 </div>
             {% endfor %}
         </div>
 
+    <!-- If no activities -->
     {% else %}
         <div class="no-results-container flow-text indigo-text text-darken-4 center-align">
             <p>You have not added any activities... yet!</p>

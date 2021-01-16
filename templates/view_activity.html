@@ -4,12 +4,17 @@
 {% block nav_activities_mob %}active{% endblock %}
 
 {% block content %}
+
     <div class="row">
+
+        <!-- Back button -->
         <div class="back-button-container col s6 m8 l10">
             <a href="{{ url_for('get_activities') }}" class="btn indigo" aria-label="back to activities button">
                 <i class="fas fa-undo-alt left"></i> Back
             </a>
         </div>
+
+        <!-- Edit / Delete buttons -->
         {% if (session.user|lower == activity.created_by|lower) or (session.user|lower == "admin") %}
             <div class="col s3 m2 l1 center-align">
                 <button data-target="{{ activity._id }}" class="btn-floating modal-trigger center-align hoverable white" aria-label="delete activity button">
@@ -22,7 +27,10 @@
                 </a>
             </div>
         {% endif %}
+
     </div>
+
+    <!-- Image -->
 
     <div class="view-activity-image-container center-align">
         {% if activity.image_file == "" %}
@@ -33,6 +41,8 @@
             <img src="{{ activity.image_file }}" alt="{{ activity.activity_summary }}" class="view-activity-image responsive-img" loading="lazy">
         {% endif %}
     </div>
+
+    <!-- Heading -->
 
     <div class="row view-activity-heading-row center">
         <div class="col s12">
@@ -45,31 +55,41 @@
     <div class="row activity-info-container left-align">
         
         {% for category in categories if category.category_name == activity.category_name %}
+
+            <!-- Category name -->
             <div class="col s12 m4 activity-info">
                 <a href="{{ url_for('filter_category', category_id=category._id) }}" class="grey-text text-darken-3" >
                         <i class="fas fa-folder-open"></i> {{ activity.category_name }}
                 </a>
             </div>
 
+            <!-- Target age -->
             <div class="col s12 m4 activity-info">
                 <a href="{{ url_for('filter_age', target_age=activity.target_age) }}" class="grey-text text-darken-3">
                         <i class="fas fa-child"></i> {{ activity.target_age }}
                 </a>
             </div>
+
         {% endfor %}
-        
-        <div class="col s12 m4 activity-info">
-            <a href="{{ url_for('filter_user', username=activity.created_by) }}" class="grey-text text-darken-3">
-                    <i class="fas fa-user"></i> {{ activity.created_by }}
-            </a>
-        </div>
+            
+            <!-- Author -->
+            <div class="col s12 m4 activity-info">
+                <a href="{{ url_for('filter_user', username=activity.created_by) }}" class="grey-text text-darken-3">
+                        <i class="fas fa-user"></i> {{ activity.created_by }}
+                </a>
+            </div>
 
     </div>
+
+    <!-- Details -->
+
     <div class="activity-details-container">
         {% for para in activity.activity_details.splitlines() %}
             <p class="flow-text">{{ para }}</p>
         {% endfor %}
     </div>
+
+    <!-- Equipment -->
 
     <div class="equipment-needed-text activity-info center"><i class="fas fa-box-open"></i> Things you'll need:</div>
     <div class="col s12 activity-equipment-container">
@@ -83,6 +103,8 @@
             <div class="equipment-needed-text">You won't need any specialized tools for this one!</div>
         {% endif %}
     </div>
+
+    <!-- Deletion modal -->
 
     <div id="{{ activity._id }}" class="modal">
         <div class="modal-content">
