@@ -87,10 +87,6 @@ nav ul a {
     font-size: 1.2rem;
 }
 
-nav ul a:hover {
-    background-color: #1a237e;
-}
-
 #profile-dropdown a {
     color: #1a237e;
     text-shadow: none;
@@ -114,6 +110,7 @@ nav ul a:hover {
   padding: 0.5rem 0 0 1rem;
 }
 
+.footer-menu li,
 .footer-links li {
   display:inline-block;
   padding: 0 1rem;
@@ -122,10 +119,18 @@ nav ul a:hover {
 .footer-menu a,
 .footer-links a {
     color: #fff;
+    display: inherit;
+    -webkit-transition: scale 0.1s ease;
+    -o-transition: scale 0.1s ease;
+    transition: scale 0.1s ease;
 }
 
-
-
+.footer-menu a:hover,
+.footer-links a:hover {
+    -webkit-transform: scale(1.1);
+        -ms-transform: scale(1.1);
+            transform: scale(1.1);
+}
 
 /* FORMS */
 
@@ -173,19 +178,13 @@ select {
 
 /* BUTTONS */
 
-.add-item-button-container {
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-}
-
 .btn-floating.halfway-fab {
     border: solid 1px;
 }
 
 .pulse::before {
-    -webkit-animation: pulse-animation 2.5s cubic-bezier(0.24, 0, 0.38, 1) infinite;
-            animation: pulse-animation 2.5s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+    -webkit-animation: pulse-animation 5s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+            animation: pulse-animation 5s cubic-bezier(0.24, 0, 0.38, 1) infinite;
 }
 
 .form-button-container {

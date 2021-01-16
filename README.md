@@ -125,11 +125,13 @@ Two bold shades of Materialize's indigo were used for the core elements of the s
 
 **Cards**
 
-To give the activity and category cards some weight, lighter shades of indigo and green were used. The aim was to distinguish the two types of cards so that users can tell at a glance which page they are on and what the cards are representing. 
+To give the activity and category cards some weight, lighter shades of indigo and green were used. The aim was to distinguish the two types of cards so that users can tell at a glance which page they are on and what the cards are representing. To provide a touch of variety, the chips containing required equipment on the View Activity page have a lighter shade of blue.
 
 - ![#e8eaf6](https://via.placeholder.com/15/e8eaf6/000000?text=+) #e8eaf6 (indigo lighten-5)
 
 - ![#f1f8e9](https://via.placeholder.com/15/f1f8e9/000000?text=+) #e8eaf6 (light-green lighten-5)
+
+- ![#0077ff](https://via.placeholder.com/15/0077ff/000000?text=+) #0077ff ("Dodger Blue")
 
 **Buttons**
 
@@ -147,11 +149,9 @@ Orange was used as an accent colour for the pulsing FAB 'Add Activity' and 'Add 
 
 - ![#ff6d00](https://via.placeholder.com/15/ff6d00/000000?text=+) #f44336 (orange accent-4)
 
-**Other**
+**Transition and transformation**
 
-To provide a touch of variety, the chips containing required equipment on the View Activity page have a lighter shade of blue.
-
-- ![#0077ff](https://via.placeholder.com/15/0077ff/000000?text=+) #0077ff ("Dodger Blue")
+To add to the physicality of the cards, the Materialize `hoverable` (all) and `waves-effect` (categories) classes were used. To give the Footer a touch of interactivity, a subtle scale effect has been applied on clickable links.
 
 #### Fonts
 
@@ -488,7 +488,7 @@ Full details of testing can be found [here](TESTING.md).
 
 ## Credits
 
-#### Tutorials
+### Tutorials
 
 - Code Institute Task Manager Project ([Tim Nelson](https://github.com/TravelTimN))
 - [Boto S3](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html#id224)
@@ -502,7 +502,7 @@ Full details of testing can be found [here](TESTING.md).
 - [SWAP your clothes](https://github.com/LigaMoon/swap-clothes-app)
 - [Wean Cuisine](https://github.com/Lucyjpjones/wean-cuisine)
 
-#### Code modified from other sources
+### Code modified from other sources
 
 - [Resizing images prior to S3 upload](https://stackoverflow.com/a/56241877)
 - [Image processing with Pillow](https://dzone.com/articles/image-processing-in-python-with-pillow)
