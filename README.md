@@ -371,7 +371,7 @@ Pages for 404 and 500 errors keep the user on the site when something goes wrong
 
 ## Deployment
 
-The master branch of this repository is the most current version and has been used for the deployed version of the site.
+The master branch of this repository is the most current version and has been used for the deployed version of the site. A separate branch was used for implementing image upload functionality (PIL) and this has been successfully merged.
 
 ### Prerequisites
 
@@ -436,6 +436,10 @@ os.environ.setdefault("S3_SECRET_ACCESS_KEY", "<S3 secret key>")
 os.environ.setdefault("S3_LOCATION", "https://<S3 bucket name>.s3.<S3 bucket region>.amazonaws.com/")
 ```
 8. **Make sure that env.py is listed in your .gitignore file to prevent your environment variables being pushed publicly**
+9. The app can now be run locally using
+```console
+python3 app.py
+```
 
 
 ### How to deploy to Heroku

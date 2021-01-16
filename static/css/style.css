@@ -10,22 +10,22 @@
 /* STRUCTURE */
 
 body {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  min-height: 100vh;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  font-family: 'Montserrat', sans-serif;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    min-height: 100vh;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    font-family: 'Montserrat', sans-serif;
 }
 
 /* Combined with min-height on body, this sets footer to bottom of screen without any content */
 main {
-  -webkit-box-flex: 1;
-      -ms-flex: 1 0 auto;
-          flex: 1 0 auto;
+    -webkit-box-flex: 1;
+        -ms-flex: 1 0 auto;
+            flex: 1 0 auto;
 }
 
 .container {
@@ -100,20 +100,20 @@ nav ul a {
 /* FOOTER */
 
 .footer-menu li {
-  display:inline-block;
-  padding: 0 1rem;
-  border-right: thin solid;
+    display:inline-block;
+    padding: 0 1rem;
+    border-right: thin solid;
 }
 
 .footer-menu li:last-child {
-  border-right: none;
-  padding: 0.5rem 0 0 1rem;
+    border-right: none;
+    padding: 0.5rem 0 0 1rem;
 }
 
 .footer-menu li,
 .footer-links li {
-  display:inline-block;
-  padding: 0 1rem;
+    display:inline-block;
+    padding: 0 1rem;
 }
 
 .footer-menu a,
@@ -315,17 +315,14 @@ select {
 /* CATEGORIES */
 
 .category-card-action,
-.category-card-content {
+.category-card-content,
+.category-card-reveal {
     padding: 1rem !important;
 }
 
 .category-card-icon,
 .category-card-button {
     padding: 0 !important;
-}
-
-.category-card-reveal {
-    padding: 1rem !important;
 }
 
 /* VIEW ACTIVITY */
