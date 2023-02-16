@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Self Isolution - Add Category{% endblock %}
+{% block nav_profile %}active{% endblock %}
+{% block nav_add_category_mob %}active{% endblock %}
+{% block content %}
+
+    <h3 class="center-align section-heading">Add Category</h3>
+
+    <div class="row">
+        <form class="col s12" method="POST" action="{{ url_for('add_category') }}" enctype="multipart/form-data">
+
+            <!-- Title -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="fas fa-pencil-alt prefix"></i>
+                    <input id="category_name" name="category_name" minlength="5" maxlength="14" data-length="14"
+                        type="text" class="validate" required>
+                    <label for="category_name">Title</label>
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="fas fa-quote-left prefix"></i>
+                    <textarea id="category_summary" name="category_summary" minlength="10" maxlength="140" data-length="140"
+                    class="materialize-textarea validate" required></textarea>
+                    <label for="category_summary">Summary</label>
+                </div>
+            </div>
+
+            <!-- Image -->
+            <div class="row">
+               <div class="file-field input-field col s12">
+                    <i class="fas fa-image prefix"></i>
+                    <input type="file" id="category_image" name="image_file" required/>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text"
+                        placeholder="Upload image" />
+                        <label for="category_image">Image for your category</label>
+                    </div>
+               </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="row">
+                <div class="col s12 form-button-container">
+                    <div class="form-button">
+                        <a href="{{ url_for('get_categories') }}" class="btn red text-shadow" aria-label="cancel submit button">
+                            Cancel <i class="fas fa-times-circle right"></i>
+                        </a>
+                    </div>
+                    <div class="form-button">
+                        <button type="submit" class="btn teal darken-1 text-shadow" aria-label="submit form button">
+                            Submit <i class="fas fa-plus-circle right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+{% endblock %}

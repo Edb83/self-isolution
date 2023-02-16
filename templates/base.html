@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ideas for parents stuck in self-isolation with their young children">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='favicons/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicons/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicons/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='favicons/site.webmanifest') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+        integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
+        crossorigin="anonymous" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
+
+    <!-- Dynamic page titles -->
+    <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+    <header>
+
+        <!-- Profile dropdown list -->
+
+        <ul id="profile-dropdown" class="dropdown-content">
+            <li><a href="{{ url_for('profile', username=session['user']) }}">View</a></li>
+            <li><a href="{{ url_for('add_activity') }}">Add Activity</a></li>
+
+            <!-- If admin, show Add Category -->
+            {% if session.user|lower == "admin"|lower %}
+                <li><a href="{{ url_for('add_category') }}">Add Category</a></li>
+            {% endif %}
+            <li class="divider"></li>
+            <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+        </ul>
+
+        <!-- Main Navbar -->
+
+        <div class="navbar-fixed">
+            <div class="row">
+                <nav>
+                    <div class="nav-wrapper indigo darken-1">
+                        <div class="col s12">
+                            <a href="{{ url_for('home') }}" class="brand-logo left text-shadow">Self Isolution</a>
+                            <a href="#" data-target="mobile-navbar" class="sidenav-trigger right" aria-label="Side navigation bar trigger"><i
+                                    class="fas fa-bars"></i></a>
+                            <ul class="right hide-on-med-and-down text-shadow">
+
+                                <!-- Various blocks allow to pipe in 'active' class when page loaded -->
+                                <li class="{% block nav_home %}{% endblock %}">
+                                    <a href="{{ url_for('home') }}">Home</a>
+                                </li>
+                                <li class="{% block nav_activities %}{% endblock %}">
+                                    <a href="{{ url_for('get_activities') }}">Activities</a>
+                                </li>
+                                <li class="{% block nav_categories %}{% endblock %}">
+                                    <a href="{{ url_for('get_categories') }}">Categories</a>
+                                </li>
+
+                                <!-- If logged in, show Profile dropdown list (see above) -->
+                                {% if session.user %}
+                                    <li class="{% block nav_profile %}{% endblock %}">
+                                        <a class="dropdown-trigger" href="#!"
+                                            data-target="profile-dropdown">
+                                            Profile <i class="fas fa-caret-down right"></i>
+                                        </a>
+                                    </li>
+
+                                <!-- Otherwise, show Register and Log In -->
+                                {% else %}
+                                    <li class="{% block nav_register %}{% endblock %}">
+                                        <a href="{{ url_for('register') }}">Register</a>
+                                    </li>
+                                    <li class="{% block nav_login %}{% endblock %}">
+                                        <a href="{{ url_for('login') }}">Log In</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Side Navbar -->
+
+        <ul class="sidenav" id="mobile-navbar">
+            <li>
+                <h4 id="nav-sidebar-header" class="brand-logo indigo-text text-darken-4">Self Isolution</h4>
+            </li>
+            <li class="{% block nav_home_mob %}{% endblock %}">
+                <a href="{{ url_for('home') }}">Home</a>
+            </li>
+            <li class="{% block nav_activities_mob %}{% endblock %}">
+                <a href="{{ url_for('get_activities') }}">Activities</a>
+            </li>
+            <li class="{% block nav_categories_mob %}{% endblock %}">
+                <a href="{{ url_for('get_categories') }}">Categories</a>
+            </li>
+
+            <!-- If logged in, show Add Activity -->
+            {% if session.user %}
+                <li class="divider"></li>
+                <li class="{% block nav_profile_mob %}{% endblock %}">
+                    <a href="{{ url_for('profile', username=session['user']) }}">Profile</a>
+                </li>
+                <li class="{% block nav_add_activity_mob %}{% endblock %}">
+                    <a href="{{ url_for('add_activity') }}">Add Activity</a>
+                </li>
+
+                <!-- If admin, show Add Category -->
+                {% if session.user|lower == "admin"|lower %}
+                    <li class="{% block nav_add_category_mob %}{% endblock %}">
+                        <a href="{{ url_for('add_category') }}">Add Category</a>
+                    </li>
+                {% endif %}
+            <li>
+                <a href="{{ url_for('logout') }}">Log Out</a>
+            </li>
+
+            <!-- Otherwise, show Register and Log In -->
+            {% else %}
+                <li class="divider"></li>
+                <li class="{% block nav_register_mob %}{% endblock %}">
+                    <a href="{{ url_for('register') }}">Register</a>
+                </li>
+                <li class="{% block nav_login_mob %}{% endblock %}">
+                    <a href="{{ url_for('login') }}">Log In</a>
+                </li>
+            {% endif %}
+        </ul>
+    </header>
+
+    <!-- Block used for most content on each template -->
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+
+    <footer class="page-footer indigo darken-1">
+        <div class="row">
+            <div class="col s12 l6 center-align">
+                <h5 class="hide-on-med-and-down white-text">Menu</h5>
+                <ul class="footer-menu">
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('get_activities') }}">Activities</a></li>
+                    <li><a href="{{ url_for('get_categories') }}">Categories</a></li>
+                    {% if session.user %}
+                        <li><a href="{{ url_for('profile', username=session['user']) }}">Profile</a></li>
+                        <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('login') }}">Log In</a></li>
+                        <li><a href="{{ url_for('register') }}">Register</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="col s12 l6 center-align">
+                <h5 class="hide-on-med-and-down white-text">Links</h5>
+                <ul class="footer-links">
+                    <li>
+                        <a href="https://github.com/Edb83" target="_blank" rel="noopener" aria-label="Github">
+                            <i class="fab fa-github fa-2x"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram">
+                            <i class="fab fa-instagram fa-2x"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook">
+                            <i class="fab fa-facebook fa-2x"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 l6 offset-l6 center-align">
+                © 2020 Ed Bradley
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+    <!-- Inline script to display Materialize toasts for flashed messages -->
+    <script>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                M.toast({ html: "{{ message }}", classes: 'custom-toast rounded', displayLength: 4000 });
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </script>
+
+</body>
+
+</html>

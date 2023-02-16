@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Self Isolution - Register{% endblock %}
+{% block nav_register %}active{% endblock %}
+{% block nav_register_mob %}active{% endblock %}
+
+{% block content %}
+
+    <h3 class="center-align section-heading">Register</h3>
+
+    <div class="row">
+        <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('register') }}">
+            <div class="card-panel">
+
+                <!-- Username -->
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="fas fa-user-plus prefix"></i>
+                        <input id="username" name="username" type="text" autocomplete="username" minlength="5" maxlength="15"
+                        pattern="^[a-zA-Z0-9]{5,15}$" class="validate" required>
+                        <label for="username">Username</label>
+                        <span class="helper-text" data-error="Username must be 5-15 characters long, containing only numbers and letters"
+                        data-success="Looks good!">
+                            Username must be 5-15 characters long, containing only numbers and letters
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Password -->
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="fas fa-user-lock prefix"></i>
+                        <input id="password" name="password" type="password" autocomplete="new-password" minlength="5" maxlength="15"
+                        pattern="^[a-zA-Z0-9]{5,15}$" class="validate" required>
+                        <label for="password">Password</label>
+                        <span class="helper-text" data-error="Password must be 5-15 characters long, containing only numbers and letters"
+                        data-success="Looks good!">
+                            Password must be 5-15 characters long, containing only numbers and letters
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Submit -->
+                <div class="row">
+                    <div class="col s12 center">
+                        <button type="submit" class="btn teal darken-1" aria-label="register button">
+                            Register <i class="fas fa-sign-in-alt"></i>
+                        </button>
+                    </div>    
+                </div>
+
+                <!-- Login -->
+                <div class="row">
+                    <div class="col s12">
+                        <p class="center-align">
+                            Already registered? <a href="{{ url_for('login') }}">Log In</a>
+                        </p>
+                    </div>
+                </div>
+                
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

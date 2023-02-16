@@ -1,0 +1,454 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v7.0.29,
+* Autoprefixer: v9.7.6
+* Browsers: last 4 version
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Montserrat&display=swap');
+
+/* STRUCTURE */
+
+body {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    min-height: 100vh;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Combined with min-height on body, this sets footer to bottom of screen without any content */
+main {
+    -webkit-box-flex: 1;
+        -ms-flex: 1 0 auto;
+            flex: 1 0 auto;
+}
+
+.container {
+    padding: 2rem 0;
+}
+
+
+/* TEXT */
+
+.text-shadow {
+    text-shadow: 1px 1px 2px #000;
+}
+
+.flow-text a {
+    font-weight: 600;
+}
+
+
+/* HEADINGS */
+
+.section-heading, .card-heading {
+    font-family: 'Bubblegum Sans', cursive;
+    color: #1a237e;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+       text-overflow: ellipsis;
+}
+
+.activity-heading {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+}
+
+
+/* PAGINATION */
+
+.pagination {
+    text-align: center;
+}
+
+.pagination li.active {
+    background-color: #3949ab;
+}
+
+
+/* NAVBAR */
+
+.collapsible-header {
+    display: block;
+}
+
+.brand-logo {
+    font-family: 'Bubblegum Sans', cursive;
+    margin-left: 2rem;
+}
+
+nav ul a {
+    font-size: 1.2rem;
+}
+
+#profile-dropdown a {
+    color: #1a237e;
+    text-shadow: none;
+}
+
+#profile-dropdown li>a:hover {
+    background-color: #e8eaf6;
+}
+
+
+/* FOOTER */
+
+.footer-menu li {
+    display:inline-block;
+    padding: 0 1rem;
+    border-right: thin solid;
+}
+
+.footer-menu li:last-child {
+    border-right: none;
+    padding: 0.5rem 0 0 1rem;
+}
+
+.footer-menu li,
+.footer-links li {
+    display:inline-block;
+    padding: 0 1rem;
+}
+
+.footer-menu a,
+.footer-links a {
+    color: #fff;
+    display: inherit;
+    -webkit-transition: scale 0.1s ease;
+    -o-transition: scale 0.1s ease;
+    transition: scale 0.1s ease;
+}
+
+.footer-menu a:hover,
+.footer-links a:hover {
+    -webkit-transform: scale(1.1);
+        -ms-transform: scale(1.1);
+            transform: scale(1.1);
+}
+
+/* FORMS */
+
+/* Fixes icon intentation for file input field */
+.file-field .file-path-wrapper {
+    padding-left: 3rem;
+}
+
+/* Remove iOS display of carets on select forms */
+select {
+    -webkit-appearance: none; 
+}
+
+.select-wrapper input.select-dropdown {
+    color: #1a237e;
+}
+
+.dropdown-content li>a, .dropdown-content li>span {
+    color: #00897b;
+}
+
+.input-field>label {
+    color: #1a237e;
+}
+
+.file-field input.file-path::-webkit-input-placeholder {
+    color: #1a237e;
+}
+
+.file-field input.file-path::-moz-placeholder {
+    color: #1a237e;
+}
+
+.file-field input.file-path:-ms-input-placeholder {
+    color: #1a237e;
+}
+
+.file-field input.file-path::-ms-input-placeholder {
+    color: #1a237e;
+}
+
+.file-field input.file-path::placeholder {
+    color: #1a237e;
+}
+
+/* BUTTONS */
+
+.btn-floating.halfway-fab {
+    border: solid 1px;
+}
+
+.pulse::before {
+    -webkit-animation: pulse-animation 5s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+            animation: pulse-animation 5s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+}
+
+.form-button-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+}
+
+.form-button {
+    padding: 0.5em;
+}
+
+
+/* HOME PAGE */
+
+.welcome-img-container {
+    margin-top: 2rem;
+}
+
+.welcome-img {
+    width: 90%;
+}
+
+.welcome-intro {
+    padding-bottom: 1rem !important;
+}
+
+.welcome-block {
+    padding: 0 0 2rem;
+}
+
+/* SEARCH BAR */
+
+.search-bar {
+    margin-bottom: 2rem;
+}
+
+.search-button-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+}
+
+.search-button {
+    padding: 0 0.5rem;
+}
+
+
+/* TOASTS */
+
+.custom-toast {
+    background-color: #ffa726;
+    color: #1a237e;
+}
+
+
+/* CARDS */
+
+.card {
+    border-radius: 5%;
+    overflow: hidden;
+}
+.card .card-image img {
+    height: 200px;
+    -o-object-fit: cover;
+       object-fit: cover;
+    -webkit-filter: brightness(0.8);
+            filter: brightness(0.8);
+    width: 100% !important;
+}
+
+.card-stacked .card-content {
+    padding: 1rem;
+}
+
+.card-stacked .card-action {
+    padding: 0.6rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: space-evenly;
+        -ms-flex-pack: space-evenly;
+            justify-content: space-evenly;
+}
+
+.card-action-link {
+    text-transform: none !important;
+    color: #000 !important;
+    margin-right: 0 !important;
+}
+
+.card-action-link:hover {
+    color: #00897b !important;
+}
+
+.activities-card-summary {
+    overflow: hidden;
+    white-space: nowrap;
+    -o-text-overflow: ellipsis;
+       text-overflow: ellipsis;
+}
+
+.profile-intro {
+    padding-bottom: 1rem;
+    border-bottom: thin solid #3949ab;
+}
+
+.profile-card-name-container {
+    min-height: 66%;
+}
+
+.profile-card-name {
+    color: #1a237e;
+    font-weight: 600;
+}
+
+.no-results-container {
+    padding: 1rem;
+}
+
+
+/* CATEGORIES */
+
+.category-card-action,
+.category-card-content,
+.category-card-reveal {
+    padding: 1rem !important;
+}
+
+.category-card-icon,
+.category-card-button {
+    padding: 0 !important;
+}
+
+/* VIEW ACTIVITY */
+
+.view-activity-image-container {
+    margin-top: 2rem;
+}
+
+.view-activity-image {
+    border-radius: 5%;
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+            box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+}
+
+.fa-activity-delete {
+    color: #f44336 !important;
+}
+
+.fa-activity-edit {
+    color: #00897b !important;
+}
+
+.view-activity-heading-row {
+    margin-bottom: 0;
+}
+
+.activity-info {
+    padding: 0.5rem 0.9rem !important;
+}
+
+.activity-info a:hover {
+    color: #00897b !important;
+}
+
+.activity-details-container {
+    margin: 2rem 0;
+    padding: 1rem 0;
+    border-bottom: thin solid #3949ab;
+    border-top: thin solid #3949ab;
+}
+
+.activity-equipment-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -ms-flex-flow: wrap;
+        flex-flow: wrap;
+    padding: 1rem 2rem 4rem 2rem;
+}
+
+.activity-equipment-chip {
+    color: #fff;
+    background-color: #0077ff;
+    margin: 0.3rem;
+}
+
+.activity-heading-row {
+    margin-bottom: 0;
+}
+
+.activity-creation-summary {
+    color: #3949ab;
+    padding: 1rem 0;
+}
+
+.equipment-needed-text {
+    color: #1a237e;
+    font-weight: 600;
+    word-spacing: 0.2rem;
+}
+
+.special-text {
+    font-weight: 600 !important;
+    color: #000 !important;
+    font-size: 1.1em;
+}
+
+
+/* ERROR PAGES */
+
+.error-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;    
+}
+
+.error-img {
+    border-radius: 5%;
+}
+
+
+/* MEDIA QUERIES */
+
+@media only screen and (min-width: 601px) {
+
+    .activity-info-container {
+        text-align: center !important;
+    }
+
+    .activity-info-container .activity-info:first-child {
+        text-align: right;
+    }
+    .activity-info-container .activity-info:last-child {
+        text-align: left;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    #browse-block {
+        padding-right: 3rem;
+    }
+    #share-block {
+        padding-left: 1rem;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .modal .modal-content,
+    .modal .modal-footer {
+    text-align: center !important;
+    }
+}

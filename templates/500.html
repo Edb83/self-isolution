@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Self Isolution - Oops!{% endblock %}
+
+{% block content %}
+<div class="row center">
+
+    <!-- Image -->
+
+    <div class="col s6 offset-s3 l4 offset-l4">
+        <div class="error-image-container">
+            <img src="{{ url_for('static', filename='images/404.jpg') }}" alt="Illustration of man looking at list, scratching head in confusion" class="responsive-img error-img">
+        </div>
+    </div>
+
+    <!-- Content -->
+
+    <div class="col s12">
+        <div class="error-container">
+            <div class="error-heading">
+                <h3 class="section-heading">Something went wrong</h3>
+            </div>
+            <div class="error-message flow-text">
+                <p>Get back to the <a href="{{ url_for('get_activities') }}">Activities!</a></p>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

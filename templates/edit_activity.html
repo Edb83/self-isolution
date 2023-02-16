@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block title %}Self Isolution - Edit {{ activity.activity_name }}{% endblock %}
+{% block content %}
+
+    <h3 class="center-align section-heading">{{ activity.activity_name }}</h3>
+
+    <div class="row">
+        <form class="col s12" method="POST" action="{{ url_for('edit_activity', activity_id=activity._id) }}"
+        enctype="multipart/form-data">
+
+            <!-- Title -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="fas fa-pencil-alt prefix"></i>
+                    <input id="activity_name" name="activity_name" minlength="5" maxlength="20" data-length="20"
+                        value="{{ activity.activity_name }}" type="text" class="validate" required>
+                    <label for="activity_name">Title</label>
+                </div>
+            </div>
+
+            <!-- Category -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="fas fa-folder-open prefix"></i>
+                    <select id="category_name" name="category_name" class="validate" required>
+                        <option value="" disabled>Choose category</option>
+                        {% if session.user|lower == "admin" %}
+                            {% for category in categories %}
+                                {% if category.category_name == activity.category_name %}
+                                    <option value="{{category.category_name}}" selected>{{category.category_name}}</option>
+                                {% else %}
+                                    <option value="{{category.category_name}}">{{category.category_name}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            {% for category in categories if not category.category_name == "Unassigned" %}
+                                {% if category.category_name == activity.category_name %}
+                                    <option value="{{category.category_name}}" selected>{{category.category_name}}</option>
+                                {% else %}
+                                    <option value="{{category.category_name}}">{{category.category_name}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                    <label for="category_name">Category</label>
+                </div>
+            </div>
+
+            <!-- Target Age -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="fas fa-child prefix"></i>
+                    <select id="target_age" name="target_age" class="validate" required>
+                        <option value="" disabled>Choose age</option>
+                            {% for age in ages %}
+                                {% if activity.target_age == age %}
+                                    <option value="{{ activity.target_age }}" selected>{{ activity.target_age }}</option>
+                                {% else %}
+                                    <option value="{{ age }}">{{ age }}</option>
+                                {% endif %}
+                            {% endfor %}
+                    </select>
+                    <label for="target_age">Target Age</label>
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="fas fa-quote-left prefix"></i>
+                    <textarea id="activity_summary" name="activity_summary" minlength="10" maxlength="50" data-length="50"
+                    class="materialize-textarea validate" required>
+                        {{- activity.activity_summary -}}
+                    </textarea>
+                    <label for="activity_summary">Summary</label>
+                </div>
+            </div>
+
+            <!-- Details -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="fas fa-align-left prefix"></i>
+                    <textarea id="activity_details" name="activity_details" minlength="10" maxlength="500" data-length="500"
+                    class="materialize-textarea validate" required>
+                        {{- activity.activity_details -}}
+                    </textarea>
+                    <label for="activity_details">Details</label>
+                </div>
+            </div>
+
+            <!-- What you'll need -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="fas fa-box-open prefix"></i>
+                    <textarea id="activity_equipment" name="activity_equipment" minlength="3" maxlength="50" data-length="50"
+                    class="materialize-textarea validate">
+                        {{- activity.activity_equipment -}}
+                    </textarea>
+                    <label for="activity_equipment">What you'll need</label>
+                    <span class="helper-text">Please enter each item on a new line or leave blank if nothing needed!</span>
+                </div>
+            </div>
+
+            <!-- Image -->
+            <div class="row">
+               <div class="file-field input-field col s12">
+                    <i class="fas fa-image prefix"></i>
+                    <input type="file" id="activity_image" name="image_file">
+                    <div class="file-path-wrapper">
+                        <input class="file-path" type="text" value="{{ activity.image_file }}" />
+                        <label for="activity_image">Upload new image</label>
+                    </div>
+               </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="row">
+                <div class="col s12 center-align">
+                    <a href="{{ url_for('get_activities') }}" class="btn red text-shadow" aria-label="cancel submit button">
+                        Cancel <i class="fas fa-times-circle right"></i>
+                    </a>
+                    <button type="submit" class="btn teal darken-1 text-shadow" aria-label="submit form button">
+                        Update <i class="fas fa-edit right"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+{% block title %}Self Isolution - Categories{% endblock %}
+{% block nav_categories %}active{% endblock %}
+{% block nav_categories_mob %}active{% endblock %}
+{% block content %}
+
+    <!-- Heading and FAB -->
+
+    <div class="row section-heading center valign-wrapper">
+
+        <!-- Heading -->
+        <div class="col s8 offset-s2">
+            <h3>Categories</h3>
+        </div>
+
+        <!-- Add category FAB -->
+        <div class="col s2">
+             {% if session.user|lower == "admin"|lower %}
+                <div class="add-item-button-container">
+                    <a href="{{ url_for('add_category') }}"
+                    class="btn-floating orange accent-4 pulse" aria-label="add category button">
+                    <i class="fas fa-plus"></i>
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+
+    </div>
+
+    <!-- Cards -->
+
+    <div class="row">
+        {% for category in categories %}
+            <div class="col s12 m6 xl4">
+                <div class="card light-green lighten-5 hoverable">
+
+                    <!-- Card image -->
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="{{ category.image_file }}" alt="{{category.category_name}}" loading="lazy">
+                    </div>
+
+                    <!-- Card name -->
+                    <div class="card-content category-card-content valign-wrapper center">
+                        <div class="col s12 card-title activator grey-text text-darken-4">
+                            {{ category.category_name }} <i class="fas fa-info-circle fa-xs"></i>
+                        </div>
+                    </div>
+
+                    <div class="col s12 card-action category-card-action valign-wrapper center">
+
+                        <!-- Delete button -->
+                        <div class="col s3 category-card-icon">
+                            {% if session.user|lower == "admin" and not category.category_name == "Unassigned" %}
+                                <button data-target="{{ category._id }}" class="btn-floating modal-trigger btn-small red" aria-label="delete category">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            {% endif %}
+                        </div>
+
+                        <!-- View button -->
+                        <div class="col s6 category-card-button">
+                            {% if category.activity_list|length > 0 %}
+                                <a href="{{ url_for('filter_category', category_id=category._id) }}"
+                                class="btn indigo" aria-label="view all {{category}} activities button">
+                                    View ({{ category.activity_list|count }})
+                                </a>
+                            {% else %}
+                                <a href="#" class="btn disabled" aria-label="no activities available for {{category}}">View ({{ category.activity_list|count }})</a>
+                            {% endif %}
+                        </div>
+
+                        <!-- Edit button -->
+                        <div class="col s3 category-card-icon">
+                            {% if session.user|lower == "admin" %}
+                                <a href="{{ url_for('edit_category', category_id=category._id) }}"
+                                    class="btn-floating btn-small teal darken-1" aria-label="edit category button">
+                                    <i class="fas fa-pencil-alt "></i>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Card reveal -->
+                    <div class="card-reveal category-card-reveal light-green lighten-5">
+
+                        <!-- Name -->
+                        <span class="card-title grey-text text-darken-4">
+                            {{ category.category_name }}<i class="fas fa-times-circle fa-xs right"></i>
+                        </span>
+
+                        <!-- Summary -->
+                        <p>{{ category.category_summary }}</p>
+
+                        <!-- Example activities -->
+                        {% if category.activity_list|length > 0 %}
+                            <p>Exciting activities include:</p>
+                            <ul>
+                                {% for activity in activities if activity.category_name == category.category_name %}
+                                    {% if loop.index < 4 %}
+                                            <li>{{ activity.activity_name }}</li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        {% elif category.category_name == "Unassigned" %}
+                        {% else %}
+                            <p>We're still waiting for this one to be filled up!</p>
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Deletion modal -->
+        
+            <div id="{{ category._id }}" class="modal">
+
+                <div class="modal-content">
+                    <h4>Confirm deletion</h4>
+                    <p>Are you sure you want to delete <span class="special-text">{{ category.category_name }}</span> ?</p>
+
+                    {% if category.activity_list|count > 0 %}
+                        <p>The following activities will be left without an associated category:</p>
+                        <ul>
+                            {% for activity in activities if activity.category_name == category.category_name %}
+                                <li><span class="special-text">{{ activity.activity_name }}</span></li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                </div>
+
+                <div class="modal-footer">
+                    <a href="#!" class="btn modal-close indigo text-shadow" aria-label="cancel delete button">
+                        Cancel <i class="fas fa-undo-alt right"></i>
+                    </a>
+                    <a href="{{ url_for('delete_category', category_id=category._id) }}"
+                    class="btn modal-close white-text red text-shadow" aria-label="confirm delete button">
+                        Delete <i class="far fa-trash-alt right"></i>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

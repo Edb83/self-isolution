@@ -1,0 +1,10 @@
+core.Microsoft*
+core.mongo*
+core.python*
+env.py
+__pycache__/
+*.py[cod]
+venv
+.theia
+.gitpod.dockerfile
+.gitpod.yml

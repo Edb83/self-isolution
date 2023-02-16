@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% block title %}Self Isolution - Activities{% endblock %}
+{% block nav_activities %}active{% endblock %}
+{% block nav_activities_mob %}active{% endblock %}
+{% block content %}
+
+    <!-- Heading and FAB -->
+
+    <div class="row section-heading center valign-wrapper">
+
+        <!-- Heading -->
+        <div class="col s8 offset-s2">
+            <h3>{{ page_heading }}</h3>
+        </div>
+
+        <!-- Add activity FAB -->
+        <div class="col s2">
+            {% if session.user %}
+                <div class="add-item-button-container">
+                    <a href="{{ url_for('add_activity') }}"
+                    class="btn-floating orange accent-4 pulse" aria-label="add activity button">
+                    <i class="fas fa-plus"></i>
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+        
+    </div>
+    
+    <!-- Search -->
+
+    <div class="row card-panel search-bar grey lighten-5">
+        <form action="{{ url_for('search') }}" method="GET" class="col s12">
+            <div class="row center-align">
+
+                <!-- Input field -->
+                <div class="input-field col s12">
+                    <i class="fas fa-search prefix"></i>
+                    <input type="text" name="query" id="query" minlength="3" class="validate" required>
+                    <label for="query">Search Activities</label>
+                </div>
+
+                <!-- Search buttons -->
+                <div class="col s12 search-button-container">
+                    <div class="search-button">
+                        <a href="{{ url_for('get_activities') }}" class="btn red text-shadow" aria-label="reload page button">
+                            <i class="fas fa-redo center-align"></i>
+                        </a>
+                    </div>
+                    <div class="search-button">
+                        <button type="submit" class="btn indigo text-shadow" aria-label="search button">
+                            <i class="fas fa-search center-align"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+    <!-- Cards -->
+
+    {% if activities|length > 0 %}
+        <div class="row">
+            {% for activity in activities %}
+                <div class="col s12 m6 xl4">
+                    <div class="card hoverable indigo lighten-5">
+
+                        <!-- Card image -->
+                        <div class="card-image">
+                            <a href="{{ url_for('view_activity', activity_id=activity._id) }}">
+                                {% if activity.image_file == "" %}
+                                    {% for category in categories if category.category_name == activity.category_name %}
+                                        <img src="{{ category.image_file }}" alt="{{ category.category_name }}" loading="lazy" />
+                                    {% endfor %}
+                                {% else %}
+                                    <img src="{{ activity.image_file }}" alt="{{ activity.activity_summary }}" loading="lazy" />
+                                {% endif %}
+                                <span class="card-title text-shadow">{{ activity.activity_name }}</span>
+                            </a>
+                            {% if session.user|lower == activity.created_by|lower %}
+                                <a
+                                    href="{{ url_for('edit_activity', activity_id=activity._id) }}"
+                                    class="btn-floating halfway-fab teal darken-1"
+                                    aria-label="edit activity button">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                            {% endif %}
+                        </div>
+
+                        <!-- Card summary -->
+                        <div class="card-content activities-card-summary">
+                            {{ activity.activity_summary }}
+                        </div>
+
+                        <!-- Card footer -->
+                        <div class="card-action center-align truncate">
+
+                            <!-- Target age -->
+                            <div class="col s5">
+                                <a href="{{ url_for('filter_age', target_age=activity.target_age) }}" class="card-action-link">
+                                    <i class="fas fa-child prefix"></i>  {{ activity.target_age }}
+                                </a>
+                            </div>
+                            <!-- Category -->
+                            <div class="col s7">
+                                {% for category in categories if category.category_name == activity.category_name %}
+                                    <a href="{{ url_for('filter_category', category_id=category._id) }}" class="card-action-link">
+                                        <i class="fas fa-folder-open prefix"></i> {{ activity.category_name }}
+                                    </a>
+                                {% endfor %}
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    <!-- Pagination links -->
+
+    {{ pagination.links }}
+
+    <!-- If no activities -->
+
+    {% else %}
+        <div class="no-results-container flow-text indigo-text text-darken-4 center-align">
+            {% if session.user %}
+                <p>There were no activities to be found...</p>
+                <p>Click <a href="{{ url_for('add_activity') }} ">here</a> to add your own!</p>
+            {% else %}
+                <p>No results were found <i class="fas fa-sad-cry"></i></p>
+                <p><a href="{{ url_for('login') }}">Log In</a> or <a href="{{ url_for('register') }}">Register</a> to fill in the blanks!</p>
+            {% endif %}
+        </div>
+    {% endif %}        
+
+{% endblock %}
